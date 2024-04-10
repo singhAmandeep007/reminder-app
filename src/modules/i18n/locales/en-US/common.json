@@ -1,0 +1,24 @@
+{
+  "theme": {
+    "iconLabel": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "app": {
+    "author": "Amandeep Singh",
+    "version": "1.0.0",
+    "description": "A simple todo app",
+    "appName": "Todo App",
+    "copyright": "Copyright © {{year}}"
+  },
+  "lang": {
+    "en-US": "English",
+    "ja-JP": "Japanese",
+    "iconLabel": "Change language"
+  },
+  "navbar": {
+    "home": "Home",
+    "reminders": "Reminders"
+  },
+  "notFound": "Not found - Page doesn't exist"
+}

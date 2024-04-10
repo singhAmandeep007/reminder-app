@@ -1,0 +1,8 @@
+{
+  "techStack": "Tech Stack",
+  "folderStructure": "Folder Structure",
+  "reminderApp": "A simple reminder app",
+  "choosingTechStack": "Choosing a technology stack is a very subjective matter, if you happen to like using Create React App, Tailwind, TS, Redux Toolkit, React Router DOM, i18n, TDD, cypress, strict linting and more to build React SPA applications, then give it a try.",
+  "techStackItems": ["React", "Tailwind", "TypeScript", "Redux Toolkit", "React Router DOM", "i18n", "TDD", "Cypress"],
+  "folderStructureCode": "<c> src <c/> <c> ├── app # app entry <c/> <c> ├── assets # assets for images <c/> <c> ├── components # reusable blocks <c/> <c> ├── hooks # reusable custom hooks <c/> <c> ├── modules # custom modules <c/> <c> ├── services # API handling <c/> <c> ├── shared # stuff shared across app <c/> <c> ├── types # typescript types <c/> <c> ├── views # presentation <c/> <c> └── index.tsx # entry point <c/>"
+}

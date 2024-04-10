@@ -1,0 +1,24 @@
+{
+  "theme": {
+    "iconLabel": "テーマの切り替え",
+    "light": "ライト",
+    "dark": "暗い"
+  },
+  "app": {
+    "author": "アマンディープ・シン",
+    "version": "1.0.0",
+    "description": "シンプルなToDoアプリ",
+    "appName": "Todoアプリ",
+    "copyright": "著作権© {{year}}"
+  },
+  "lang": {
+    "en-US": "英語",
+    "ja-JP": "日本語",
+    "iconLabel": "言語を変えてください"
+  },
+  "navbar": {
+    "home": "家",
+    "reminders": "リマインダー"
+  },
+  "notFound": "見つかりません - ページが存在しません"
+}

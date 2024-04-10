@@ -1,0 +1,7 @@
+{
+  "reloadApp": "Reload App",
+  "default": {
+    "caption": "Something went wrong!",
+    "content": "Please click reload to load the app again!"
+  }
+}
