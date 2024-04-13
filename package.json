@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "concurrently npm:dev",
-    "dev": "node scripts/start.js",
+    "dev": "env-cmd -f ./.development.env node scripts/start.js",
     "build": "node scripts/build.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "npm run tsc:check && node scripts/test.js --watchAll=false",
@@ -46,17 +46,18 @@
     "tsc:check": "tsc --project ./tsconfig.json --noEmit --skipLibCheck",
     "tsc:watch": "tsc --project ./tsconfig.json --noEmit --skipLibCheck --watch",
     "PREVIEW": "---------------------------------------------------------------------",
-    "preview": "run-s -c preview:*",
+    "preview": "env-cmd -f ./.local-production.env run-s -c preview:*",
     "preview:build": "npm run build",
-    "preview:start": "http-server ./build --proxy http://localhost:8080? ./build",
+    "preview:start": "http-server ./build --port 8080 --proxy http://localhost:8080? ./build",
     "COMMIT": "------------------------------------------------------------------------",
     "commit:pre": "lint-staged",
     "commit:init": "git-cz",
     "commit:devmoji": "devmoji -e --lint",
     "prepare": "husky || true",
     "DEPLOY": "------------------------------------------------------------------------",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "run-s deploy:build deploy:gh-pages",
+    "deploy:build": "env-cmd -f ./.production.env npm run build",
+    "deploy:gh-pages": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -104,6 +105,7 @@
     "devmoji": "^2.3.0",
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
