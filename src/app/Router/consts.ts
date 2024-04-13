@@ -1,4 +1,22 @@
-import { ROUTES, getRoutesList, getRoutesPathByName, getRoutesPropByKeyList } from "shared";
+import { getRoutesList, getRoutesPathByName, getRoutesPropByKeyList } from "shared";
+
+import { TRoutes } from "types";
+
+export const BASENAME = "/todo-app";
+
+export const ROUTES = {
+  home: {
+    path: "/",
+    childRoutes: {
+      reminders: {
+        path: "/reminders",
+      },
+    },
+  },
+  notFound: {
+    path: "*",
+  },
+} as const satisfies TRoutes;
 
 /**
  * An array of all root route paths.
