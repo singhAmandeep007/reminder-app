@@ -1,6 +1,7 @@
 {
   "name": "todo-app",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "license": "MIT",
   "description": "A simple todo app",
@@ -47,7 +48,7 @@
     "PREVIEW": "---------------------------------------------------------------------",
     "preview": "run-s -c preview:*",
     "preview:build": "npm run build",
-    "preview:start": "http-server ./build -- -p 8080",
+    "preview:start": "http-server ./build --proxy http://localhost:8080? ./build",
     "COMMIT": "------------------------------------------------------------------------",
     "commit:pre": "lint-staged",
     "commit:init": "git-cz",
