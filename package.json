@@ -1,7 +1,6 @@
 {
   "name": "todo-app",
   "version": "0.1.0",
-  "homepage": "https://singhAmandeep007.github.io/todo-app",
   "private": true,
   "license": "MIT",
   "description": "A simple todo app",

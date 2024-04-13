@@ -2,7 +2,9 @@ import { getRoutesList, getRoutesPathByName, getRoutesPropByKeyList } from "shar
 
 import { TRoutes } from "types";
 
-export const BASENAME = "/todo-app";
+const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
+
+export const BASENAME = new URL(PUBLIC_URL).pathname;
 
 export const ROUTES = {
   home: {
