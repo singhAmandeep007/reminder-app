@@ -10,6 +10,8 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
 async function setupApp() {
+  await i18n.configure();
+
   const mockerType = process.env.REACT_APP_MOCKER;
 
   if (!!mockerType && process.env.NODE_ENV === "development") {
@@ -17,12 +19,10 @@ async function setupApp() {
 
     const { setupMocker } = mocker;
 
-    setupMocker({ type: mockerType });
+    await setupMocker({ type: mockerType });
     // eslint-disable-next-line no-console
     console.log(`%c API is being mocked using ${mockerType}!`, "color: #bada55; font-weight: bold;");
   }
-
-  await i18n.configure();
 
   return Promise.resolve();
 }

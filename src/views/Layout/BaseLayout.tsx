@@ -25,7 +25,6 @@ export const BaseLayout: FC<PropsWithChildren<TBaseLayoutProps>> = () => {
           <div>
             <RouteLink to={ROUTE_BY_PATH.home}>
               <Bell className="icon inline-block fill-primary" />
-              <h1 className="ml-3 inline-block text-lg">{t("app.appName")}</h1>
             </RouteLink>
           </div>
           <div>

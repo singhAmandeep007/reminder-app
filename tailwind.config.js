@@ -1,10 +1,13 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
+import { BREAKPOINTS } from "./src/shared/config/breakpoints";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   darkMode: ["class"],
   theme: {
+    screens: BREAKPOINTS,
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
@@ -34,6 +37,9 @@ module.exports = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        "accent-dark": {
+          DEFAULT: "hsl(var(--accent-dark))",
         },
       },
       borderRadius: {

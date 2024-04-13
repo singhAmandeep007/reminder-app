@@ -13,6 +13,7 @@ declare global {
       // additional environment variables types
       readonly REACT_APP_NODE_ENV: TEnv;
       readonly REACT_APP_MOCKER: TMocker;
+      readonly REACT_APP_API_URL: string;
     }
   }
 }

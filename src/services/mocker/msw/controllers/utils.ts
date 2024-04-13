@@ -1,9 +1,13 @@
-/**
- * Returns the URL with the prefix based on the provided path.
- * @param path - The path to be prefixed. Should start with a slash.
- * @returns The URL with the prefix.
- */
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export const urlPrefix = (path: string) => {
-  if (path[0] !== "/") throw new Error(`Path ${path} should start with a slash (/).`);
-  return `${process.env.REACT_APP_API_BASE_URL}${path}`;
+  if (path[0] !== "/") {
+    throw new Error("MSW handler path should start with a forward slash.");
+  }
+  const isApiUrlEndsWithSlash = apiUrl[apiUrl.length - 1] === "/";
+
+  if (isApiUrlEndsWithSlash) {
+    return `${apiUrl}${path.slice(1)}`;
+  }
+  return `${apiUrl}${path}`;
 };

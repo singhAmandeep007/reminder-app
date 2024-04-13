@@ -1,11 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
-import { reducer } from "./reducer";
+import { apiSlice } from "./apiSlice";
+
+import { remindersSlice } from "./reminders";
 
 export type TStore = typeof store;
 
 export const store = configureStore({
-  reducer,
+  reducer: {
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    [remindersSlice.reducerPath]: remindersSlice.reducer,
+  },
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([]),
+  // Adding the api middleware enables caching, invalidation, polling, and other useful features of `rtk-query`.
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });
+
+setupListeners(store.dispatch);

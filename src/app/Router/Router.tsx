@@ -10,8 +10,6 @@ import { BaseLayout } from "views/Layout";
 
 import { Home } from "views/Home";
 
-import { Reminders } from "views/Reminders";
-
 import { HOME_ROUTE_BY_PATH, ROUTE_BY_PATH } from "./consts";
 
 export type TRouterProps = Record<string, never>;
@@ -28,7 +26,12 @@ const router = createBrowserRouter([
       },
       {
         path: HOME_ROUTE_BY_PATH.reminders,
-        element: <Reminders />,
+        lazy: async () => {
+          const { Reminders } = await import("views/Reminders");
+          return {
+            Component: Reminders,
+          };
+        },
       },
       {
         path: ROUTE_BY_PATH.notFound,
