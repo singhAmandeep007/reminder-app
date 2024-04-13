@@ -4,21 +4,21 @@ import { RefreshCcw } from "lucide-react";
 
 import { Button, Typography } from "components";
 
-import { useGetRemindersQuery, selectQueryParams, useAppSelector, selectRemindersGroups } from "shared";
+import { useGetRemindersQuery, useSelectReminderGroups, useSelectQueryParams } from "shared";
 
 import { ReminderItem } from "./ReminderItem";
 
 export type TRemindersListProps = Record<string, never>;
 
 export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
-  const queryParams = useAppSelector(selectQueryParams);
+  const queryParams = useSelectQueryParams();
 
   const { data: reminders, refetch } = useGetRemindersQuery(queryParams);
 
-  const { data: remindersGroups } = useAppSelector(selectRemindersGroups());
+  const { data: reminderGroups } = useSelectReminderGroups();
 
-  const remindersGroupName =
-    remindersGroups && remindersGroups.find((remindersGroup) => remindersGroup.id === queryParams.groupId)?.name;
+  const reminderGroupName =
+    reminderGroups && reminderGroups.find((reminderGroup) => reminderGroup.id === queryParams.groupId)?.name;
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden p-4">
@@ -28,7 +28,7 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
           className="text-md flex items-center justify-between font-bold leading-none"
           data-testid="active-list-title"
         >
-          {remindersGroupName || "All"}
+          {reminderGroupName || "All"}
         </Typography>
         <div className="flex gap-2">
           <Button

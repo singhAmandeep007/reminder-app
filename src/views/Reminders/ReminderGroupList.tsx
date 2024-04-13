@@ -2,16 +2,16 @@ import { FC, PropsWithChildren } from "react";
 
 import { Plus } from "lucide-react";
 
-import { useGetRemindersGroupsQuery } from "shared";
+import { useGetReminderGroupsQuery } from "shared";
 
 import { Button } from "components";
 
-import { RemindersGroupItem } from "./RemindersGroupItem";
+import { ReminderGroupItem } from "./ReminderGroupItem";
 
-export type TRemindersGroupListProps = Record<string, never>;
+export type TReminderGroupListProps = Record<string, never>;
 
-export const RemindersGroupList: FC<PropsWithChildren<TRemindersGroupListProps>> = () => {
-  const { data: remindersGroups } = useGetRemindersGroupsQuery();
+export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> = () => {
+  const { data: reminderGroups } = useGetReminderGroupsQuery();
 
   return (
     <div className="flex min-w-[200px] flex-1 flex-col overflow-hidden bg-secondary p-4">
@@ -27,13 +27,13 @@ export const RemindersGroupList: FC<PropsWithChildren<TRemindersGroupListProps>>
       <div className="flex-1 overflow-scroll">
         <ul className="divide divide-y">
           <li key="all">
-            <RemindersGroupItem />
+            <ReminderGroupItem />
           </li>
-          {remindersGroups &&
-            remindersGroups.map((remindersGroup) => {
+          {reminderGroups &&
+            reminderGroups.map((reminderGroup) => {
               return (
-                <li key={remindersGroup.id}>
-                  <RemindersGroupItem remindersGroup={remindersGroup} />
+                <li key={reminderGroup.id}>
+                  <ReminderGroupItem reminderGroup={reminderGroup} />
                 </li>
               );
             })}

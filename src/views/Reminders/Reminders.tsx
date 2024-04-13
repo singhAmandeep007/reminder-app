@@ -8,7 +8,7 @@ import { cn } from "shared";
 
 import { RemindersList } from "./RemindersList";
 
-import { RemindersGroupList } from "./RemindersGroupList";
+import { ReminderGroupList } from "./ReminderGroupList";
 
 export type TRemindersProps = Record<string, never>;
 
@@ -27,13 +27,13 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
         <PanelGroup
           direction={isBelowMd ? "vertical" : "horizontal"}
           className="flex-1"
-          // autoSaveId={"reminders-panel-group"}
+          autoSaveId={"reminders-panel-group"}
         >
           <Panel
             maxSize={50}
             className="flex flex-col"
           >
-            <RemindersGroupList />
+            <ReminderGroupList />
           </Panel>
 
           <PanelResizeHandle className="group">

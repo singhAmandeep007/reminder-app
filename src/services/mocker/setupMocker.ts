@@ -1,6 +1,6 @@
 export const MOCKER_TYPE = {
   msw: "msw",
-  miragejs: "miragejs",
+  mirage: "mirage",
 } as const;
 
 export type TMocker = (typeof MOCKER_TYPE)[keyof typeof MOCKER_TYPE] | undefined;

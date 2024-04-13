@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
   TReminder,
-  TRemindersGroup,
+  TReminderGroup,
   TGetRemindersQueryParams,
   TGetRemindersResponsePayload,
-  TGetRemindersGroupsResponsePayload,
+  TGetReminderGroupsResponsePayload,
   TCreateReminderResponsePayload,
   TCreateReminderRequestPayload,
   TUpdateReminderRequestPayload,
@@ -26,10 +26,10 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: TGetRemindersResponsePayload) => response.data,
       providesTags: ["Reminders"],
     }),
-    getRemindersGroups: builder.query<TRemindersGroup[], void>({
-      query: () => "/remindersGroups",
-      transformResponse: (response: TGetRemindersGroupsResponsePayload) => response.data,
-      providesTags: ["RemindersGroups"],
+    getReminderGroups: builder.query<TReminderGroup[], void>({
+      query: () => "/reminder-groups",
+      transformResponse: (response: TGetReminderGroupsResponsePayload) => response.data,
+      providesTags: ["ReminderGroups"],
     }),
     createReminder: builder.mutation<TReminder, TCreateReminderRequestPayload>({
       query: (body) => ({
@@ -59,15 +59,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetRemindersQuery,
-  useCreateReminderMutation,
-  useUpdateReminderMutation,
-  useDeleteReminderMutation,
-  useGetRemindersGroupsQuery,
-} = remindersApiSlice;
-
-export const selectRemindersGroups = () => remindersApiSlice.endpoints.getRemindersGroups.select();
+export const selectReminderGroups = () => remindersApiSlice.endpoints.getReminderGroups.select();
 
 const initialRemindersSliceState = {
   queryParams: {

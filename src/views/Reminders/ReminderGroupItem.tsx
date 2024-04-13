@@ -1,21 +1,21 @@
 import { FC, PropsWithChildren, useCallback } from "react";
 
-import { TRemindersGroup } from "types";
+import { TReminderGroup } from "types";
 
 import { useAppDispatch, setQueryParams, useAppSelector, selectQueryParams, cn } from "shared";
 
 import { DeleteButton } from "./components";
 
-export type TRemindersGroupItemProps = {
-  remindersGroup?: TRemindersGroup;
+export type TReminderGroupItemProps = {
+  reminderGroup?: TReminderGroup;
 };
 
-export const RemindersGroupItem: FC<PropsWithChildren<TRemindersGroupItemProps>> = ({ remindersGroup }) => {
+export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> = ({ reminderGroup }) => {
   const dispatch = useAppDispatch();
 
   const { groupId } = useAppSelector(selectQueryParams);
 
-  const isSelected = groupId === remindersGroup?.id;
+  const isSelected = groupId === reminderGroup?.id;
 
   const className = cn("flex flex-1 items-center justify-between py-2 cursor-pointer gap-2");
 
@@ -28,11 +28,11 @@ export const RemindersGroupItem: FC<PropsWithChildren<TRemindersGroupItemProps>>
     [dispatch]
   );
 
-  if (!remindersGroup) {
+  if (!reminderGroup) {
     return (
       <div
         className={className}
-        data-testid="reminders-group-item-all"
+        data-testid="reminder-group-item-all"
         onClick={() => handleOnClick({ groupId: undefined })}
       >
         <div className={titleClassName}>All</div>
@@ -43,12 +43,12 @@ export const RemindersGroupItem: FC<PropsWithChildren<TRemindersGroupItemProps>>
   return (
     <div
       className={className}
-      data-testid={`reminders-group-item-${remindersGroup.id}`}
-      onClick={() => handleOnClick({ groupId: remindersGroup.id })}
+      data-testid={`reminder-group-item-${reminderGroup.id}`}
+      onClick={() => handleOnClick({ groupId: reminderGroup.id })}
     >
-      <div className={titleClassName}> {remindersGroup.name}</div>
+      <div className={titleClassName}> {reminderGroup.name}</div>
 
-      <DeleteButton data-testid={`delete-reminders-group-item-${remindersGroup.id}`} />
+      <DeleteButton data-testid={`delete-reminder-group-item-${reminderGroup.id}`} />
     </div>
   );
 };

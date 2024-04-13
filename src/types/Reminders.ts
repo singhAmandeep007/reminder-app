@@ -12,18 +12,21 @@ export type TReminder = {
   isPinned: boolean;
   createdAt: string;
   updatedAt: string;
-  group?: TRemindersGroup;
+  group?: TReminderGroup;
 };
 
-export type TRemindersGroup = {
+export type TReminderGroup = {
   id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
 };
 
+/**
+ * Reminder
+ */
 export type TGetRemindersQueryParams = Partial<{
-  groupId: TRemindersGroup["id"];
+  groupId: TReminderGroup["id"];
   state: TReminder["state"];
 }>;
 
@@ -31,18 +34,14 @@ export type TGetRemindersResponsePayload = {
   data: TReminder[];
 };
 
-export type TGetRemindersGroupsResponsePayload = {
-  data: TRemindersGroup[];
-};
-
-export type TCreateReminderRequestPayload = Pick<TReminder, "title"> & Partial<{ groupId: TRemindersGroup["id"] }>;
+export type TCreateReminderRequestPayload = Pick<TReminder, "title"> & Partial<{ groupId: TReminderGroup["id"] }>;
 
 export type TCreateReminderResponsePayload = {
   data: TReminder;
 };
 
 export type TUpdateReminderRequestPayload = Pick<TReminder, "id"> &
-  Partial<Pick<TReminder, "title" | "state" | "isPinned"> & { groupId: TRemindersGroup["id"] }>;
+  Partial<Pick<TReminder, "title" | "state" | "isPinned"> & { groupId: TReminderGroup["id"] }>;
 
 export type TUpdateReminderResponsePayload = {
   data: TReminder;
@@ -51,3 +50,26 @@ export type TUpdateReminderResponsePayload = {
 export type TDeleteReminderRequestPayload = TReminder["id"];
 
 export type TDeleteReminderResponsePayload = {};
+
+/**
+ * Reminder Group
+ */
+export type TGetReminderGroupsResponsePayload = {
+  data: TReminderGroup[];
+};
+
+export type TCreateReminderGroupRequestPayload = Pick<TReminderGroup, "name">;
+
+export type TCreateReminderGroupResponsePayload = {
+  data: TReminderGroup;
+};
+
+export type TUpdateReminderGroupRequestPayload = Pick<TReminderGroup, "id"> & Partial<Pick<TReminderGroup, "name">>;
+
+export type TUpdateReminderGroupResponsePayload = {
+  data: TReminderGroup;
+};
+
+export type TDeleteReminderGroupRequestPayload = TReminderGroup["id"];
+
+export type TDeleteReminderGroupResponsePayload = {};

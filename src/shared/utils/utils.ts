@@ -23,10 +23,19 @@ export function merge<T extends object, U extends object[]>(target: T, ...source
   return target as T & U[number];
 }
 
-export function uuid() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
+const generateUUID = function () {
+  let counter = 1;
+  return function () {
+    counter += 1;
+    return (
+      "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxx" +
+      `${counter}`.replace(/[xy]/g, function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      })
+    );
+  };
+};
+
+export const uuid = generateUUID();

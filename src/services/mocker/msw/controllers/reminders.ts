@@ -1,25 +1,25 @@
 import { HttpResponse, http } from "msw";
 
-import { TCreateReminderRequestPayload, TReminder, TRemindersGroup } from "types";
+import { TCreateReminderRequestPayload, TReminder, TReminderGroup } from "types";
 
 import { uuid, getUrlSearchParams } from "shared";
 
 import { urlPrefix } from "./utils";
 
-const group1: TRemindersGroup = {
+const group1: TReminderGroup = {
   id: uuid(),
   name: "group 1",
   createdAt: "2021-09-01T00:00:00Z",
   updatedAt: "2021-09-01T00:00:00Z",
 };
-const group2: TRemindersGroup = {
+const group2: TReminderGroup = {
   id: uuid(),
   name: "group 2",
   createdAt: "2021-09-03T00:00:00Z",
   updatedAt: "2021-09-03T00:00:00Z",
 };
 
-const remindersGroup: TRemindersGroup[] = [group1, group2];
+const reminderGroups: TReminderGroup[] = [group1, group2];
 
 const reminders: TReminder[] = [
   {
@@ -84,8 +84,8 @@ export const getReminders = http.get(urlPrefix("/reminders"), ({ request }) => {
   return HttpResponse.json({ data }, { status: 200 });
 });
 
-export const getRemindersGroups = http.get(urlPrefix("/remindersGroups"), () => {
-  return HttpResponse.json({ data: remindersGroup }, { status: 200 });
+export const getReminderGroups = http.get(urlPrefix("/reminder-groups"), () => {
+  return HttpResponse.json({ data: reminderGroups }, { status: 200 });
 });
 
 export const createReminder = http.post<never, TCreateReminderRequestPayload>(
@@ -93,10 +93,10 @@ export const createReminder = http.post<never, TCreateReminderRequestPayload>(
   async ({ request }) => {
     const { title, groupId } = await request.json();
 
-    const group = remindersGroup.find((group) => group.id === groupId);
+    const group = reminderGroups.find((group) => group.id === groupId);
 
     if (groupId && !group) {
-      return HttpResponse.json({ message: `Reminders Group with id ${groupId} not found!` }, { status: 404 });
+      return HttpResponse.json({ message: `Reminder Group with id ${groupId} not found!` }, { status: 404 });
     }
 
     const newReminder: TReminder = {

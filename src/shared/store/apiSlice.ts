@@ -14,7 +14,7 @@ export const apiSlice = createApi({
       return response.status >= 200 && response.status <= 299;
     },
   }),
-  tagTypes: ["Reminders", "RemindersGroups"],
+  tagTypes: ["Reminders", "ReminderGroups"],
   endpoints: (builder) => ({}),
   // keepUnusedDataFor: 60, // time in seconds
 });

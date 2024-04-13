@@ -1,16 +1,23 @@
 import {
-  Model,
-  hasMany,
-  belongsTo,
   RestSerializer,
   createServer,
   Factory,
   // trait
 } from "miragejs";
 
-export function runServer({ environment = "development" } = {}) {
+import { createRoutes } from "./routes";
+import * as models from "./models";
+import { TMockServer } from "./types";
+
+export type TRunMirageServerConfig = {
+  environment?: string;
+  logging?: boolean;
+};
+
+export function runServer(config: TRunMirageServerConfig = {}): TMockServer {
   return createServer({
-    environment,
+    logging: config.logging || true,
+    environment: config?.environment || "development",
     serializers: {
       reminder: RestSerializer.extend({
         include: ["list"],
@@ -18,15 +25,17 @@ export function runServer({ environment = "development" } = {}) {
       }),
     },
 
-    models: {
-      list: Model.extend({
-        reminders: hasMany(),
-      }),
+    // models: {
+    //   list: Model.extend({
+    //     reminders: hasMany(),
+    //   }),
 
-      reminder: Model.extend({
-        list: belongsTo(),
-      }),
-    },
+    //   reminder: Model.extend({
+    //     list: belongsTo(),
+    //   }),
+    // },
+
+    models,
 
     factories: {
       list: Factory.extend({
@@ -67,18 +76,20 @@ export function runServer({ environment = "development" } = {}) {
     },
 
     routes() {
+      createRoutes.call(this);
+
       this.get("/api/lists", (schema, request) => {
         return schema.all("list");
       });
 
-      this.get("/api/lists/:id/reminders", (schema, request) => {
-        let reminders =
-          schema.findBy("list", {
-            id: request.params.id,
-          })?.reminders || [];
+      // this.get("/api/lists/:id/reminders", (schema, request) => {
+      //   let reminders =
+      //     schema.findBy("list", {
+      //       id: request.params.id,
+      //     })?.reminders || [];
 
-        return reminders;
-      });
+      //   return reminders;
+      // });
 
       this.get("/api/reminders", (schema) => {
         return schema.all("reminder");
@@ -102,16 +113,18 @@ export function runServer({ environment = "development" } = {}) {
         return schema.findBy("reminder", { id })?.destroy() || null;
       });
 
-      this.delete("/api/lists/:id", (schema, request) => {
-        let id = request.params.id;
-        let list = schema.findBy("list", { id });
+      // this.delete("/api/lists/:id", (schema, request) => {
+      //   let id = request.params.id;
+      //   let list = schema.findBy("list", { id });
 
-        if (list?.reminders) {
-          list?.reminders?.destroy();
-        }
+      //   if (list?.reminders) {
+      //     list?.reminders?.destroy();
+      //   }
 
-        return list?.destroy() || null;
-      });
+      //   return list?.destroy() || null;
+      // });
+
+      this.passthrough();
     },
   });
 }
