@@ -14,7 +14,7 @@ async function setupApp() {
 
   const mockerType = process.env.REACT_APP_MOCKER;
 
-  if (!!mockerType && process.env.NODE_ENV === "development") {
+  if (!!mockerType) {
     const mocker = await import("services/mocker");
 
     const { setupMocker } = mocker;

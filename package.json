@@ -36,6 +36,7 @@
     "start": "concurrently npm:dev",
     "dev": "env-cmd -f ./.development.env node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:msw": "msw init ./build --no-save",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "npm run tsc:check && node scripts/test.js --watchAll=false",
     "LINT": "------------------------------------------------------------------------",
@@ -57,7 +58,7 @@
     "DEPLOY": "------------------------------------------------------------------------",
     "deploy": "run-s deploy:build deploy:gh-pages",
     "deploy:build": "env-cmd -f ./.production.env npm run build",
-    "deploy:gh-pages": "gh-pages -d build"
+    "deploy:gh-pages": "gh-pages -d build -- --message \"Updates\""
   },
   "browserslist": {
     "production": [
