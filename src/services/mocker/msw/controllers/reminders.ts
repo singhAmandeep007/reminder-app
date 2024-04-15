@@ -1,6 +1,14 @@
 import { HttpResponse, http } from "msw";
 
-import { TCreateReminderRequestPayload, TReminder, TReminderGroup } from "types";
+import {
+  TCreateReminderRequestPayload,
+  TDeleteReminderRequestPayload,
+  TDeleteReminderResponsePayload,
+  TReminder,
+  TReminderGroup,
+  TCreateReminderResponsePayload,
+  THTTPError,
+} from "types";
 
 import { uuid, getUrlSearchParams } from "shared";
 
@@ -65,6 +73,7 @@ const reminders: TReminder[] = [
     isPinned: false,
     createdAt: "2021-10-05T00:00:00Z",
     updatedAt: "2021-10-05T00:00:00Z",
+    group: group2,
   },
 ];
 
@@ -88,29 +97,45 @@ export const getReminderGroups = http.get(urlPrefix("/reminder-groups"), () => {
   return HttpResponse.json({ data: reminderGroups }, { status: 200 });
 });
 
-export const createReminder = http.post<never, TCreateReminderRequestPayload>(
-  urlPrefix("/reminders"),
-  async ({ request }) => {
-    const { title, groupId } = await request.json();
+export const createReminder = http.post<
+  never,
+  TCreateReminderRequestPayload,
+  TCreateReminderResponsePayload | THTTPError
+>(urlPrefix("/reminders"), async ({ request }) => {
+  const { title, groupId } = await request.json();
 
-    const group = reminderGroups.find((group) => group.id === groupId);
+  const group = reminderGroups.find((group) => group.id === groupId);
 
-    if (groupId && !group) {
-      return HttpResponse.json({ message: `Reminder Group with id ${groupId} not found!` }, { status: 404 });
+  if (groupId && !group) {
+    return HttpResponse.json({ message: `Reminder Group with id ${groupId} not found!` }, { status: 404 });
+  }
+
+  const newReminder: TReminder = {
+    id: uuid(),
+    state: "ACTIVE",
+    title: title,
+    isPinned: false,
+    ...(groupId ? group : {}),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  reminders.push(newReminder);
+
+  return HttpResponse.json({ data: newReminder }, { status: 201 });
+});
+
+export const deleteReminder = http.delete<{ id: TDeleteReminderRequestPayload }, never, TDeleteReminderResponsePayload>(
+  urlPrefix("/reminders/:id"),
+  ({ params }) => {
+    const reminderIndex = reminders.findIndex((reminder) => reminder.id === params.id);
+
+    if (reminderIndex === -1) {
+      return HttpResponse.json({ message: `Reminder with id ${params.id} not found!` }, { status: 404 });
     }
 
-    const newReminder: TReminder = {
-      id: uuid(),
-      state: "ACTIVE",
-      title: title,
-      isPinned: false,
-      ...(groupId ? group : {}),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    reminders.splice(reminderIndex, 1);
 
-    reminders.push(newReminder);
-
-    return HttpResponse.json({ data: newReminder }, { status: 201 });
+    return HttpResponse.json({ message: `Reminder with id ${params.id} deleted!` }, { status: 200 });
   }
 );

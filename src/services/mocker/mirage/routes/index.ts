@@ -1,7 +1,9 @@
-import { TMockServer } from "../types";
+import { TAppMockServer } from "../types";
 
-import { remindersRoutes } from "./reminders";
+import { reminderRoutes } from "./reminder";
+import { reminderGroupRoutes } from "./reminderGroup";
 
-export function createRoutes(this: TMockServer) {
-  remindersRoutes.call(this);
+export function createRoutes(this: TAppMockServer) {
+  reminderRoutes.call(this);
+  reminderGroupRoutes.call(this);
 }

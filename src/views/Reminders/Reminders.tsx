@@ -5,6 +5,7 @@ import { EllipsisVertical, EllipsisIcon } from "lucide-react";
 
 import { useBreakpoint } from "hooks";
 import { cn } from "shared";
+import { Typography } from "components";
 
 import { RemindersList } from "./RemindersList";
 
@@ -20,7 +21,14 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
       <div className="flex h-full flex-col rounded border-2 border-primary shadow-lg lg:h-3/4">
         <nav className="flex h-[--navbar-height] border-b-2 border-primary">
           <ul className="flex flex-1 items-center justify-between px-4">
-            <li>Reminders</li>
+            <li>
+              <Typography
+                variant={"h2"}
+                className="pb-0"
+              >
+                Reminders
+              </Typography>
+            </li>
           </ul>
         </nav>
 

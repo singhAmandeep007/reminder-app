@@ -2,6 +2,8 @@ import { FC, PropsWithChildren, useCallback } from "react";
 
 import { TReminderGroup } from "types";
 
+import { Typography } from "components";
+
 import { useAppDispatch, setQueryParams, useAppSelector, selectQueryParams, cn } from "shared";
 
 import { DeleteButton } from "./components";
@@ -17,9 +19,9 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
 
   const isSelected = groupId === reminderGroup?.id;
 
-  const className = cn("flex flex-1 items-center justify-between py-2 cursor-pointer gap-2");
+  const className = cn("py-2 flex items-center justify-between cursor-pointer gap-2");
 
-  const titleClassName = cn(isSelected && "text-primary");
+  const titleClassName = cn("text-nowrap overflow-x-scroll py-2", isSelected && "text-primary");
 
   const handleOnClick = useCallback(
     (queryParams: Parameters<typeof setQueryParams>[0]) => {
@@ -35,7 +37,12 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
         data-testid="reminder-group-item-all"
         onClick={() => handleOnClick({ groupId: undefined })}
       >
-        <div className={titleClassName}>All</div>
+        <Typography
+          variant={"p"}
+          className={titleClassName}
+        >
+          All
+        </Typography>
       </div>
     );
   }
@@ -44,9 +51,14 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
     <div
       className={className}
       data-testid={`reminder-group-item-${reminderGroup.id}`}
-      onClick={() => handleOnClick({ groupId: reminderGroup.id })}
     >
-      <div className={titleClassName}> {reminderGroup.name}</div>
+      <Typography
+        variant={"p"}
+        className={titleClassName}
+        onClick={() => handleOnClick({ groupId: reminderGroup.id })}
+      >
+        {reminderGroup.name}
+      </Typography>
 
       <DeleteButton data-testid={`delete-reminder-group-item-${reminderGroup.id}`} />
     </div>

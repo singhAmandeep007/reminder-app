@@ -24,16 +24,15 @@ export function merge<T extends object, U extends object[]>(target: T, ...source
 }
 
 const generateUUID = function () {
-  let counter = 1;
+  let counter = 0;
   return function () {
     counter += 1;
     return (
-      "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxx" +
-      `${counter}`.replace(/[xy]/g, function (c) {
-        var r = (Math.random() * 16) | 0,
+      "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0,
           v = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
-      })
+      }) + `-${counter.toString()}`
     );
   };
 };

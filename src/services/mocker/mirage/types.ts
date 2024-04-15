@@ -6,8 +6,12 @@ import * as models from "./models";
 
 import * as factories from "./factories";
 
-export type TAppRegistry = Registry<typeof models, typeof factories>;
+export type TAppModels = typeof models;
+
+export type TAppFactories = typeof factories;
+
+export type TAppRegistry = Registry<TAppModels, TAppFactories>;
 
 export type TAppSchema = Schema<TAppRegistry>;
 
-export type TMockServer = Server<TAppRegistry>;
+export type TAppMockServer = Server<TAppRegistry>;

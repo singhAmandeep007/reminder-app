@@ -2,14 +2,19 @@ import { Factory } from "miragejs";
 // eslint-disable-next-line import/no-unresolved
 import { FactoryDefinition } from "miragejs/-types";
 
-// import { TReminder } from "types";
+import { TReminder } from "types";
 
-export const reminder: FactoryDefinition = Factory.extend({
+import { TAppModels } from "../types";
+
+export const reminder: FactoryDefinition<TAppModels["reminder"]> = Factory.extend<TReminder>({
+  id(n) {
+    return `reminder-id-${n}`;
+  },
+  title(n) {
+    return `Reminder ${n}`;
+  },
   isPinned: false,
   state: "ACTIVE",
-  title(i) {
-    return `Reminder ${i}`;
-  },
   createdAt() {
     return new Date().toISOString();
   },

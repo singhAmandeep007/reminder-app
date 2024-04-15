@@ -15,9 +15,9 @@ export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> =
 
   return (
     <div className="flex min-w-[200px] flex-1 flex-col overflow-hidden bg-secondary p-4">
-      <div className="mb-2 flex justify-center">
+      <div className="mb-2 mt-1 flex justify-center">
         <Button
-          className="gap-1 hover:bg-accent-dark hover:text-primary"
+          className="gap-1 border border-accent-dark hover:bg-accent-dark hover:text-primary"
           variant={"ghost"}
         >
           <Plus className="icon" />
@@ -25,7 +25,7 @@ export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> =
         </Button>
       </div>
       <div className="flex-1 overflow-scroll">
-        <ul className="divide divide-y">
+        <ul className="divide divide-y divide-accent-dark">
           <li key="all">
             <ReminderGroupItem />
           </li>

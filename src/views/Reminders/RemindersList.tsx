@@ -22,10 +22,10 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden p-4">
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between gap-2">
         <Typography
-          variant={"h3"}
-          className="text-md flex items-center justify-between font-bold leading-none"
+          variant={"h4"}
+          className="flex items-center justify-between overflow-x-scroll text-nowrap py-2 "
           data-testid="active-list-title"
         >
           {reminderGroupName || "All"}

@@ -22,6 +22,21 @@ export type TReminderGroup = {
   updatedAt: string;
 };
 
+export type TMessageResponsePaylaod = {
+  message: string;
+};
+
+export type TDataResponsePayload<T> = {
+  data: T;
+};
+
+/**
+ * Error
+ */
+export type THTTPError = {
+  message: string;
+};
+
 /**
  * Reminder
  */
@@ -30,46 +45,42 @@ export type TGetRemindersQueryParams = Partial<{
   state: TReminder["state"];
 }>;
 
-export type TGetRemindersResponsePayload = {
-  data: TReminder[];
-};
+export type TGetRemindersResponsePayload = TDataResponsePayload<TReminder[]>;
+
+export type TGetReminderRequestPayload = TReminder["id"];
+
+export type TGetReminderResponsePayload = TDataResponsePayload<TReminder>;
 
 export type TCreateReminderRequestPayload = Pick<TReminder, "title"> & Partial<{ groupId: TReminderGroup["id"] }>;
 
-export type TCreateReminderResponsePayload = {
-  data: TReminder;
-};
+export type TCreateReminderResponsePayload = TDataResponsePayload<TReminder>;
 
 export type TUpdateReminderRequestPayload = Pick<TReminder, "id"> &
   Partial<Pick<TReminder, "title" | "state" | "isPinned"> & { groupId: TReminderGroup["id"] }>;
 
-export type TUpdateReminderResponsePayload = {
-  data: TReminder;
-};
+export type TUpdateReminderResponsePayload = TDataResponsePayload<TReminder>;
 
 export type TDeleteReminderRequestPayload = TReminder["id"];
 
-export type TDeleteReminderResponsePayload = {};
+export type TDeleteReminderResponsePayload = TMessageResponsePaylaod;
 
 /**
  * Reminder Group
  */
-export type TGetReminderGroupsResponsePayload = {
-  data: TReminderGroup[];
-};
+export type TGetReminderGroupsResponsePayload = TDataResponsePayload<TReminderGroup[]>;
+
+export type TGetReminderGroupRequestPayload = TReminderGroup["id"];
+
+export type TGetReminderGroupResponsePayload = TDataResponsePayload<TReminderGroup>;
 
 export type TCreateReminderGroupRequestPayload = Pick<TReminderGroup, "name">;
 
-export type TCreateReminderGroupResponsePayload = {
-  data: TReminderGroup;
-};
+export type TCreateReminderGroupResponsePayload = TDataResponsePayload<TReminderGroup>;
 
 export type TUpdateReminderGroupRequestPayload = Pick<TReminderGroup, "id"> & Partial<Pick<TReminderGroup, "name">>;
 
-export type TUpdateReminderGroupResponsePayload = {
-  data: TReminderGroup;
-};
+export type TUpdateReminderGroupResponsePayload = TDataResponsePayload<TReminderGroup>;
 
 export type TDeleteReminderGroupRequestPayload = TReminderGroup["id"];
 
-export type TDeleteReminderGroupResponsePayload = {};
+export type TDeleteReminderGroupResponsePayload = TMessageResponsePaylaod;
