@@ -24,12 +24,11 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
         return appendQueryParams("/reminders", queryParams);
       },
       transformResponse: (response: TGetRemindersResponsePayload) => response.data,
-      providesTags: (result) =>
-        // is result available?
+      providesTags: (result, error, query) =>
         result
           ? // successful query
             [...result.map(({ id }) => ({ type: "Reminders", id }) as const), { type: "Reminders", id: "LIST" }]
-          : // an error occurred, but we still want to refetch this query when `{ type: 'Reminders', id: 'LIST' }` is invalidated
+          : // an error occurred,
             [{ type: "Reminders", id: "LIST" }],
     }),
     getReminder: builder.query<TReminder, TGetReminderRequestPayload>({
@@ -38,6 +37,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
       // result, error, request payload
       providesTags: (result, error, id) => [{ type: "Reminders", id }],
     }),
+    // rr
     createReminder: builder.mutation<TReminder, TCreateReminderRequestPayload>({
       query: (body) => ({
         url: "/reminders",
@@ -45,7 +45,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
         body,
       }),
       transformResponse: (response: TCreateReminderResponsePayload) => response.data,
-      invalidatesTags: [{ type: "Reminders", id: "LIST" }],
+      // invalidatesTags: [{ type: "Reminders", id: "LIST" }],
     }),
     updateReminder: builder.mutation<TReminder, TUpdateReminderRequestPayload>({
       query: ({ id, ...body }) => ({
@@ -56,7 +56,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: TCreateReminderResponsePayload) => response.data,
       // invalidates all queries that subscribe to this Reminders `id` only.
       // in this case, `getReminder` will be re-run. `getReminders` *might*  rerun, if this id was under its results.
-      invalidatesTags: (response, error, { id }) => [{ type: "Reminders", id }],
+      // invalidatesTags: (response, error, { id }) => [{ type: "Reminders", id }],
     }),
     deleteReminder: builder.mutation<TDeleteReminderResponsePayload, TDeleteReminderRequestPayload>({
       query: (id) => ({

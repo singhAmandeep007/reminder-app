@@ -1,6 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-import { selectQueryParams, selectReminderGroups, remindersApiSlice, reminderGroupsApiSlice } from "./reminders";
+import { selectQueryParams, remindersApiSlice, reminderGroupsApiSlice } from "./reminders";
 
 import { TAppDispatch, TRootState } from "./types";
 
@@ -15,9 +15,13 @@ export const useAppSelector: TypedUseSelectorHook<TRootState> = useSelector;
 
 export const useSelectQueryParams = () => useAppSelector(selectQueryParams);
 
-export const useSelectReminderGroups = () => useAppSelector(selectReminderGroups());
-
 export const { useGetRemindersQuery, useCreateReminderMutation, useUpdateReminderMutation, useDeleteReminderMutation } =
   remindersApiSlice;
 
-export const { useGetReminderGroupQuery, useGetReminderGroupsQuery } = reminderGroupsApiSlice;
+export const {
+  useGetReminderGroupQuery,
+  useGetReminderGroupsQuery,
+  useCreateReminderGroupMutation,
+  useDeleteReminderGroupMutation,
+  useUpdateReminderGroupMutation,
+} = reminderGroupsApiSlice;

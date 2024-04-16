@@ -4,7 +4,15 @@ import { TReminderGroup } from "types";
 
 import { Typography } from "components";
 
-import { useAppDispatch, setQueryParams, useAppSelector, selectQueryParams, cn } from "shared";
+import {
+  useAppDispatch,
+  setQueryParams,
+  useAppSelector,
+  selectQueryParams,
+  cn,
+  useDeleteReminderGroupMutation,
+  handleAsync,
+} from "shared";
 
 import { DeleteButton } from "./components";
 
@@ -17,6 +25,8 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
 
   const { groupId } = useAppSelector(selectQueryParams);
 
+  const [deleteReminderGroup, result] = useDeleteReminderGroupMutation();
+
   const isSelected = groupId === reminderGroup?.id;
 
   const className = cn("py-2 flex items-center justify-between cursor-pointer gap-2");
@@ -28,6 +38,17 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
       dispatch(setQueryParams(queryParams));
     },
     [dispatch]
+  );
+
+  const handleOnDelete = useCallback(
+    async (id: Parameters<typeof deleteReminderGroup>[0]) => {
+      const { data } = await handleAsync(() => deleteReminderGroup(id));
+
+      if (data && isSelected) {
+        dispatch(setQueryParams({ groupId: undefined }));
+      }
+    },
+    [deleteReminderGroup, dispatch, isSelected]
   );
 
   if (!reminderGroup) {
@@ -60,7 +81,11 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
         {reminderGroup.name}
       </Typography>
 
-      <DeleteButton data-testid={`delete-reminder-group-item-${reminderGroup.id}`} />
+      <DeleteButton
+        data-testid={`delete-reminder-group-item-${reminderGroup.id}`}
+        onClick={() => handleOnDelete(reminderGroup.id)}
+        disabled={result.isLoading}
+      />
     </div>
   );
 };

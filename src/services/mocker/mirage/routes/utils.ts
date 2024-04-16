@@ -1,3 +1,5 @@
+import { Response } from "miragejs";
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const urlPrefix = (path: string) => {
@@ -11,3 +13,6 @@ export const urlPrefix = (path: string) => {
   }
   return `${apiUrl}${path}`;
 };
+
+export const resourceNotFoundResponse = (resourceName?: string) =>
+  new Response(404, {}, { message: `Resource ${resourceName} not found!` });

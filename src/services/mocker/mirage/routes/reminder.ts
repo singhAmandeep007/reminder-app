@@ -1,8 +1,6 @@
-import { Response } from "miragejs";
-
 import { TAppMockServer } from "../types";
 
-import { urlPrefix } from "./utils";
+import { urlPrefix, resourceNotFoundResponse } from "./utils";
 
 export function reminderRoutes(this: TAppMockServer) {
   this.get(urlPrefix("/reminders"), (schema, request) => {
@@ -11,6 +9,12 @@ export function reminderRoutes(this: TAppMockServer) {
     // queryParams = { groupId: "group-id-1" }
 
     if (queryParams) {
+      if (queryParams.groupId) {
+        const reminderGroup = schema.find("reminderGroup", queryParams.groupId as string);
+        if (reminderGroup === null) {
+          return resourceNotFoundResponse("Reminder group " + queryParams.groupId);
+        }
+      }
       reminders = schema.where("reminder", queryParams);
     } else {
       reminders = schema.all("reminder");
@@ -18,16 +22,6 @@ export function reminderRoutes(this: TAppMockServer) {
 
     return {
       data: reminders.models.map((reminder) => reminder.getAttributes()),
-    };
-  });
-
-  this.post(urlPrefix("/reminders"), (schema, request) => {
-    const attrs = JSON.parse(request.requestBody);
-
-    const reminder = schema.create("reminder", attrs);
-
-    return {
-      data: reminder.attrs,
     };
   });
 
@@ -40,11 +34,21 @@ export function reminderRoutes(this: TAppMockServer) {
 
     reminder?.destroy();
 
+    if (reminder === null) {
+      return resourceNotFoundResponse("Reminder " + id);
+    }
+
     // NOTE: use Response class to return a custom response
-    return new Response(
-      reminder === null ? 404 : 200,
-      {},
-      { message: reminder === null ? `Reminder with id ${id} not found!` : `Reminder with id ${id} deleted!` }
-    );
+    return { message: `Reminder with id ${id} deleted!` };
+  });
+
+  this.post(urlPrefix("/reminders"), (schema, request) => {
+    const attrs = JSON.parse(request.requestBody);
+
+    const reminder = schema.create("reminder", attrs);
+
+    return {
+      data: reminder.attrs,
+    };
   });
 }

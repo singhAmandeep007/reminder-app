@@ -19,14 +19,13 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
       query: () => "/reminder-groups",
       transformResponse: (response: TGetReminderGroupsResponsePayload) => response.data,
       providesTags: (result) =>
-        // is result available?
         result
           ? // successful query
             [
               ...result.map(({ id }) => ({ type: "ReminderGroups", id }) as const),
               { type: "ReminderGroups", id: "LIST" },
             ]
-          : // an error occurred, but we still want to refetch this query when `{ type: 'ReminderGroups', id: 'LIST' }` is invalidated
+          : // an error occurred,
             [{ type: "ReminderGroups", id: "LIST" }],
     }),
     getReminderGroup: builder.query<TReminderGroup, TGetReminderGroupRequestPayload>({
@@ -34,6 +33,18 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: TGetReminderGroupResponsePayload) => response.data,
       providesTags: (result, error, id) => [{ type: "ReminderGroups", id }],
     }),
+    deleteReminderGroup: builder.mutation<TDeleteReminderGroupResponsePayload, TDeleteReminderGroupRequestPayload>({
+      query: (id) => ({
+        url: `/reminder-groups/${id}`,
+        method: "DELETE",
+      }),
+      // FIX: invalidates getReminders query having deleted id as argument. No better way to prevent auto refetching of it
+      invalidatesTags: (result, error, id) => [
+        { type: "ReminderGroups", id: "LIST" },
+        { type: "Reminders", id: "LIST" },
+      ],
+    }),
+    // rr
     createReminderGroup: builder.mutation<TReminderGroup, TCreateReminderGroupRequestPayload>({
       query: (body) => ({
         url: "/reminder-groups",
@@ -41,7 +52,7 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
         body,
       }),
       transformResponse: (response: TCreateReminderGroupResponsePayload) => response.data,
-      invalidatesTags: [{ type: "ReminderGroups", id: "LIST" }],
+      // invalidatesTags: [{ type: "ReminderGroups", id: "LIST" }],
     }),
     updateReminderGroup: builder.mutation<TReminderGroup, TUpdateReminderGroupRequestPayload>({
       query: ({ id, ...body }) => ({
@@ -50,14 +61,10 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
         body,
       }),
       transformResponse: (response: TUpdateReminderGroupResponsePayload) => response.data,
-      invalidatesTags: (response, error, { id }) => [{ type: "ReminderGroups", id }],
-    }),
-    deleteReminderGroup: builder.mutation<TDeleteReminderGroupResponsePayload, TDeleteReminderGroupRequestPayload>({
-      query: (id) => ({
-        url: `/reminder-groups/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: (result, error, id) => [{ type: "ReminderGroups", id }],
+      // invalidatesTags: (response, error, { id }) => [
+      //   { type: "ReminderGroups", id },
+      //   { type: "Reminders", id: "LIST" },
+      // ],
     }),
   }),
 });

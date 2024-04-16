@@ -1,14 +1,27 @@
-import { Response } from "miragejs";
-
 import { TAppMockServer } from "../types";
 
-import { urlPrefix } from "./utils";
+import { urlPrefix, resourceNotFoundResponse } from "./utils";
 
 export function reminderGroupRoutes(this: TAppMockServer) {
-  this.get(urlPrefix("/reminder-groups"), (schema, request) => {
+  this.get(urlPrefix("/reminder-groups"), (schema) => {
     const reminderGroups = schema.all("reminderGroup").models;
+
     return {
       data: reminderGroups,
+    };
+  });
+
+  this.get(urlPrefix("/reminder-groups/:id"), (schema, request) => {
+    const id = request.params.id;
+
+    const reminderGroup = schema.find("reminderGroup", id);
+
+    if (reminderGroup === null) {
+      return resourceNotFoundResponse("Reminder group " + id);
+    }
+
+    return {
+      data: reminderGroup,
     };
   });
 
@@ -17,15 +30,19 @@ export function reminderGroupRoutes(this: TAppMockServer) {
 
     const reminderGroup = schema.find("reminderGroup", id);
 
+    if (reminderGroup === null) {
+      return resourceNotFoundResponse("Reminder group " + id);
+    }
+
+    // @ts-expect-error
+    const reminders = schema.all("reminder").filter((reminder) => reminder.groupId === id);
+
+    reminders?.destroy();
+
     reminderGroup?.destroy();
 
-    return new Response(
-      reminderGroup === null ? 404 : 200,
-      {},
-      {
-        message:
-          reminderGroup === null ? `Reminder group with id ${id} not found!` : `Reminder group with id ${id} deleted!`,
-      }
-    );
+    return {
+      message: `Reminder group with id ${id} deleted!`,
+    };
   });
 }
