@@ -32,8 +32,7 @@ module.exports = {
     // Enables recommended settings in [eslint-plugin-testing-library](https://www.npmjs.com/package/eslint-plugin-testing-library)
     // "plugin:testing-library/react",
 
-    // "plugin:storybook/recommended",
-
+    "plugin:storybook/recommended",
     "prettier",
   ],
 
