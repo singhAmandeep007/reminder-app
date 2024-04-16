@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktodo_app=self.webpackChunktodo_app||[]).push([[245],{5245:(o,t,a)=>{a.r(t),a.d(t,{resourceNotFoundResponse:()=>c,urlPrefix:()=>s});var e=a(1266);const r="https://todo-app.com/api/v1/",s=o=>{if("/"!==o[0])throw new Error("Miragejs handler path should start with a forward slash.");return"/"===r[27]?"".concat(r).concat(o.slice(1)):"".concat(r).concat(o)},c=o=>new e.YK(404,{},{message:"Resource ".concat(o," not found!")})}}]);
+//# sourceMappingURL=245.4bd1c3f3.chunk.js.map
