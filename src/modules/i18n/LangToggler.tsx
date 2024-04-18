@@ -61,7 +61,7 @@ export function LangToggler() {
       )}
       itemRenderer={(item) => {
         return (
-          <div className="my-1 px-3 py-1">
+          <div className="flex  cursor-pointer rounded-md px-4 py-2  hover:bg-secondary-foreground hover:text-accent">
             <span>{item.label}</span>
           </div>
         );

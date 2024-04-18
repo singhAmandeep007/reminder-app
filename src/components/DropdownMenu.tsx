@@ -57,7 +57,7 @@ export const DropdownMenu = <T,>({
   return (
     <div
       ref={dropdownRef}
-      className="relative"
+      className="relative inline-block"
     >
       <Triggerer
         aria-label="Toggle dropdown"
@@ -67,19 +67,17 @@ export const DropdownMenu = <T,>({
       {isOpen && (
         <div
           aria-label="Dropdown menu"
-          className={cn(
-            "absolute z-10 max-h-52 w-max overflow-y-auto  rounded-md border bg-secondary ring-offset-background ",
-            {
-              "right-0 top-full mt-2": position === "bottom-right",
-              "left-0 top-full mt-2": position === "bottom-left",
-              "bottom-full right-0 mb-2": position === "top-right",
-              "bottom-full left-0 mb-2": position === "top-left",
-            }
-          )}
+          className={cn("absolute z-10 max-h-52 w-max overflow-y-auto  rounded-md border bg-secondary", {
+            "right-0 top-full mt-2": position === "bottom-right",
+            "left-0 top-full mt-2": position === "bottom-left",
+            "bottom-full right-0 mb-2": position === "top-right",
+            "bottom-full left-0 mb-2": position === "top-left",
+          })}
         >
           <ul
             role="menu"
             aria-orientation="vertical"
+            className="p-2 py-2"
           >
             {data?.map((item) => (
               <li
