@@ -33,7 +33,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
 
   const titleClassName = cn("text-nowrap overflow-x-scroll py-2", isSelected && "text-primary");
 
-  const handleOnClick = useCallback(
+  const handleOnItemClick = useCallback(
     (queryParams: Parameters<typeof setQueryParams>[0]) => {
       dispatch(setQueryParams(queryParams));
     },
@@ -42,13 +42,9 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
 
   const handleOnDelete = useCallback(
     async (id: Parameters<typeof deleteReminderGroup>[0]) => {
-      const { data } = await handleAsync(() => deleteReminderGroup(id));
-
-      if (data && isSelected) {
-        dispatch(setQueryParams({ groupId: undefined }));
-      }
+      await handleAsync(() => deleteReminderGroup(id));
     },
-    [deleteReminderGroup, dispatch, isSelected]
+    [deleteReminderGroup]
   );
 
   if (!reminderGroup) {
@@ -56,7 +52,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
       <div
         className={className}
         data-testid="reminder-group-item-all"
-        onClick={() => handleOnClick({ groupId: undefined })}
+        onClick={() => handleOnItemClick({ groupId: undefined })}
       >
         <Typography
           variant={"p"}
@@ -76,7 +72,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
       <Typography
         variant={"p"}
         className={titleClassName}
-        onClick={() => handleOnClick({ groupId: reminderGroup.id })}
+        onClick={() => handleOnItemClick({ groupId: reminderGroup.id })}
       >
         {reminderGroup.name}
       </Typography>

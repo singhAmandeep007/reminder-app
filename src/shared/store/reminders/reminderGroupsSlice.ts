@@ -13,6 +13,10 @@ import {
 
 import { apiSlice } from "../apiSlice";
 
+import { TRootState } from "../types";
+
+import { setQueryParams } from "./remindersSlice";
+
 export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getReminderGroups: builder.query<TReminderGroup[], void>({
@@ -38,11 +42,17 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
         url: `/reminder-groups/${id}`,
         method: "DELETE",
       }),
-      // FIX: invalidates getReminders query having deleted id as argument. No better way to prevent auto refetching of it
       invalidatesTags: (result, error, id) => [
         { type: "ReminderGroups", id: "LIST" },
         { type: "Reminders", id: "LIST" },
       ],
+      onQueryStarted(id, { dispatch, getState }) {
+        const selectedGroupId = (getState() as TRootState)["reminders"]["queryParams"]["groupId"];
+
+        if (selectedGroupId === id) {
+          dispatch(setQueryParams({ groupId: undefined }));
+        }
+      },
     }),
     // rr
     createReminderGroup: builder.mutation<TReminderGroup, TCreateReminderGroupRequestPayload>({
