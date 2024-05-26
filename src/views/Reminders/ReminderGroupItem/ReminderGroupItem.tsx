@@ -1,10 +1,10 @@
-import { FC, PropsWithChildren, useCallback, useMemo, useRef, useState } from "react";
+import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
 
-import { ChevronDown, ChevronUp, Pencil, Trash, Check, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil, Trash } from "lucide-react";
 
 import { TReminderGroup } from "types";
 
-import { Button, Typography, DropdownMenu, Input } from "components";
+import { Button, Typography, DropdownMenu } from "components";
 
 import {
   useAppDispatch,
@@ -13,9 +13,10 @@ import {
   selectQueryParams,
   cn,
   useDeleteReminderGroupMutation,
-  useUpdateReminderGroupMutation,
   handleAsync,
 } from "shared";
+
+import { useCreateUpdateItem } from "../useCreateUpdateItem";
 
 import { IconButton } from "../components";
 
@@ -26,13 +27,21 @@ export type TReminderGroupItemProps = {
 export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> = ({ reminderGroup }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
   const [deleteReminderGroup, deleteReminderGroupResult] = useDeleteReminderGroupMutation();
-  const [updateReminderGroup, updateReminderGroupResult] = useUpdateReminderGroupMutation();
   const { groupId } = useAppSelector(selectQueryParams);
   const isSelected = groupId === reminderGroup?.id;
+
+  const { ItemComponent, result: updateReminderGroupResult } = useCreateUpdateItem({
+    type: "reminderGroup",
+    mode: "update",
+    ...(reminderGroup ? { id: reminderGroup.id } : {}),
+    onCancel: () => setIsEditing(false),
+    onSave: () => setIsEditing(false),
+    value: reminderGroup?.name,
+  });
+
   const isMenuDisabled = deleteReminderGroupResult.isLoading || updateReminderGroupResult.isLoading;
 
   const className = cn("py-2 flex items-center justify-between cursor-pointer gap-2");
@@ -52,34 +61,9 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
     [deleteReminderGroup]
   );
 
-  const handleOnEdit = useCallback(
-    async (payload: Parameters<typeof updateReminderGroup>[0]) => {
-      await handleAsync(() => updateReminderGroup(payload));
-      setIsEditing(false);
-    },
-    [updateReminderGroup]
-  );
-
   const renderItem = useMemo(() => {
     if (reminderGroup && isEditing) {
-      return (
-        <div className="flex flex-1 items-center justify-between">
-          <Input
-            className="ml-1 mr-2"
-            defaultValue={reminderGroup.name}
-            ref={inputRef}
-            autoFocus
-          />
-          <div className="flex items-center gap-1">
-            <IconButton onClick={() => handleOnEdit({ id: reminderGroup.id, name: inputRef.current!.value })}>
-              <Check className="icon" />
-            </IconButton>
-            <IconButton onClick={() => setIsEditing(false)}>
-              <X className="icon text-destructive" />
-            </IconButton>
-          </div>
-        </div>
-      );
+      return <ItemComponent />;
     }
 
     return (
@@ -91,7 +75,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
         {reminderGroup ? reminderGroup.name : "All"}
       </Typography>
     );
-  }, [reminderGroup, isEditing, isSelected, handleOnItemClick, handleOnEdit]);
+  }, [isSelected, handleOnItemClick, isEditing, ItemComponent, reminderGroup]);
 
   return (
     <div

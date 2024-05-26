@@ -59,6 +59,7 @@ export const DropdownMenu = <T,>({
   useEffect(() => {
     const { current } = dropdownRef;
     if (current !== null) {
+      current.focus();
       current.scrollIntoView({ behavior: "smooth" });
     }
   });

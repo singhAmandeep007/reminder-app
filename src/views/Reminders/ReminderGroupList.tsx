@@ -4,7 +4,7 @@ import { useGetReminderGroupsQuery } from "shared";
 
 import { ReminderGroupItem } from "./ReminderGroupItem";
 import { AddButton } from "./components";
-import { useAddItem } from "./useAddItem";
+import { useCreateUpdateItem } from "./useCreateUpdateItem";
 
 export type TReminderGroupListProps = Record<string, never>;
 
@@ -13,8 +13,9 @@ export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> =
 
   const [isCreating, setIsCreating] = useState(false);
 
-  const { AddItemComponent } = useAddItem({
+  const { ItemComponent } = useCreateUpdateItem({
     type: "reminderGroup",
+    mode: "create",
     onCancel: () => setIsCreating(false),
     onSave: () => setIsCreating(false),
   });
@@ -47,7 +48,7 @@ export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> =
         </ul>
       </div>
 
-      {isCreating && <AddItemComponent />}
+      {isCreating && <ItemComponent />}
     </div>
   );
 };

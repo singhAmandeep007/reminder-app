@@ -7,6 +7,7 @@ import {
   TCreateReminderResponsePayload,
   TCreateReminderRequestPayload,
   TUpdateReminderRequestPayload,
+  TUpdateReminderResponsePayload,
   TDeleteReminderRequestPayload,
   TDeleteReminderResponsePayload,
   TGetReminderRequestPayload,
@@ -37,7 +38,6 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
       // result, error, request payload
       providesTags: (result, error, id) => [{ type: "Reminders", id }],
     }),
-    // rr
     createReminder: builder.mutation<TReminder, TCreateReminderRequestPayload>({
       query: (body) => ({
         url: "/reminders",
@@ -45,7 +45,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
         body,
       }),
       transformResponse: (response: TCreateReminderResponsePayload) => response.data,
-      // invalidatesTags: [{ type: "Reminders", id: "LIST" }],
+      invalidatesTags: (result, error) => [{ type: "Reminders", id: "LIST" }],
     }),
     updateReminder: builder.mutation<TReminder, TUpdateReminderRequestPayload>({
       query: ({ id, ...body }) => ({
@@ -53,10 +53,10 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      transformResponse: (response: TCreateReminderResponsePayload) => response.data,
+      transformResponse: (response: TUpdateReminderResponsePayload) => response.data,
       // invalidates all queries that subscribe to this Reminders `id` only.
       // in this case, `getReminder` will be re-run. `getReminders` *might*  rerun, if this id was under its results.
-      // invalidatesTags: (response, error, { id }) => [{ type: "Reminders", id }],
+      invalidatesTags: (response, error, { id }) => [{ type: "Reminders", id }],
     }),
     deleteReminder: builder.mutation<TDeleteReminderResponsePayload, TDeleteReminderRequestPayload>({
       query: (id) => ({
