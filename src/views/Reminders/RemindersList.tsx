@@ -7,6 +7,7 @@ import { Button, Typography } from "components";
 import { useGetRemindersQuery, useSelectQueryParams, useGetReminderGroupQuery } from "shared";
 
 import { ReminderItem } from "./ReminderItem";
+import { AddButton } from "./components";
 
 export type TRemindersListProps = Record<string, never>;
 
@@ -41,8 +42,11 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
               onClick={refetch}
             />
           </Button>
+
+          <AddButton size={"icon"} />
         </div>
       </div>
+
       {reminders && (
         <div className="flex-1 overflow-scroll">
           <ul className="divide divide-y">

@@ -1,29 +1,36 @@
-import { FC, PropsWithChildren } from "react";
-
-import { Plus } from "lucide-react";
+import { FC, PropsWithChildren, useState } from "react";
 
 import { useGetReminderGroupsQuery } from "shared";
 
-import { Button } from "components";
-
 import { ReminderGroupItem } from "./ReminderGroupItem";
+import { AddButton } from "./components";
+import { useAddItem } from "./useAddItem";
 
 export type TReminderGroupListProps = Record<string, never>;
 
 export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> = () => {
   const { data: reminderGroups } = useGetReminderGroupsQuery();
 
+  const [isCreating, setIsCreating] = useState(false);
+
+  const { AddItemComponent } = useAddItem({
+    type: "reminderGroup",
+    onCancel: () => setIsCreating(false),
+    onSave: () => setIsCreating(false),
+  });
+
   return (
-    <div className="flex min-w-[200px] flex-1 flex-col overflow-hidden bg-secondary p-4">
+    <div className="flex min-w-[200px] flex-1 flex-col overflow-hidden p-4">
       <div className="mb-2 mt-1 flex justify-center">
-        <Button
-          className="gap-1 border border-accent-dark hover:bg-accent-dark hover:text-primary"
-          variant={"ghost"}
+        <AddButton
+          size={"full"}
+          onClick={() => setIsCreating((isCreating) => !isCreating)}
+          disabled={isCreating}
         >
-          <Plus className="icon" />
-          Add list
-        </Button>
+          Add List
+        </AddButton>
       </div>
+
       <div className="flex-1 overflow-scroll">
         <ul className="divide divide-y divide-accent-dark">
           <li key="all">
@@ -39,6 +46,8 @@ export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> =
             })}
         </ul>
       </div>
+
+      {isCreating && <AddItemComponent />}
     </div>
   );
 };

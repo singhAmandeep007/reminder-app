@@ -16,7 +16,8 @@ type TDropdownProps<T> = {
   selectedId?: string;
   onSelect?: (item: TDropdownItem<T>) => void;
   triggerer: React.JSXElementConstructor<React.HTMLAttributes<HTMLElement>>;
-  itemRenderer: (item: TDropdownItem<T>) => React.ReactNode;
+  itemRenderer: (item: TDropdownItem<T & { isSelected: boolean }>) => React.ReactNode;
+  className?: string;
 };
 
 export const DropdownMenu = <T,>({
@@ -28,6 +29,7 @@ export const DropdownMenu = <T,>({
   onSelect,
   triggerer: Triggerer,
   itemRenderer,
+  className,
 }: TDropdownProps<T>) => {
   const [selectedItem, setSelectedItem] = useState<TDropdownItem<T> | undefined>(
     selectedId ? data.find((item) => item.id === selectedId) : undefined
@@ -54,40 +56,50 @@ export const DropdownMenu = <T,>({
     handler: () => onToggle(false),
   });
 
+  useEffect(() => {
+    const { current } = dropdownRef;
+    if (current !== null) {
+      current.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+
   return (
     <div
       ref={dropdownRef}
-      className="relative inline-block"
+      className="relative inline-block "
     >
       <Triggerer
         aria-label="Toggle dropdown"
         aria-haspopup="true"
         aria-expanded={isOpen}
+        onClick={() => onToggle(!isOpen)}
       />
       {isOpen && (
         <div
           aria-label="Dropdown menu"
-          className={cn("absolute z-10 max-h-52 w-max overflow-y-auto  rounded-md border bg-secondary", {
-            "right-0 top-full mt-2": position === "bottom-right",
-            "left-0 top-full mt-2": position === "bottom-left",
-            "bottom-full right-0 mb-2": position === "top-right",
-            "bottom-full left-0 mb-2": position === "top-left",
-          })}
+          className={cn(
+            "absolute z-10 max-h-52 w-max overflow-y-auto  rounded-md border bg-secondary",
+            {
+              "right-0 top-full mt-2": position === "bottom-right",
+              "left-0 top-full mt-2": position === "bottom-left",
+              "bottom-full right-0 mb-2": position === "top-right",
+              "bottom-full left-0 mb-2": position === "top-left",
+            },
+            className
+          )}
         >
           <ul
             role="menu"
             aria-orientation="vertical"
-            className="p-2 py-2"
+            className="p-2 py-2 "
           >
             {data?.map((item) => (
               <li
                 key={item.id}
                 onClick={() => handleItemChange(item)}
-                className={cn("cursor-pointer", {
-                  "text-primary": selectedItem?.id === item.id,
-                })}
+                className={"mb-2 cursor-pointer last:mb-0"}
               >
-                {itemRenderer(item)}
+                {itemRenderer({ ...item, isSelected: selectedItem?.id === item.id })}
               </li>
             ))}
           </ul>

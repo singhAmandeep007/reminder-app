@@ -52,17 +52,18 @@ export function LangToggler() {
         <Button
           variant="outline"
           size="icon"
-          onClick={() => setIsOpen((prev) => !prev)}
           {...props}
         >
           <Languages className="icon" />
           <span className="sr-only">{t("iconLabel")}</span>
         </Button>
       )}
-      itemRenderer={(item) => {
+      itemRenderer={({ label, isSelected }) => {
         return (
-          <div className="flex  cursor-pointer rounded-md px-4 py-2  hover:bg-secondary-foreground hover:text-accent">
-            <span>{item.label}</span>
+          <div
+            className={`flex cursor-pointer rounded-md px-3 py-1.5  hover:bg-secondary-foreground hover:text-accent ${isSelected ? "text-primary" : ""}`}
+          >
+            <span>{label}</span>
           </div>
         );
       }}

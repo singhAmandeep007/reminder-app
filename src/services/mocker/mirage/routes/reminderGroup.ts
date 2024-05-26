@@ -45,4 +45,31 @@ export function reminderGroupRoutes(this: TAppMockServer) {
       message: `Reminder group with id ${id} deleted!`,
     };
   });
+
+  this.patch(urlPrefix("/reminder-groups/:id"), (schema, request) => {
+    const id = request.params.id;
+    const attrs = JSON.parse(request.requestBody);
+
+    const reminderGroup = schema.find("reminderGroup", id);
+
+    if (reminderGroup === null) {
+      return resourceNotFoundResponse("Reminder group " + id);
+    }
+
+    reminderGroup.update(attrs);
+
+    return {
+      data: reminderGroup,
+    };
+  });
+
+  this.post(urlPrefix("/reminder-groups"), (schema, request) => {
+    const attrs = JSON.parse(request.requestBody);
+
+    const reminderGroup = schema.create("reminderGroup", attrs);
+
+    return {
+      data: reminderGroup,
+    };
+  });
 }

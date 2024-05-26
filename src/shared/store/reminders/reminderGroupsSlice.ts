@@ -42,27 +42,18 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
         url: `/reminder-groups/${id}`,
         method: "DELETE",
       }),
+      // causes a re-fetch of the list of reminder groups and reminders
       invalidatesTags: (result, error, id) => [
         { type: "ReminderGroups", id: "LIST" },
         { type: "Reminders", id: "LIST" },
       ],
       onQueryStarted(id, { dispatch, getState }) {
         const selectedGroupId = (getState() as TRootState)["reminders"]["queryParams"]["groupId"];
-
+        // if the reminder group which is being deleted is equal to current selected reminder group, unset the selected reminder group in store
         if (selectedGroupId === id) {
           dispatch(setQueryParams({ groupId: undefined }));
         }
       },
-    }),
-    // rr
-    createReminderGroup: builder.mutation<TReminderGroup, TCreateReminderGroupRequestPayload>({
-      query: (body) => ({
-        url: "/reminder-groups",
-        method: "POST",
-        body,
-      }),
-      transformResponse: (response: TCreateReminderGroupResponsePayload) => response.data,
-      // invalidatesTags: [{ type: "ReminderGroups", id: "LIST" }],
     }),
     updateReminderGroup: builder.mutation<TReminderGroup, TUpdateReminderGroupRequestPayload>({
       query: ({ id, ...body }) => ({
@@ -71,10 +62,16 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
         body,
       }),
       transformResponse: (response: TUpdateReminderGroupResponsePayload) => response.data,
-      // invalidatesTags: (response, error, { id }) => [
-      //   { type: "ReminderGroups", id },
-      //   { type: "Reminders", id: "LIST" },
-      // ],
+      invalidatesTags: (response, error, { id }) => [{ type: "ReminderGroups", id }],
+    }),
+    createReminderGroup: builder.mutation<TReminderGroup, TCreateReminderGroupRequestPayload>({
+      query: (body) => ({
+        url: "/reminder-groups",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: TCreateReminderGroupResponsePayload) => response.data,
+      invalidatesTags: [{ type: "ReminderGroups", id: "LIST" }],
     }),
   }),
 });

@@ -17,7 +17,7 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
   const { isBelowMd } = useBreakpoint("md");
 
   return (
-    <div className="mx-auto h-full max-w-screen-md p-8">
+    <div className="mx-auto h-full max-w-screen-md p-2 md:p-8">
       <div className="flex h-full flex-col rounded border-2 border-primary shadow-lg lg:h-3/4">
         <nav className="flex h-[--navbar-height] border-b-2 border-primary">
           <ul className="flex flex-1 items-center justify-between px-4">
@@ -47,18 +47,11 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
           <PanelResizeHandle className="group">
             <div
               className={cn(
-                "flex h-full w-8 items-center border-primary bg-secondary",
-                isBelowMd ? "h-8 w-full border-b-2" : "border-r-2"
+                "flex h-full w-full items-center border-primary group-hover:bg-secondary group-hover:text-primary",
+                isBelowMd ? "border-b-2" : "border-r-2"
               )}
             >
-              <span
-                className={cn(
-                  "mx-auto rounded group-hover:bg-primary group-hover:text-secondary",
-                  isBelowMd ? "px-1" : "py-1"
-                )}
-              >
-                {isBelowMd ? <EllipsisIcon className="icon" /> : <EllipsisVertical className={"icon"} />}
-              </span>
+              {isBelowMd ? <EllipsisIcon className="icon mx-auto" /> : <EllipsisVertical className="icon mx-auto" />}
             </div>
           </PanelResizeHandle>
 

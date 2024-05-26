@@ -17,7 +17,7 @@ export const reminder: ModelDefinition<TModelReminder> = Model.extend({
     // NOTE: this.attrs is the object that contains the attributes of the model.
     // NOTE: this.fks is array of foreign keys of the model.
     const { groupId, ...reminderAttributes } = (this as any).attrs;
-
+    // NOTE: populate the group attribute if the reminder is associated with a group.
     if (groupId) {
       reminderAttributes.group = (this as any).group.attrs;
     }
