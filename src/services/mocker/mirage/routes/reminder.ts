@@ -60,4 +60,21 @@ export function reminderRoutes(this: TAppMockServer) {
       data: reminder.attrs,
     };
   });
+
+  this.patch(urlPrefix("/reminders/:id"), (schema, request) => {
+    const id = request.params.id;
+    const attrs = JSON.parse(request.requestBody);
+
+    const reminder = schema.find("reminder", id);
+
+    if (reminder === null) {
+      return resourceNotFoundResponse("Reminder " + id);
+    }
+
+    reminder.update(attrs);
+
+    return {
+      data: reminder,
+    };
+  });
 }
