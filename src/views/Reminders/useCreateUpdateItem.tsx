@@ -22,6 +22,7 @@ export type TUseCreateUpdateItemProps = {
   value?: string;
   mode: "create" | "update";
   id?: TReminder["id"] | TReminderGroup["id"];
+  groupId?: TReminderGroup["id"];
 };
 
 export const useCreateUpdateItem = (props: TUseCreateUpdateItemProps) => {
@@ -35,7 +36,7 @@ export const useCreateUpdateItem = (props: TUseCreateUpdateItemProps) => {
   const [updateReminderGroup, updateReminderGroupResult] = useUpdateReminderGroupMutation();
 
   const handleOnSave = useCallback(async () => {
-    const { mode, type, onSave, id } = props;
+    const { mode, type, onSave, id, groupId } = props;
     if (type === "reminder") {
       if (mode === "update") {
         if (!id) {
@@ -44,7 +45,7 @@ export const useCreateUpdateItem = (props: TUseCreateUpdateItemProps) => {
         await handleAsync(() => updateReminder({ id, title: inputRef.current!.value }));
       }
       if (mode === "create") {
-        await handleAsync(() => createReminder({ title: inputRef.current!.value }));
+        await handleAsync(() => createReminder({ title: inputRef.current!.value, groupId }));
       }
     }
     if (type === "reminderGroup") {

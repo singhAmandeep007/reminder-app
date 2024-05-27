@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 
 import { RefreshCcw } from "lucide-react";
 
@@ -8,6 +8,7 @@ import { useGetRemindersQuery, useSelectQueryParams, useGetReminderGroupQuery } 
 
 import { ReminderItem } from "./ReminderItem";
 import { AddButton } from "./components";
+import { useCreateUpdateItem } from "./useCreateUpdateItem";
 
 export type TRemindersListProps = Record<string, never>;
 
@@ -18,6 +19,16 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
 
   const { currentData: reminderGroup } = useGetReminderGroupQuery(queryParams.groupId as string, {
     skip: !queryParams.groupId,
+  });
+
+  const [isCreating, setIsCreating] = useState(false);
+
+  const { ItemComponent } = useCreateUpdateItem({
+    type: "reminder",
+    mode: "create",
+    onCancel: () => setIsCreating(false),
+    onSave: () => setIsCreating(false),
+    groupId: reminderGroup?.id,
   });
 
   return (
@@ -43,7 +54,11 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
             />
           </Button>
 
-          <AddButton size={"icon"} />
+          <AddButton
+            size={"icon"}
+            onClick={() => setIsCreating((isCreating) => !isCreating)}
+            disabled={isCreating}
+          />
         </div>
       </div>
 
@@ -60,6 +75,8 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
           </ul>
         </div>
       )}
+
+      {isCreating && <ItemComponent />}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import * as factories from "./factories";
 import { buildScenarios } from "./scenarios";
 
 import { TAppMockServer } from "./types";
+import { IdentityManager } from "./identityManager";
 
 export type TRunMirageServerConfig = {
   environment?: string;
@@ -19,6 +20,9 @@ export function runServer(config: TRunMirageServerConfig = {}): TAppMockServer {
     environment: config?.environment || "development",
     models,
     factories,
+    identityManagers: {
+      application: IdentityManager,
+    },
     // mirage's seeds are loaded on initialization
     seeds(server) {
       buildScenarios(server).withReminders(30).withReminderGroups({ remindersPerGroup: 10 });

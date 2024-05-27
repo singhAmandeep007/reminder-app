@@ -1,3 +1,5 @@
+import { TReminderGroup } from "types";
+
 import { TAppMockServer } from "../types";
 
 import { urlPrefix, resourceNotFoundResponse } from "./utils";
@@ -66,7 +68,12 @@ export function reminderGroupRoutes(this: TAppMockServer) {
   this.post(urlPrefix("/reminder-groups"), (schema, request) => {
     const attrs = JSON.parse(request.requestBody);
 
-    const reminderGroup = schema.create("reminderGroup", attrs);
+    const defaultAttr: Partial<TReminderGroup> = {
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const reminderGroup = schema.create("reminderGroup", Object.assign(defaultAttr, attrs));
 
     return {
       data: reminderGroup,

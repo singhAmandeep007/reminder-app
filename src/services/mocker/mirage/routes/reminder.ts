@@ -1,3 +1,5 @@
+import { TReminder } from "types";
+
 import { TAppMockServer } from "../types";
 
 import { urlPrefix, resourceNotFoundResponse } from "./utils";
@@ -45,7 +47,14 @@ export function reminderRoutes(this: TAppMockServer) {
   this.post(urlPrefix("/reminders"), (schema, request) => {
     const attrs = JSON.parse(request.requestBody);
 
-    const reminder = schema.create("reminder", attrs);
+    const defaultAttr: Partial<TReminder> = {
+      isPinned: false,
+      state: "ACTIVE",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const reminder = schema.create("reminder", Object.assign(defaultAttr, attrs));
 
     return {
       data: reminder.attrs,
