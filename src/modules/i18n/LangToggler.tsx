@@ -1,24 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Languages } from "lucide-react";
 
 import { useTranslation } from "react-i18next";
 
-import { Button, DropdownMenu } from "components";
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components";
 
-import { LANGS_MAP, TLangsValues } from "./consts";
-
-const data = Object.values(LANGS_MAP).reduce(
-  (acc, { label, value }) => {
-    return [
-      ...acc,
-      {
-        id: value,
-        label,
-      },
-    ];
-  },
-  [] as { id: TLangsValues; label: string }[]
-);
+import { LANGS_VALUES, TLangsValues } from "./consts";
 
 export function LangToggler() {
   const { t, i18n } = useTranslation("common", { keyPrefix: "lang" });
@@ -36,37 +23,35 @@ export function LangToggler() {
     changeLanguage(currentLang).catch(console.error);
   }, [currentLang, i18n]);
 
-  const onSelect = useCallback((item: (typeof data)[number]) => {
-    setCurrentLang(item.id);
-  }, []);
-
   return (
     <DropdownMenu
-      isOpen={isOpen}
-      onToggle={setIsOpen}
-      position="bottom-right"
-      data={data}
-      onSelect={onSelect}
-      selectedId={currentLang}
-      triggerer={(props) => (
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           size="icon"
-          {...props}
         >
           <Languages className="icon" />
           <span className="sr-only">{t("iconLabel")}</span>
         </Button>
-      )}
-      itemRenderer={({ label, isSelected }) => {
-        return (
-          <div
-            className={`flex cursor-pointer rounded-md px-3 py-1.5  hover:bg-secondary-foreground hover:text-accent ${isSelected ? "text-primary" : ""}`}
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        align="end"
+        onInteractOutside={() => setIsOpen(false)}
+      >
+        {LANGS_VALUES.map((lang) => (
+          <DropdownMenuItem
+            key={lang}
+            onClick={() => setCurrentLang(lang)}
+            className={lang === currentLang ? "text-primary" : ""}
           >
-            <span>{label}</span>
-          </div>
-        );
-      }}
-    />
+            {t(lang)}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

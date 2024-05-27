@@ -1,24 +1,16 @@
 import { FC, PropsWithChildren, useState } from "react";
 
-import { useGetReminderGroupsQuery } from "shared";
+import { ReminderGroupItem } from "../ReminderGroupItem";
+import { AddButton, AddUpdateItem } from "../components";
 
-import { ReminderGroupItem } from "./ReminderGroupItem";
-import { AddButton } from "./components";
-import { useCreateUpdateItem } from "./useCreateUpdateItem";
+import { useReminderGroupsList } from "./useReminderGroupsList";
 
-export type TReminderGroupListProps = Record<string, never>;
+export type TReminderGroupsListProps = Record<string, never>;
 
-export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> = () => {
-  const { data: reminderGroups } = useGetReminderGroupsQuery();
-
+export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>> = () => {
   const [isCreating, setIsCreating] = useState(false);
 
-  const { ItemComponent } = useCreateUpdateItem({
-    type: "reminderGroup",
-    mode: "create",
-    onCancel: () => setIsCreating(false),
-    onSave: () => setIsCreating(false),
-  });
+  const { handleOnSave, reminderGroups } = useReminderGroupsList();
 
   return (
     <div className="flex min-w-[200px] flex-1 flex-col overflow-hidden p-4">
@@ -48,7 +40,19 @@ export const ReminderGroupList: FC<PropsWithChildren<TReminderGroupListProps>> =
         </ul>
       </div>
 
-      {isCreating && <ItemComponent />}
+      {isCreating && (
+        <AddUpdateItem
+          onCancel={() => setIsCreating(false)}
+          onSave={(name) => {
+            handleOnSave({ name: name });
+            setIsCreating(false);
+          }}
+          testIds={{
+            cancel: `reminder-group-item-create-cancel`,
+            save: `reminder-group-item-create-save`,
+          }}
+        />
+      )}
     </div>
   );
 };

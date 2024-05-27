@@ -1,103 +1,118 @@
-import { FC, PropsWithChildren, useCallback, useState } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 
 import { ChevronDown, ChevronUp, Pencil, Trash } from "lucide-react";
 
-import { TReminder } from "types";
-import { Typography, DropdownMenu, Button } from "components";
+import { TReminder, REMINDER_STATE } from "types";
 
-import { handleAsync, useDeleteReminderMutation } from "shared";
+import {
+  Button,
+  Checkbox,
+  Typography,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "components";
 
-import { IconButton } from "../components";
+import { cn } from "shared";
 
-import { useCreateUpdateItem } from "../useCreateUpdateItem";
+import { AddUpdateItem } from "../components";
+
+import { useReminderItem } from "./useReminderItem";
 
 export type TReminderItemProps = {
   reminder: TReminder;
 };
 
 export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ reminder }) => {
-  const [deleteReminder, deleteReminderResult] = useDeleteReminderMutation();
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const { ItemComponent, result: updateReminderResult } = useCreateUpdateItem({
-    type: "reminder",
-    mode: "update",
-    id: reminder.id,
-    onCancel: () => setIsEditing(false),
-    onSave: () => setIsEditing(false),
-    value: reminder.title,
+  const { handleOnDelete, handleOnUpdate, isLoading } = useReminderItem({
+    reminder,
   });
 
-  const handleOnDelete = useCallback(
-    async (id: Parameters<typeof deleteReminder>[0]) => {
-      await handleAsync(() => deleteReminder(id));
-    },
-    [deleteReminder]
-  );
-
-  const isMenuDisabled = deleteReminderResult.isLoading || updateReminderResult.isLoading;
+  const isMenuDisabled = isLoading;
 
   return (
     <div
-      className="flex items-center justify-between gap-2 py-2"
+      className="flex items-center justify-between gap-2  py-2"
       data-testid={`reminder-item-${reminder.id}`}
     >
-      {isEditing ? (
-        <ItemComponent className="flex-1" />
+      {isUpdating ? (
+        <AddUpdateItem
+          className="flex-1"
+          defaultValue={reminder.title}
+          onCancel={() => setIsUpdating(false)}
+          onSave={(title) => {
+            handleOnUpdate({ id: reminder.id, title });
+            setIsUpdating(false);
+          }}
+          testIds={{
+            cancel: `reminder-item-update-cancel-${reminder.id}`,
+            save: `reminder-item-update-save-${reminder.id}`,
+          }}
+        />
       ) : (
-        <Typography
-          variant={"p"}
-          className="overflow-x-scroll text-nowrap py-2"
-        >
-          {reminder.title}
-        </Typography>
+        <>
+          <Checkbox
+            checked={reminder.state === REMINDER_STATE.COMPLETED}
+            className="peer"
+          />
+          <Typography
+            variant={"p"}
+            affects={"withoutPMargin"}
+            className={cn("flex-1 overflow-x-scroll text-nowrap py-2 peer-aria-[checked=true]:line-through")}
+          >
+            {reminder.title}
+          </Typography>
+        </>
       )}
 
-      {!isEditing && (
+      {!isUpdating && (
         <DropdownMenu
-          data={[
-            {
-              id: "edit",
-              component: () => (
-                <IconButton
-                  data-testid={`reminder-item-edit-${reminder.id}`}
-                  onClick={() => setIsEditing(true)}
-                >
-                  <Pencil className="icon" />
-                </IconButton>
-              ),
-            },
-            {
-              id: "delete",
-              component: () => (
-                <IconButton
-                  data-testid={`reminder-item-delete-${reminder.id}`}
-                  onClick={() => handleOnDelete(reminder.id)}
-                  className="hover:text-destructive"
-                >
-                  <Trash className="icon" />
-                </IconButton>
-              ),
-            },
-          ]}
-          triggerer={(props) => (
+          open={isDropdownOpen}
+          onOpenChange={setIsDropdownOpen}
+        >
+          <DropdownMenuTrigger asChild>
             <Button
-              variant="secondary"
+              variant="outline"
               size="icon"
               data-testid={`reminder-item-menu-${reminder.id}`}
               disabled={isMenuDisabled}
-              {...props}
             >
               {isDropdownOpen ? <ChevronUp className="icon" /> : <ChevronDown className="icon" />}
             </Button>
-          )}
-          isOpen={isDropdownOpen}
-          onToggle={setIsDropdownOpen}
-          itemRenderer={(item) => item.component()}
-          position="bottom-right"
-        />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="min-w-min"
+            align="end"
+            onInteractOutside={() => setIsDropdownOpen(false)}
+          >
+            <DropdownMenuItem
+              data-testid={`reminder-item-edit-${reminder.id}`}
+              onClick={() => setIsUpdating(true)}
+              className="group"
+            >
+              <Pencil
+                size={20}
+                className="group-hover:text-primary"
+              />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              data-testid={`reminder-item-delete-${reminder.id}`}
+              onClick={() => handleOnDelete(reminder.id)}
+              className="group"
+            >
+              <Trash
+                size={20}
+                className="group-hover:text-destructive"
+              />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )}
     </div>
   );

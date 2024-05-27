@@ -9,7 +9,7 @@ import { Typography } from "components";
 
 import { RemindersList } from "./RemindersList";
 
-import { ReminderGroupList } from "./ReminderGroupList";
+import { ReminderGroupsList } from "./ReminderGroupsList";
 
 export type TRemindersProps = Record<string, never>;
 
@@ -41,7 +41,7 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
             maxSize={50}
             className="flex flex-col"
           >
-            <ReminderGroupList />
+            <ReminderGroupsList />
           </Panel>
 
           <PanelResizeHandle className="group">

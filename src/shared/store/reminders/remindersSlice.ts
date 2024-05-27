@@ -63,7 +63,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
         url: `/reminders/${id}`,
         method: "DELETE",
       }),
-      // Invalidates all queries that subscribe to this Reminders `id` only.
+      // invalidates all queries that subscribe to this Reminders `id` only.
       invalidatesTags: (result, error, id) => [{ type: "Reminders", id }],
     }),
   }),

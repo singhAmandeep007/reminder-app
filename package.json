@@ -14,12 +14,16 @@
     "task",
     "react",
     "jest",
-    "cypress"
+    "cypress",
+    "redux",
+    "redux-toolkit"
   ],
   "dependencies": {
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@reduxjs/toolkit": "^2.2.3",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "i18next": "^23.11.0",
     "i18next-browser-languagedetector": "^7.2.1",
     "lucide-react": "^0.365.0",
@@ -30,7 +34,8 @@
     "react-resizable-panels": "^2.0.16",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.22.3",
-    "tailwind-merge": "^2.2.2",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1"
   },
   "scripts": {

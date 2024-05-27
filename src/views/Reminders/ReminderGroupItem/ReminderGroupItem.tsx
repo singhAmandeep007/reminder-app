@@ -1,24 +1,24 @@
-import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { FC, PropsWithChildren, useMemo, useState } from "react";
 
 import { ChevronDown, ChevronUp, Pencil, Trash } from "lucide-react";
 
 import { TReminderGroup } from "types";
 
-import { Button, Typography, DropdownMenu } from "components";
-
 import {
-  useAppDispatch,
-  setQueryParams,
-  useAppSelector,
-  selectQueryParams,
-  cn,
-  useDeleteReminderGroupMutation,
-  handleAsync,
-} from "shared";
+  Button,
+  Typography,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "components";
 
-import { useCreateUpdateItem } from "../useCreateUpdateItem";
+import { cn } from "shared";
 
-import { IconButton } from "../components";
+import { AddUpdateItem } from "../components";
+
+import { useReminderGroupItem } from "./useReminderGroupItem";
 
 export type TReminderGroupItemProps = {
   reminderGroup?: TReminderGroup;
@@ -26,44 +26,31 @@ export type TReminderGroupItemProps = {
 
 export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> = ({ reminderGroup }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const dispatch = useAppDispatch();
-  const [deleteReminderGroup, deleteReminderGroupResult] = useDeleteReminderGroupMutation();
-  const { groupId } = useAppSelector(selectQueryParams);
-  const isSelected = groupId === reminderGroup?.id;
-
-  const { ItemComponent, result: updateReminderGroupResult } = useCreateUpdateItem({
-    type: "reminderGroup",
-    mode: "update",
-    ...(reminderGroup ? { id: reminderGroup.id } : {}),
-    onCancel: () => setIsEditing(false),
-    onSave: () => setIsEditing(false),
-    value: reminderGroup?.name,
+  const { handleOnDelete, handleOnItemClick, handleOnSave, isLoading, isSelected } = useReminderGroupItem({
+    reminderGroup,
   });
 
-  const isMenuDisabled = deleteReminderGroupResult.isLoading || updateReminderGroupResult.isLoading;
-
-  const className = cn("py-2 flex items-center justify-between cursor-pointer gap-2");
-
-  const handleOnItemClick = useCallback(
-    (queryParams: Parameters<typeof setQueryParams>[0]) => {
-      // update the query params value in store, causing a re-fetch of the reminders
-      dispatch(setQueryParams(queryParams));
-    },
-    [dispatch]
-  );
-
-  const handleOnDelete = useCallback(
-    async (id: Parameters<typeof deleteReminderGroup>[0]) => {
-      await handleAsync(() => deleteReminderGroup(id));
-    },
-    [deleteReminderGroup]
-  );
+  const isMenuDisabled = isLoading;
 
   const renderItem = useMemo(() => {
-    if (reminderGroup && isEditing) {
-      return <ItemComponent className="flex-1" />;
+    if (reminderGroup && isUpdating) {
+      return (
+        <AddUpdateItem
+          className="flex-1"
+          defaultValue={reminderGroup.name}
+          onCancel={() => setIsUpdating(false)}
+          onSave={(name) => {
+            handleOnSave({ id: reminderGroup.id, name });
+            setIsUpdating(false);
+          }}
+          testIds={{
+            cancel: `reminder-group-item-update-cancel-${reminderGroup.id}`,
+            save: `reminder-group-item-update-save-${reminderGroup.id}`,
+          }}
+        />
+      );
     }
 
     return (
@@ -75,58 +62,58 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
         {reminderGroup ? reminderGroup.name : "All"}
       </Typography>
     );
-  }, [isSelected, handleOnItemClick, isEditing, ItemComponent, reminderGroup]);
+  }, [isSelected, handleOnItemClick, isUpdating, reminderGroup, handleOnSave]);
 
   return (
     <div
-      className={`${className}`}
+      className={cn("flex cursor-pointer items-center justify-between gap-2 px-1 py-2")}
       data-testid={`reminder-group-item-${reminderGroup ? reminderGroup.id : "all"}`}
     >
       {renderItem}
 
-      {reminderGroup && !isEditing && (
+      {reminderGroup && !isUpdating && (
         <DropdownMenu
-          data={[
-            {
-              id: "edit",
-              component: () => (
-                <IconButton
-                  data-testid={`reminder-group-item-edit-${reminderGroup.id}`}
-                  onClick={() => setIsEditing(true)}
-                >
-                  <Pencil className="icon" />
-                </IconButton>
-              ),
-            },
-            {
-              id: "delete",
-              component: () => (
-                <IconButton
-                  data-testid={`reminder-group-item-delete-${reminderGroup.id}`}
-                  onClick={() => handleOnDelete(reminderGroup.id)}
-                  className="hover:text-destructive"
-                >
-                  <Trash className="icon" />
-                </IconButton>
-              ),
-            },
-          ]}
-          triggerer={(props) => (
+          open={isDropdownOpen}
+          onOpenChange={setIsDropdownOpen}
+        >
+          <DropdownMenuTrigger asChild>
             <Button
-              variant="secondary"
+              variant="outline"
               size="icon"
               data-testid={`reminder-group-item-menu-${reminderGroup.id}`}
               disabled={isMenuDisabled}
-              {...props}
             >
               {isDropdownOpen ? <ChevronUp className="icon" /> : <ChevronDown className="icon" />}
             </Button>
-          )}
-          isOpen={isDropdownOpen}
-          onToggle={setIsDropdownOpen}
-          itemRenderer={(item) => item.component()}
-          position="bottom-right"
-        />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            onInteractOutside={() => setIsDropdownOpen(false)}
+            className="min-w-min"
+          >
+            <DropdownMenuItem
+              onClick={() => setIsUpdating(true)}
+              data-testid={`reminder-group-item-update-${reminderGroup.id}`}
+              className="group"
+            >
+              <Pencil
+                size={20}
+                className="group-hover:text-primary"
+              />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => handleOnDelete(reminderGroup.id)}
+              data-testid={`reminder-group-item-delete-${reminderGroup.id}`}
+              className="group"
+            >
+              <Trash
+                size={20}
+                className="group-hover:text-destructive"
+              />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )}
     </div>
   );

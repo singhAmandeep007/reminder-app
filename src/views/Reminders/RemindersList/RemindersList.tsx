@@ -4,32 +4,17 @@ import { RefreshCcw } from "lucide-react";
 
 import { Button, Typography } from "components";
 
-import { useGetRemindersQuery, useSelectQueryParams, useGetReminderGroupQuery } from "shared";
+import { ReminderItem } from "../ReminderItem";
+import { AddButton, AddUpdateItem } from "../components";
 
-import { ReminderItem } from "./ReminderItem";
-import { AddButton } from "./components";
-import { useCreateUpdateItem } from "./useCreateUpdateItem";
+import { useRemindersList } from "./useRemindersList";
 
 export type TRemindersListProps = Record<string, never>;
 
 export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
-  const queryParams = useSelectQueryParams();
-
-  const { currentData: reminders, refetch } = useGetRemindersQuery(queryParams);
-
-  const { currentData: reminderGroup } = useGetReminderGroupQuery(queryParams.groupId as string, {
-    skip: !queryParams.groupId,
-  });
+  const { reminders, refetchReminders, reminderGroup, handleOnSave } = useRemindersList();
 
   const [isCreating, setIsCreating] = useState(false);
-
-  const { ItemComponent } = useCreateUpdateItem({
-    type: "reminder",
-    mode: "create",
-    onCancel: () => setIsCreating(false),
-    onSave: () => setIsCreating(false),
-    groupId: reminderGroup?.id,
-  });
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden p-4">
@@ -37,7 +22,7 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
         <Typography
           variant={"h4"}
           className="flex items-center justify-between overflow-x-scroll text-nowrap py-2 "
-          data-testid="active-list-title"
+          data-testid="reminder-list-title"
         >
           {reminderGroup?.name || "All"}
         </Typography>
@@ -46,11 +31,11 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
             size={"icon"}
             variant={"ghost"}
             className="hover:text-primary"
-            data-testid="refresh-reminder-list"
+            data-testid="reminder-list-refetch"
           >
             <RefreshCcw
               className="icon"
-              onClick={refetch}
+              onClick={refetchReminders}
             />
           </Button>
 
@@ -76,7 +61,19 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
         </div>
       )}
 
-      {isCreating && <ItemComponent />}
+      {isCreating && (
+        <AddUpdateItem
+          onCancel={() => setIsCreating(false)}
+          onSave={(title) => {
+            handleOnSave({ title: title, groupId: reminderGroup?.id });
+            setIsCreating(false);
+          }}
+          testIds={{
+            cancel: `reminder-item-create-cancel`,
+            save: `reminder-item-create-save`,
+          }}
+        />
+      )}
     </div>
   );
 };
