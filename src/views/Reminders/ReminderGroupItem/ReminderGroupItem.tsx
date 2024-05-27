@@ -63,7 +63,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
 
   const renderItem = useMemo(() => {
     if (reminderGroup && isEditing) {
-      return <ItemComponent />;
+      return <ItemComponent className="flex-1" />;
     }
 
     return (

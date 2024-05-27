@@ -9,6 +9,7 @@ import {
   handleAsync,
   useUpdateReminderGroupMutation,
   useUpdateReminderMutation,
+  cn,
 } from "shared";
 import { TReminder, TReminderGroup } from "types";
 
@@ -65,9 +66,9 @@ export const useCreateUpdateItem = (props: TUseCreateUpdateItemProps) => {
     onCancel?.();
   }, [onCancel]);
 
-  const ItemComponent = () => {
+  const ItemComponent = ({ className }: { className?: string }) => {
     return (
-      <div className="my-2 flex items-center justify-between">
+      <div className={cn("my-2 flex items-center justify-between", className)}>
         <Input
           className="ml-1 mr-2"
           defaultValue={value}
