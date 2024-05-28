@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useState } from "react";
 
-import { ChevronDown, ChevronUp, Pencil, Trash } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil, Trash, Pin } from "lucide-react";
 
 import { TReminder, REMINDER_STATE } from "types";
 
@@ -97,13 +97,34 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
             onInteractOutside={() => setIsDropdownOpen(false)}
           >
             <DropdownMenuItem
+              data-testid={`reminder-item-pin-${reminder.id}`}
+              onClick={() =>
+                handleOnUpdate({
+                  id: reminder.id,
+                  isPinned: !reminder.isPinned,
+                })
+              }
+              className={cn("group", {
+                "bg-primary text-secondary": reminder.isPinned,
+              })}
+            >
+              <Pin
+                size={20}
+                className={cn("group-hover:text-primary")}
+                role="button"
+              />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
               data-testid={`reminder-item-edit-${reminder.id}`}
               onClick={() => setIsUpdating(true)}
               className="group"
+              disabled={reminder.state === REMINDER_STATE.COMPLETED}
             >
               <Pencil
                 size={20}
                 className="group-hover:text-primary"
+                role="button"
               />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -115,6 +136,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
               <Trash
                 size={20}
                 className="group-hover:text-destructive"
+                role="button"
               />
             </DropdownMenuItem>
           </DropdownMenuContent>

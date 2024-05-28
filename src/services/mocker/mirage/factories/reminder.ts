@@ -13,7 +13,12 @@ export const reminder: FactoryDefinition<TAppModels["reminder"]> = Factory.exten
   title(n) {
     return `Reminder ${n}`;
   },
-  isPinned: false,
+  isPinned(n) {
+    if (n % 2 === 0) {
+      return true;
+    }
+    return false;
+  },
   state: "ACTIVE",
   createdAt() {
     return new Date().toISOString();

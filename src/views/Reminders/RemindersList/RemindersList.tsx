@@ -50,13 +50,18 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
       {reminders && (
         <div className="flex-1 overflow-scroll">
           <ul className="divide divide-y">
-            {reminders.map((reminder) => {
-              return (
-                <li key={reminder.id}>
-                  <ReminderItem reminder={reminder} />
-                </li>
-              );
-            })}
+            {reminders
+              ?.slice()
+              .sort((a, b) => {
+                return a.isPinned ? -1 : b.isPinned ? 1 : 0;
+              })
+              .map((reminder) => {
+                return (
+                  <li key={reminder.id}>
+                    <ReminderItem reminder={reminder} />
+                  </li>
+                );
+              })}
           </ul>
         </div>
       )}

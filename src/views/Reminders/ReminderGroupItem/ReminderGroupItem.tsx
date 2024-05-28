@@ -56,7 +56,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
     return (
       <Typography
         variant={"p"}
-        className={cn("overflow-x-scroll text-nowrap py-2", isSelected && "text-primary")}
+        className={cn("flex-1 cursor-pointer overflow-x-scroll text-nowrap py-2", isSelected && "text-primary")}
         onClick={() => handleOnItemClick({ groupId: reminderGroup ? reminderGroup.id : undefined })}
       >
         {reminderGroup ? reminderGroup.name : "All"}
@@ -99,6 +99,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
               <Pencil
                 size={20}
                 className="group-hover:text-primary"
+                role="button"
               />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -110,6 +111,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
               <Trash
                 size={20}
                 className="group-hover:text-destructive"
+                role="button"
               />
             </DropdownMenuItem>
           </DropdownMenuContent>

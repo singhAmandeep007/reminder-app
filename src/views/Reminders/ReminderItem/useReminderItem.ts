@@ -30,6 +30,7 @@ export const useReminderItem = ({ reminder }: TUseReminderItemProps) => {
           groupId: props.groupId,
           title: props.title,
           state: props.state,
+          isPinned: props.isPinned,
         })
       );
     },
