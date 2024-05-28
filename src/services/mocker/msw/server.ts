@@ -1,6 +1,10 @@
 import { setupWorker } from "msw/browser";
 
+import { db, buildScenarios } from "./controllers/db";
+
 import { handlers } from "./handlers";
+
+buildScenarios(db).withReminders(5).withReminderGroups({ remindersPerGroup: 2 });
 
 const worker = setupWorker(...handlers);
 

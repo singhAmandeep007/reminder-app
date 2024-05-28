@@ -25,8 +25,10 @@ export function merge<T extends object, U extends object[]>(target: T, ...source
 
 const generateUUID = function () {
   let counter = 0;
-  return function () {
+  return function ({ simple = false } = {}) {
     counter += 1;
+    if (simple) return counter.toString();
+
     return (
       "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxx".replace(/[xy]/g, function (c) {
         const r = (Math.random() * 16) | 0,

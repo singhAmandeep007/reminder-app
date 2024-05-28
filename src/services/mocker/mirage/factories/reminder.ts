@@ -2,7 +2,7 @@ import { Factory } from "miragejs";
 // eslint-disable-next-line import/no-unresolved
 import { FactoryDefinition } from "miragejs/-types";
 
-import { TReminder } from "types";
+import { TReminder, REMINDER_STATE } from "types";
 
 import { TAppModels } from "../types";
 
@@ -19,7 +19,7 @@ export const reminder: FactoryDefinition<TAppModels["reminder"]> = Factory.exten
     }
     return false;
   },
-  state: "ACTIVE",
+  state: REMINDER_STATE.ACTIVE,
   createdAt() {
     return new Date().toISOString();
   },
