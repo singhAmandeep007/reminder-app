@@ -59,6 +59,12 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
           <Checkbox
             checked={reminder.state === REMINDER_STATE.COMPLETED}
             className="peer"
+            onClick={() =>
+              handleOnUpdate({
+                id: reminder.id,
+                state: reminder.state === REMINDER_STATE.COMPLETED ? REMINDER_STATE.ACTIVE : REMINDER_STATE.COMPLETED,
+              })
+            }
           />
           <Typography
             variant={"p"}
