@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { uuid } from "shared";
 
 class IdentityManager {
   ids: Set<string>;
@@ -9,14 +9,14 @@ class IdentityManager {
 
   // Returns a new unused unique identifier.
   fetch() {
-    let uuid = uuidv4();
-    while (this.ids.has(uuid)) {
-      uuid = uuidv4();
+    let id = uuid();
+    while (this.ids.has(id)) {
+      id = uuid();
     }
 
-    this.ids.add(uuid);
+    this.ids.add(id);
 
-    return uuid;
+    return id;
   }
 
   // Registers an identifier as used. Must throw if identifier is already used.
