@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktodo_app=self.webpackChunktodo_app||[]).push([[636],{7636:(e,t,n)=>{n.r(t),n.d(t,{reminder:()=>d});const d=n(1266).$7.extend({id:e=>"reminder-id-".concat(e),title:e=>"Reminder ".concat(e),isPinned:e=>e%2===0,state:"ACTIVE",createdAt:()=>(new Date).toISOString(),updatedAt:()=>(new Date).toISOString()})}}]);
+//# sourceMappingURL=636.06880059.chunk.js.map
