@@ -1,0 +1,5 @@
+{
+  "temp-dir": "reports",
+  "report-dir": "reports/cypress/coverage",
+  "reporter": ["html", "json", "lcov"]
+}

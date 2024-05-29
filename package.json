@@ -45,7 +45,10 @@
     "build": "node scripts/build.js",
     "build:msw": "msw init ./build --no-save",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "test": "npm run tsc:check && node scripts/test.js --watchAll=false",
+    "TEST": "------------------------------------------------------------------------",
+    "test": "npm run cy:test && npm run test:unit",
+    "test:unit": "npm run tsc:check && node scripts/test.js --watchAll=false",
+    "test:unit-coverage": "npm run test:unit -- --coverage",
     "LINT": "------------------------------------------------------------------------",
     "lint": "run-s format:write lint:check:script format:check tsc:check",
     "lint:check:script": "eslint --config ./.eslintrc.js \"src/**/*.{js,jsx,ts,tsx}\" --report-unused-disable-directives --max-warnings 0",
@@ -73,15 +76,14 @@
     "CYPRESS": "-------------------------------------------------------------------------",
     "cy:open": "cypress open",
     "cy:test": "npm-run-all -n cy:clean --parallel -r start \"cy:run:report -- {@}\" --",
-    "cy:test:coverage": "npm-run-all -n cy:clean --parallel -r start \"cy:run:report -- --env coverage=true {@}\" --",
-    "cy:clean": "rm -rf ./cypress/reports ./cypress/screenshots ./cypress/videos ./coverage-reports .nyc_output",
+    "cy:clean": "rm -rf ./reports/cypress ./cypress/screenshots ./cypress/videos",
     "cy:run:report": "run-s -c \"cy:run -- {@}\" cy:report --",
     "cy:run": "NO_COLOR=1 cypress run",
     "cy:report": "run-s cy:report:combine:html cy:report:combine:xml",
     "cy:report:combine:html": "run-s cy:report:combine:json cy:report:generate:html",
-    "cy:report:combine:json": "mochawesome-merge cypress/reports/json/*.json > cypress/reports/json/combined-json-report.json",
-    "cy:report:generate:html": "marge cypress/reports/json/combined-json-report.json --no-showPassed --assetsDir cypress/reports/html -o cypress/reports/html -f combined-html-report -t \"Cypress HTML Report\"",
-    "cy:report:combine:xml": "jrm cypress/reports/xml/combined-xml-report.xml \"cypress/reports/xml/*.xml\""
+    "cy:report:combine:json": "mochawesome-merge reports/cypress/result/json/*.json > reports/cypress/result/json/combined-json-report.json",
+    "cy:report:generate:html": "marge reports/cypress/result/json/combined-json-report.json --no-showPassed --assetsDir reports/cypress/result/html -o reports/cypress/result/html -f combined-html-report -t \"Cypress HTML Report\"",
+    "cy:report:combine:xml": "jrm reports/cypress/result/xml/combined-xml-report.xml \"reports/cypress/result/xml/*.xml\""
   },
   "browserslist": {
     "production": [
@@ -94,18 +96,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          "istanbul"
-        ]
-      }
-    }
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -219,10 +209,5 @@
     "workerDirectory": [
       "public"
     ]
-  },
-  "nyc": {
-    "report-dir": "cypress-coverage",
-    "all": true,
-    "include": "./src/**/*.[jt]s?(x)"
   }
 }

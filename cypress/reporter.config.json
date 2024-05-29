@@ -1,7 +1,7 @@
 {
   "reporterEnabled": "mochawesome, mocha-junit-reporter",
   "mochawesomeReporterOptions": {
-    "reportDir": "cypress/reports/json",
+    "reportDir": "reports/cypress/result/json",
     "overwrite": false,
     "html": false,
     "json": true,
@@ -9,7 +9,7 @@
     "timestamp": "longDate"
   },
   "mochaJunitReporterReporterOptions": {
-    "mochaFile": "cypress/reports/xml/report-[hash].xml",
+    "mochaFile": "reports/cypress/result/xml/report-[hash].xml",
     "jenkinsMode": true,
     "rootSuiteTitle": "Cypress",
     "suiteTitleSeparatedBy": " › ",

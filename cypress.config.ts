@@ -23,14 +23,9 @@ export default defineConfig({
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/specs/**/*.cy.{js,jsx,ts,tsx}",
-    // env: {
-    //   codeCoverage: {
-    //     url: "http://localhost:3000/__coverage__"
-    //   }
-    // }
   },
   video: false,
   env: {
-    coverage: false,
+    coverage: true,
   },
 });
