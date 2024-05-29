@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreminder_app=self.webpackChunkreminder_app||[]).push([[245],{5245:(e,r,a)=>{a.r(r),a.d(r,{resourceNotFoundResponse:()=>o,urlPrefix:()=>c});var n=a(1266);const s="https://reminder-app.com/api/v1/",c=e=>{if("/"!==e[0])throw new Error("Miragejs handler path should start with a forward slash.");return"/"===s[31]?"".concat(s).concat(e.slice(1)):"".concat(s).concat(e)},o=e=>new n.YK(404,{},{message:"Resource ".concat(e," not found!")})}}]);
+//# sourceMappingURL=245.2295789c.chunk.js.map
