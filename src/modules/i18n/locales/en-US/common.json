@@ -7,7 +7,7 @@
   "app": {
     "author": "Amandeep Singh",
     "version": "1.0.0",
-    "description": "A Production-Grade reminder app",
+    "description": "A Production-Grade reminder app.",
     "appName": "Reminder App",
     "copyright": "Copyright © {{year}}"
   },

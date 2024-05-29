@@ -32,6 +32,7 @@ export function LangToggler() {
         <Button
           variant="outline"
           size="icon"
+          data-testid="lang-toggler"
         >
           <Languages className="icon" />
           <span className="sr-only">{t("iconLabel")}</span>
@@ -41,6 +42,7 @@ export function LangToggler() {
       <DropdownMenuContent
         align="end"
         onInteractOutside={() => setIsOpen(false)}
+        data-testid="lang-toggler-menu"
       >
         {LANGS_VALUES.map((lang) => (
           <DropdownMenuItem

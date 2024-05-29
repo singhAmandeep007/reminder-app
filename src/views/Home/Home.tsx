@@ -11,7 +11,7 @@ export const Home: FC<PropsWithChildren<THomeProps>> = () => {
   return (
     <div
       className="p-4"
-      data-testid="home-page"
+      data-testid="home"
     >
       <Typography>{t("reminderApp")}</Typography>
       <Typography variant={"p"}>{t("choosingTechStack")}</Typography>

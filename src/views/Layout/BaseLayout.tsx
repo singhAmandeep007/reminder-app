@@ -20,7 +20,10 @@ export const BaseLayout: FC<PropsWithChildren<TBaseLayoutProps>> = () => {
 
   return (
     <div>
-      <header className="h-[--navbar-height]">
+      <header
+        className="h-[--navbar-height]"
+        data-testid="header"
+      >
         <div className="flex h-full w-full items-center justify-between border-b-2 border-primary px-4">
           <div>
             <RouteLink to={ROUTE_BY_PATH.home}>
@@ -54,10 +57,16 @@ export const BaseLayout: FC<PropsWithChildren<TBaseLayoutProps>> = () => {
           </div>
         </div>
       </header>
-      <main className="h-[--content-height] overflow-x-auto">
+      <main
+        className="h-[--content-height] overflow-x-auto"
+        data-testid="content"
+      >
         <Outlet />
       </main>
-      <footer className="h-[--footer-height]">
+      <footer
+        className="h-[--footer-height]"
+        data-testid="footer"
+      >
         <div className="flex h-full w-full items-center justify-center border-t-2 border-primary">
           <Typography variant={"p"}>
             {t("app.copyright", {

@@ -17,7 +17,10 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
   const { isBelowMd } = useBreakpoint("md");
 
   return (
-    <div className="mx-auto h-full max-w-screen-md p-2 md:p-8">
+    <div
+      className="mx-auto h-full max-w-screen-md p-2 md:p-8"
+      data-testid="reminders"
+    >
       <div className="flex h-full flex-col rounded border-2 border-primary shadow-lg lg:h-3/4">
         <nav className="flex h-[--navbar-height] border-b-2 border-primary">
           <ul className="flex flex-1 items-center justify-between px-4">

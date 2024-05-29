@@ -96,5 +96,33 @@ module.exports = {
 
     "no-console": "warn",
   },
+  overrides: [
+    {
+      env: {
+        // enable Cypress global variables.
+        "cypress/globals": true,
+      },
+      files: ["./cypress/**/*.cy.{js,jsx,ts,tsx}"],
+      extends: ["plugin:cypress/recommended"],
+      plugins: ["cypress"],
+      rules: {
+        // disallow using `force: true` with action commands
+        "cypress/no-force": "warn",
+        // ensure screenshots are preceded by an assertion
+        "cypress/assertion-before-screenshot": "warn",
+        // only allow data-* attribute selectors
+        "cypress/require-data-selectors": "warn",
+        // disallow cy.pause() parent command
+        "cypress/no-pause": "error",
+      },
+    },
+    {
+      files: ["**/*.d.ts", "**/*-d.ts"],
+      rules: {
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/naming-convention": "off",
+      },
+    },
+  ],
   ignorePatterns: ["/build/", "/public/", "/node_modules/", ".eslintrc.js", "/config"],
 };
