@@ -48,7 +48,7 @@
     "TEST": "------------------------------------------------------------------------",
     "test": "npm run cy:test && npm run test:unit",
     "test:unit": "npm run tsc:check && node scripts/test.js --watchAll=false",
-    "test:unit-coverage": "npm run test:unit -- --coverage",
+    "test:unit:coverage": "npm run test:unit -- --coverage",
     "LINT": "------------------------------------------------------------------------",
     "lint": "run-s format:write lint:check:script format:check tsc:check",
     "lint:check:script": "eslint --config ./.eslintrc.js \"src/**/*.{js,jsx,ts,tsx}\" --report-unused-disable-directives --max-warnings 0",
