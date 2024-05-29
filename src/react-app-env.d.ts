@@ -6,7 +6,6 @@ import { TEnv } from "types";
 
 declare global {
   declare namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface ProcessEnv {
       readonly NODE_ENV: TEnv;
       readonly PUBLIC_URL: string;

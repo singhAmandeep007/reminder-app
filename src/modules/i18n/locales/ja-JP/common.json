@@ -7,8 +7,8 @@
   "app": {
     "author": "アマンディープ・シン",
     "version": "1.0.0",
-    "description": "シンプルなToDoアプリ",
-    "appName": "Todoアプリ",
+    "description": "プロダクショングレードのリマインダーアプリ",
+    "appName": "リマインダーアプリ",
     "copyright": "著作権© {{year}}"
   },
   "lang": {

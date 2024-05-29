@@ -9,7 +9,10 @@ export const Home: FC<PropsWithChildren<THomeProps>> = () => {
   const { t } = useTranslation("homePage");
 
   return (
-    <div className="p-4">
+    <div
+      className="p-4"
+      data-testid="home-page"
+    >
       <Typography>{t("reminderApp")}</Typography>
       <Typography variant={"p"}>{t("choosingTechStack")}</Typography>
 

@@ -7,8 +7,8 @@
   "app": {
     "author": "Amandeep Singh",
     "version": "1.0.0",
-    "description": "A simple todo app",
-    "appName": "Todo App",
+    "description": "A Production-Grade reminder app",
+    "appName": "Reminder App",
     "copyright": "Copyright © {{year}}"
   },
   "lang": {
