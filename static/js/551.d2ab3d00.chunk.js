@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkreminder_app=self.webpackChunkreminder_app||[]).push([[551],{5551:e=>{e.exports=JSON.parse('{"techStack":"\u6280\u8853\u30b9\u30bf\u30c3\u30af","folderStructure":"\u30d5\u30a9\u30eb\u30c0\u30fc\u69cb\u9020"}')}}]);

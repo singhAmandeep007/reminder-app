@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunktodo_app=self.webpackChunktodo_app||[]).push([[480],{2480:(t,r,e)=>{e.r(r),e.d(r,{reminder:()=>s});var p=e(1266);const s=p.Kx.extend({group:(0,p.g4)("reminderGroup"),getAttributes(){const{groupId:t,...r}=this.attrs;return t&&(r.group=this.group.attrs),r}})}}]);
-//# sourceMappingURL=480.306bcced.chunk.js.map

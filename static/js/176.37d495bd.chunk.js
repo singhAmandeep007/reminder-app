@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreminder_app=self.webpackChunkreminder_app||[]).push([[176],{1176:(r,a,t)=>{t.r(a),t.d(a,{urlPrefix:()=>e});const c="https://todo-app.com/api/v1/",e=r=>{if("/"!==r[0])throw new Error("MSW handler path should start with a forward slash.");return"/"===c[27]?"".concat(c).concat(r.slice(1)):"".concat(c).concat(r)}}}]);
+//# sourceMappingURL=176.37d495bd.chunk.js.map

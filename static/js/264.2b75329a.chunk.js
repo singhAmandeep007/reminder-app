@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunktodo_app=self.webpackChunktodo_app||[]).push([[264,480,393],{264:(r,e,t)=>{t.r(e),t.d(e,{reminder:()=>d.reminder,reminderGroup:()=>n.reminderGroup});var d=t(2480),n=t(9393)},2480:(r,e,t)=>{t.r(e),t.d(e,{reminder:()=>n});var d=t(1266);const n=d.Kx.extend({group:(0,d.g4)("reminderGroup"),getAttributes(){const{groupId:r,...e}=this.attrs;return r&&(e.group=this.group.attrs),e}})},9393:(r,e,t)=>{t.r(e),t.d(e,{reminderGroup:()=>d});const d=t(1266).Kx.extend({})}}]);
-//# sourceMappingURL=264.2b75329a.chunk.js.map
