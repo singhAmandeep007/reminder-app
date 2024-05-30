@@ -45,7 +45,6 @@ Cypress.Commands.addQuery("getByDataAttr", ({ value, attribute = "cy" }) => {
   const getFn = cy.now("get", `[data-${attribute}="${value}"]`);
   return (subject) => {
     if (typeof getFn === "function") {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return getFn(subject);
     }
   };

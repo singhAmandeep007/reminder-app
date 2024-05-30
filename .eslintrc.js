@@ -7,7 +7,6 @@ module.exports = {
   extends: [
     // https://github.com/facebook/create-react-app/blob/main/packages/eslint-config-react-app/README.md
     "react-app",
-    "react-app/jest",
     // NOTE: Enables ALL rules that are recommended. Uncomment to enable.
 
     // Enables few key rules in [ESLint](https://eslint.org/docs/rules/) rule book.
@@ -32,7 +31,7 @@ module.exports = {
     // Enables recommended settings in [eslint-plugin-testing-library](https://www.npmjs.com/package/eslint-plugin-testing-library)
     // "plugin:testing-library/react",
 
-    "plugin:storybook/recommended",
+    // "plugin:storybook/recommended",
     "prettier",
   ],
 
@@ -98,13 +97,20 @@ module.exports = {
   },
   overrides: [
     {
+      files: ["playwright/**/*.{spec,test}.{js,jsx,ts,tsx}"],
+      extends: "plugin:playwright/recommended",
+    },
+    {
+      files: ["src/**/*.{spec,test}.{js,jsx,ts,tsx}", "src/**/__tests__/**/*.{js,jsx,ts,tsx}"],
+      extends: ["react-app/jest", "plugin:testing-library/react"],
+    },
+    {
       env: {
         // enable Cypress global variables.
         "cypress/globals": true,
       },
-      files: ["./cypress/**/*.cy.{js,jsx,ts,tsx}"],
+      files: ["cypress/**/*.cy.{js,jsx,ts,tsx}"],
       extends: ["plugin:cypress/recommended"],
-      plugins: ["cypress"],
       rules: {
         // disallow using `force: true` with action commands
         "cypress/no-force": "warn",
@@ -124,5 +130,14 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ["/build/", "/public/", "/node_modules/", ".eslintrc.js", "/config"],
+  ignorePatterns: [
+    "/build/",
+    "/scripts",
+    "/public/",
+    "/node_modules/",
+    ".eslintrc.js",
+    "/config",
+    "/jest.config.js",
+    "/prettier.config.js",
+  ],
 };

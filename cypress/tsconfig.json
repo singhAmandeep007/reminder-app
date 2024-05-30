@@ -1,12 +1,9 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es2015", "dom"],
-    "baseUrl": "../node_modules",
     "types": ["node", "cypress", "@testing-library/cypress"],
-    "isolatedModules": false,
-    "allowJs": true,
-    "noEmit": true
+    // allow files without import or export statements
+    "isolatedModules": false
   },
   "include": ["./**/*.ts"]
 }

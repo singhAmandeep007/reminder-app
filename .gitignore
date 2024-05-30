@@ -6,8 +6,6 @@
 .pnp.js
 
 # testing
-/coverage
-/cypress/reports
 /reports
 
 # production
@@ -27,3 +25,8 @@ yarn-error.log*
 *storybook.log
 
 /src/stories
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
