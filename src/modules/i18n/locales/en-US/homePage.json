@@ -12,8 +12,8 @@
     "i18n",
     "TDD",
     "Cypress",
-    "mirage",
-    "msw"
+    "Mirage",
+    "Msw"
   ],
   "folderStructureCode": "<c> src <c/> <c> ├── app # app entry <c/> <c> ├── assets # assets for images <c/> <c> ├── components # reusable blocks <c/> <c> ├── hooks # reusable custom hooks <c/> <c> ├── modules # custom modules <c/> <c> ├── services # API handling <c/> <c> ├── shared # stuff shared across app <c/> <c> ├── types # typescript types <c/> <c> ├── views # presentation <c/> <c> └── index.tsx # entry point <c/>"
 }
