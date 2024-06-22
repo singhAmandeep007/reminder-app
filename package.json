@@ -83,7 +83,11 @@
     "cy:report:combine:html": "run-s cy:report:combine:json cy:report:generate:html",
     "cy:report:combine:json": "mochawesome-merge reports/cypress/result/json/*.json > reports/cypress/result/json/combined-json-report.json",
     "cy:report:generate:html": "marge reports/cypress/result/json/combined-json-report.json --no-showPassed --assetsDir reports/cypress/result/html -o reports/cypress/result/html -f combined-html-report -t \"Cypress HTML Report\"",
-    "cy:report:combine:xml": "jrm reports/cypress/result/xml/combined-xml-report.xml \"reports/cypress/result/xml/*.xml\""
+    "cy:report:combine:xml": "jrm reports/cypress/result/xml/combined-xml-report.xml \"reports/cypress/result/xml/*.xml\"",
+    "PLAYWRIGHT": "------------------------------------------------------------------------",
+    "pw:open": "playwright test --ui",
+    "pw:test": "playwright test",
+    "pw:report": "playwright show-report"
   },
   "browserslist": {
     "production": [
