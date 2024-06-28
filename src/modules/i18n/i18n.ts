@@ -6,7 +6,7 @@ import { merge } from "shared";
 
 import { DEFAULT_INIT_OPTION, TLangsValues, TNamespaces } from "./consts";
 
-class I18n {
+export class I18n {
   protected i18n: i18next.i18n;
 
   constructor() {

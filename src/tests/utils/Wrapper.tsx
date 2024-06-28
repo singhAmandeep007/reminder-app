@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import { setupStore, TRootState } from "shared";
 
-import { initI18n } from "./initI18n";
+import { initTestI18n } from "./initTestI18n";
 
 type TProvider<T = any> = {
   Provider: FC<PropsWithChildren<T>>;
@@ -41,7 +41,7 @@ export const Wrapper: FC<PropsWithChildren<TWrapperProps>> = ({
   const providers: TProvider[] = [];
 
   if (config?.withI18n) {
-    initI18n();
+    initTestI18n();
   }
 
   if (config?.withStore) {

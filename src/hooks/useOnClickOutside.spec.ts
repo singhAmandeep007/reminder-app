@@ -1,6 +1,8 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 
-import { default as userEvent } from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
+
+import { renderHook } from "tests/utils";
 
 import { useOutsideClick } from "./useOnClickOutside";
 describe("useOnClickOutside", () => {

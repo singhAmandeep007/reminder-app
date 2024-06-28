@@ -1,6 +1,6 @@
-import { renderHook } from "@testing-library/react";
-
 import { useMediaQuery } from "react-responsive";
+
+import { renderHook } from "tests/utils";
 
 import { useBreakpoint } from "./useBreakpoint";
 

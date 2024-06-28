@@ -8,7 +8,7 @@ export type TRenderHookProps<Props> = TWrapperProps & RenderHookOptions<Props>;
 
 export const renderHook = <Props, Result>(
   render: (initialProps: Props) => Result,
-  { config, ...options }: TRenderHookProps<Props>
+  { config, ...options }: TRenderHookProps<Props> = {}
 ) => {
   const OuterWrapper = (props: { children: ReactNode }) => {
     const { children } = props;
