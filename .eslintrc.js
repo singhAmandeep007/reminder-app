@@ -77,6 +77,8 @@ module.exports = {
 
     "import/no-duplicates": "error",
 
+    "import/no-named-as-default": "off",
+
     // READ-MORE: https://typescript-eslint.io/rules/consistent-type-definitions
     "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
     // typeAlias selectors should start with prefix T

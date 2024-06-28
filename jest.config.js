@@ -1,9 +1,9 @@
 module.exports = {
-  roots: ["<rootDir>/src"],
+  roots: ["<rootDir>/src", "<rootDir>/__mocks__"],
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts", "!src/{services,modules,types}/**/*"],
 
   setupFiles: ["react-app-polyfill/jsdom"],
-  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
+  setupFilesAfterEnv: ["<rootDir>/src/tests/jest.setupAfterEnv.ts"],
   testMatch: ["<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}", "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"],
   testEnvironment: "jsdom",
   transform: {

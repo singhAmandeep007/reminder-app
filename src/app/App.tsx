@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from "react";
 
 import { Provider } from "react-redux";
 
-import { store } from "shared";
+import { setupStore } from "shared";
 
 import { ThemeProvider } from "modules/theme";
 
@@ -12,7 +12,7 @@ export type TAppProps = Record<string, never>;
 
 export const App: FC<PropsWithChildren<TAppProps>> = () => {
   return (
-    <Provider store={store}>
+    <Provider store={setupStore()}>
       <ThemeProvider>
         <Router />
       </ThemeProvider>

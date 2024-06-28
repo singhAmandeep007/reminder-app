@@ -28,11 +28,13 @@ export function LangToggler() {
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        asChild
+        data-testid="lang-toggler"
+      >
         <Button
           variant="outline"
           size="icon"
-          data-testid="lang-toggler"
         >
           <Languages className="icon" />
           <span className="sr-only">{t("iconLabel")}</span>

@@ -4,7 +4,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { EllipsisVertical, EllipsisIcon } from "lucide-react";
 
 import { useBreakpoint } from "hooks";
-import { cn } from "shared";
+import { cn, BREAKPOINTS } from "shared";
 import { Typography } from "components";
 
 import { RemindersList } from "./RemindersList";
@@ -14,7 +14,7 @@ import { ReminderGroupsList } from "./ReminderGroupsList";
 export type TRemindersProps = Record<string, never>;
 
 export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
-  const { isBelowMd } = useBreakpoint("md");
+  const { isBelowMd } = useBreakpoint<keyof typeof BREAKPOINTS>("md", BREAKPOINTS);
 
   return (
     <div
