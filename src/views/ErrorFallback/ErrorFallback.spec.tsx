@@ -2,11 +2,12 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 
-import { render } from "tests/utils";
+import { render, mockLocation } from "tests/utils";
 
 import { ErrorFallback, TErrorFallbackProps } from "./ErrorFallback";
 
 jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
   useRouteError: jest.fn(),
   isRouteErrorResponse: jest.fn(),
 }));
@@ -14,6 +15,8 @@ jest.mock("react-router-dom", () => ({
 describe("ErrorFallback", () => {
   const setup = (props: TErrorFallbackProps & { error?: any } = {}) => {
     (useRouteError as jest.Mock).mockReturnValue(props.error);
+
+    mockLocation({ href: "" });
 
     return {
       result: render(<ErrorFallback {...props} />),
@@ -66,13 +69,6 @@ describe("ErrorFallback", () => {
   });
 
   test("reload button redirects to home page", async () => {
-    Object.defineProperty(window, "location", {
-      value: {
-        href: "",
-      },
-      writable: true,
-    });
-
     setup();
 
     const reloadButton = screen.getByText("Reload App");

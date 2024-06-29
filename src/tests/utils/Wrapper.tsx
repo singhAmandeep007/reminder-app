@@ -1,8 +1,11 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 
 import { Provider } from "react-redux";
+import { MemoryRouter } from "react-router-dom";
 
 import { setupStore, TRootState } from "shared";
+
+import { ThemeProvider } from "modules/theme";
 
 import { initTestI18n } from "./initTestI18n";
 
@@ -48,6 +51,9 @@ export const Wrapper: FC<PropsWithChildren<TWrapperProps>> = ({
     const store = setupStore(config?.preloadedState);
     providers.push({ Provider, props: { store } });
   }
+
+  providers.push({ Provider: ThemeProvider, props: {} });
+  providers.push({ Provider: MemoryRouter, props: { initialEntries: ["/"] } });
 
   return addProviders(providers, children);
 };
