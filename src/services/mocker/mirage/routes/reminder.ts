@@ -49,7 +49,7 @@ export function reminderRoutes(this: TAppMockServer) {
 
     const defaultAttr: Partial<TReminder> = {
       isPinned: false,
-      state: REMINDER_STATE.ACTIVE,
+      state: REMINDER_STATE.INACTIVE,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

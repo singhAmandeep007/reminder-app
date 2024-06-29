@@ -62,7 +62,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
             onClick={() =>
               handleOnUpdate({
                 id: reminder.id,
-                state: reminder.state === REMINDER_STATE.COMPLETED ? REMINDER_STATE.ACTIVE : REMINDER_STATE.COMPLETED,
+                state: reminder.state === REMINDER_STATE.COMPLETED ? REMINDER_STATE.INACTIVE : REMINDER_STATE.COMPLETED,
               })
             }
           />

@@ -22,8 +22,7 @@ export const getReminders = http.get(urlPrefix("/reminders"), ({ request }) => {
 
   const searchParams = getUrlSearchParams(request.url);
 
-  // REFACTOR: structuredClone not required
-  let data = structuredClone(reminders) as TReminder[];
+  let data: TReminder[] = reminders;
 
   if (searchParams["groupId"]) {
     data = data.filter((reminder) => reminder?.group?.id === searchParams["groupId"]);

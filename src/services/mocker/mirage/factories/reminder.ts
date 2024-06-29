@@ -19,7 +19,7 @@ export const reminder: FactoryDefinition<TAppModels["reminder"]> = Factory.exten
     }
     return false;
   },
-  state: REMINDER_STATE.ACTIVE,
+  state: REMINDER_STATE.INACTIVE,
   createdAt() {
     return new Date().toISOString();
   },

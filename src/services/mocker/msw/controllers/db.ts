@@ -12,7 +12,7 @@ export const db = factory({
     },
 
     isPinned: () => false,
-    state: () => REMINDER_STATE.ACTIVE,
+    state: () => REMINDER_STATE.INACTIVE,
     group: oneOf("reminderGroup"),
     createdAt: () => new Date().toISOString(),
     updatedAt: () => new Date().toISOString(),

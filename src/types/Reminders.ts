@@ -1,6 +1,8 @@
 export const REMINDER_STATE = {
-  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+  INPROGRESS: "INPROGRESS",
   COMPLETED: "COMPLETED",
+  ARCHIVED: "ARCHIVED",
 } as const;
 
 export type TReminderState = (typeof REMINDER_STATE)[keyof typeof REMINDER_STATE];
@@ -8,10 +10,27 @@ export type TReminderState = (typeof REMINDER_STATE)[keyof typeof REMINDER_STATE
 export type TReminder = {
   id: string;
   title: string;
+  /**
+   * Current state of the reminder.
+   *
+   * @example "IN_ACTIVE" | "IN_PROGRESS" | "COMPLETED"
+   */
   state: TReminderState;
+  /**
+   * Indicates if the reminder is pinned on top.
+   */
   isPinned: boolean;
+  /**
+   * Date and time the reminder was created. (ISO 8601 format)
+   */
   createdAt: string;
+  /**
+   * Date and time the reminder was last updated. (ISO 8601 format)
+   */
   updatedAt: string;
+  /**
+   * Optional reminder group this reminder belongs to.
+   */
   group?: TReminderGroup;
 };
 
