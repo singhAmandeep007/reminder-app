@@ -18,7 +18,7 @@ export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
 
   return (
     <div
-      className="mx-auto h-full max-w-screen-md p-2 md:p-8"
+      className="mx-auto h-full max-w-screen-lg p-2 md:p-8"
       data-testid="reminders"
     >
       <div className="flex h-full flex-col rounded border-2 border-primary shadow-lg lg:h-3/4">

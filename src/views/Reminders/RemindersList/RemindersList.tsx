@@ -58,7 +58,10 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
               .map((reminder) => {
                 return (
                   <li key={reminder.id}>
-                    <ReminderItem reminder={reminder} />
+                    <ReminderItem
+                      reminder={reminder}
+                      listName={reminderGroup?.name}
+                    />
                   </li>
                 );
               })}

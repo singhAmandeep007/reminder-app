@@ -32,6 +32,12 @@ export type TReminder = {
    * Optional reminder group this reminder belongs to.
    */
   group?: TReminderGroup;
+  /**
+   * Optional due date and time for the reminder. (ISO 8601 format)
+   *
+   * @example "2021-09-30T00:00:00.000Z"
+   */
+  dueDate?: string | null;
 };
 
 export type TReminderGroup = {
@@ -75,7 +81,7 @@ export type TCreateReminderRequestPayload = Pick<TReminder, "title"> & Partial<{
 export type TCreateReminderResponsePayload = TDataResponsePayload<TReminder>;
 
 export type TUpdateReminderRequestPayload = Pick<TReminder, "id"> &
-  Partial<Pick<TReminder, "title" | "state" | "isPinned"> & { groupId: TReminderGroup["id"] }>;
+  Partial<Pick<TReminder, "title" | "state" | "isPinned" | "dueDate"> & { groupId: TReminderGroup["id"] }>;
 
 export type TUpdateReminderResponsePayload = TDataResponsePayload<TReminder>;
 

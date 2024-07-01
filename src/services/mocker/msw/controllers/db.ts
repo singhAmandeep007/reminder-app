@@ -1,4 +1,4 @@
-import { factory, oneOf, primaryKey } from "@mswjs/data";
+import { factory, nullable, oneOf, primaryKey } from "@mswjs/data";
 
 import { uuid } from "shared";
 
@@ -16,6 +16,7 @@ export const db = factory({
     group: oneOf("reminderGroup"),
     createdAt: () => new Date().toISOString(),
     updatedAt: () => new Date().toISOString(),
+    dueDate: nullable(String),
   },
 
   reminderGroup: {

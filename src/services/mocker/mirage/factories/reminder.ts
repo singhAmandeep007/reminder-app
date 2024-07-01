@@ -26,4 +26,7 @@ export const reminder: FactoryDefinition<TAppModels["reminder"]> = Factory.exten
   updatedAt() {
     return new Date().toISOString();
   },
+  dueDate() {
+    return null;
+  },
 });
