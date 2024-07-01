@@ -3,7 +3,10 @@ module.exports = {
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts", "!src/{services,modules,types}/**/*"],
 
   setupFiles: ["react-app-polyfill/jsdom"],
+  // to run some script immediately after the test framework has been installed in the environment but before the test code itself.
   setupFilesAfterEnv: ["<rootDir>/src/tests/jest.setupAfterEnv.ts"],
+  // to run some scripts in the testing environment before executing setupFilesAfterEnv and before the test code itself.
+  setupFiles: ["<rootDir>/src/tests/jest.polyfills.ts"],
   testMatch: ["<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}", "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"],
   testEnvironment: "jsdom",
   transform: {
@@ -30,6 +33,10 @@ module.exports = {
   displayName: {
     name: "CLIENT_UNIT_TESTS",
     color: "blue",
+  },
+  // NOTE: https://github.com/mswjs/msw/issues/1786#issuecomment-1782559851
+  testEnvironmentOptions: {
+    customExportConditions: [""],
   },
   // coverage
   coverageDirectory: "<rootDir>/reports/unit/coverage",

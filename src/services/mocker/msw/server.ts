@@ -1,16 +1,17 @@
 import { setupWorker } from "msw/browser";
 
-import { db, buildScenarios } from "./controllers/db";
+import { db, buildScenarios } from "./db";
 
 import { handlers } from "./handlers";
-
-buildScenarios(db).withReminders(5).withReminderGroups({ remindersPerGroup: 2 });
-
-const worker = setupWorker(...handlers);
 
 const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
 export const runServer = () => {
+  // NOTE: seed data
+  buildScenarios(db).withReminders(5).withReminderGroups({ remindersPerGroup: 2 });
+
+  const worker = setupWorker(...handlers);
+
   return worker.start({
     onUnhandledRequest: "bypass",
     serviceWorker: {

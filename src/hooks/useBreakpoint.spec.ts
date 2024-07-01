@@ -17,10 +17,6 @@ describe("useBreakpoint", () => {
     lg: "992px",
   };
 
-  beforeEach(() => {
-    mockedUseMediaQuery.mockReset();
-  });
-
   it('should return correct values for "sm" breakpoint when below', () => {
     mockedUseMediaQuery.mockReturnValue(true);
 

@@ -1,9 +1,11 @@
 import { useCallback } from "react";
 
+import { toast } from "sonner";
+
 import { useGetReminderGroupsQuery, useCreateReminderGroupMutation, handleAsync } from "shared";
 
 export const useReminderGroupsList = () => {
-  const { data: reminderGroups } = useGetReminderGroupsQuery();
+  const getReminderGroupResult = useGetReminderGroupsQuery();
 
   const [createReminderGroup, createReminderGroupResult] = useCreateReminderGroupMutation();
 
@@ -22,8 +24,16 @@ export const useReminderGroupsList = () => {
     [createReminderGroup]
   );
 
+  if (createReminderGroupResult.isError) {
+    toast.error("Error creating reminder group");
+  }
+
+  if (getReminderGroupResult.isError) {
+    toast.error("Error fetching reminder groups");
+  }
+
   return {
-    reminderGroups,
+    reminderGroups: getReminderGroupResult.data,
     handleOnSave,
     isLoading,
     isErrored,

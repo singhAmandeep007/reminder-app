@@ -34,6 +34,7 @@
     "i18next": "^23.11.0",
     "i18next-browser-languagedetector": "^7.2.1",
     "lucide-react": "^0.365.0",
+    "next-themes": "^0.3.0",
     "react": "^18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.2.0",
@@ -42,6 +43,7 @@
     "react-resizable-panels": "^2.0.16",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.22.3",
+    "sonner": "^1.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -213,6 +215,7 @@
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
     "typescript": "^5.5.2",
+    "undici": "^6.19.2",
     "web-vitals": "^2.1.4",
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",

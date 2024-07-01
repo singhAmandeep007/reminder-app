@@ -5,11 +5,9 @@
 import "@testing-library/jest-dom";
 import ResizeObserver from "resize-observer-polyfill";
 
-global.ResizeObserver = ResizeObserver;
+import "./utils/testServer";
 
-// Mocking the ENV variables
-// @ts-ignore
-process.env.REACT_APP_PUBLIC_URL = "http://localhost";
+global.ResizeObserver = ResizeObserver;
 
 // Mocking the matchMedia API
 global.matchMedia =

@@ -10,3 +10,4 @@ export * from "./DateTimePicker";
 export * from "./Label";
 export * from "./Dialog";
 export * from "./Badge";
+export * from "./Sonner";

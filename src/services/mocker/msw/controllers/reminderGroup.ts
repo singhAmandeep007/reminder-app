@@ -13,9 +13,9 @@ import {
   THTTPError,
 } from "types";
 
-import { urlPrefix } from "./utils";
+import { db } from "../db";
 
-import { db } from "./db";
+import { urlPrefix } from "../utils";
 
 export const getReminderGroups = http.get(urlPrefix("/reminder-groups"), () => {
   return HttpResponse.json({ data: db.reminderGroup.getAll() }, { status: 200 });

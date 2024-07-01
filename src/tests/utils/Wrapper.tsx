@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 
 import { setupStore, TRootState } from "shared";
+import { Toaster } from "components";
 
 import { ThemeProvider } from "modules/theme";
 
@@ -53,7 +54,12 @@ export const Wrapper: FC<PropsWithChildren<TWrapperProps>> = ({
   }
 
   providers.push({ Provider: ThemeProvider, props: {} });
-  providers.push({ Provider: MemoryRouter, props: { initialEntries: ["/"] } });
+  providers.push({ Provider: MemoryRouter, props: {} });
 
-  return addProviders(providers, children);
+  return (
+    <>
+      {addProviders(providers, children)}
+      <Toaster />
+    </>
+  );
 };

@@ -13,9 +13,9 @@ import {
 
 import { getUrlSearchParams } from "shared";
 
-import { urlPrefix } from "./utils";
+import { db } from "../db";
 
-import { db } from "./db";
+import { urlPrefix } from "../utils";
 
 export const getReminders = http.get(urlPrefix("/reminders"), ({ request }) => {
   const reminders = db.reminder.getAll();

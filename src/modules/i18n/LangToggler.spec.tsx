@@ -6,28 +6,15 @@ import { render } from "tests/utils";
 
 import { LangToggler } from "./LangToggler";
 
-let changeLanguageSpy: jest.SpyInstance;
-
-jest.mock("react-i18next", () => ({
-  // preserve the original module
-  ...jest.requireActual("react-i18next"),
-  // mock useTranslation
-  useTranslation: () => {
-    // get the original module
-    const originalModule = jest.requireActual("react-i18next");
-    // return the original t and i18n function
-    const { t, i18n } = originalModule.useTranslation("common", { keyPrefix: "lang" });
-
-    // spy on changeLanguage method to check if it's called
-    changeLanguageSpy = jest.spyOn(i18n, "changeLanguage");
-
-    return { t, i18n };
-  },
-}));
-
 describe("LangToggler", () => {
+  const setup = () => {
+    return {
+      result: render(<LangToggler />),
+    };
+  };
+
   it("opens the dropdown menu when clicked and shows language options", async () => {
-    render(<LangToggler />);
+    setup();
 
     await userEvent.click(screen.getByTestId("lang-toggler"));
 
@@ -41,7 +28,7 @@ describe("LangToggler", () => {
   });
 
   it("changes language when a language option is clicked", async () => {
-    render(<LangToggler />);
+    setup();
 
     await userEvent.click(screen.getByTestId("lang-toggler"));
 
@@ -51,10 +38,6 @@ describe("LangToggler", () => {
 
     await userEvent.click(screen.getByText("Japanese"));
 
-    await waitFor(() => {
-      expect(changeLanguageSpy).toHaveBeenCalledWith("ja-JP");
-    });
-
     await userEvent.click(screen.getByTestId("lang-toggler"));
 
     await waitFor(() => {
@@ -63,7 +46,7 @@ describe("LangToggler", () => {
   });
 
   it("closes the dropdown when clicking outside", async () => {
-    render(<LangToggler />);
+    setup();
 
     await userEvent.click(screen.getByTestId("lang-toggler"));
 

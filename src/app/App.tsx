@@ -6,6 +6,8 @@ import { setupStore } from "shared";
 
 import { ThemeProvider } from "modules/theme";
 
+import { Toaster } from "components";
+
 import { Router } from "./Router";
 
 export type TAppProps = Record<string, never>;
@@ -15,6 +17,7 @@ export const App: FC<PropsWithChildren<TAppProps>> = () => {
     <Provider store={setupStore()}>
       <ThemeProvider>
         <Router />
+        <Toaster />
       </ThemeProvider>
     </Provider>
   );

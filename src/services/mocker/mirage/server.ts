@@ -25,7 +25,7 @@ export function runServer(config: TRunMirageServerConfig = {}): TAppMockServer {
     },
     // mirage's seeds are loaded on initialization
     seeds(server) {
-      buildScenarios(server).withReminders(30).withReminderGroups({ remindersPerGroup: 10 });
+      buildScenarios(server).withReminders(5).withReminderGroups({ remindersPerGroup: 2 });
     },
 
     routes() {
