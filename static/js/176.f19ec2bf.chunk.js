@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkreminder_app=self.webpackChunkreminder_app||[]).push([[176],{1176:(r,a,e)=>{e.r(a),e.d(a,{urlPrefix:()=>c});const t="https://reminder-app.com/api/v1/",c=r=>{if("/"!==r[0])throw new Error("MSW handler path should start with a forward slash.");return"/"===t[31]?"".concat(t).concat(r.slice(1)):"".concat(t).concat(r)}}}]);
-//# sourceMappingURL=176.f19ec2bf.chunk.js.map

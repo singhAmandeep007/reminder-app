@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkreminder_app=self.webpackChunkreminder_app||[]).push([[636],{7636:(e,t,n)=>{n.r(t),n.d(t,{reminder:()=>i});var r=n(1266),d=n(9700);const i=r.$7.extend({id:e=>"reminder-id-".concat(e),title:e=>"Reminder ".concat(e),isPinned:e=>e%2===0,state:d.x.ACTIVE,createdAt:()=>(new Date).toISOString(),updatedAt:()=>(new Date).toISOString()})},9700:(e,t,n)=>{n.d(t,{x:()=>r});const r={ACTIVE:"ACTIVE",COMPLETED:"COMPLETED"}}}]);
-//# sourceMappingURL=636.4f7b7c33.chunk.js.map
