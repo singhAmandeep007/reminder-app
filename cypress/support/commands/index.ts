@@ -39,7 +39,10 @@
 import "@testing-library/cypress/add-commands";
 
 /**
- * @example cy.getByDataAttr({value:"modal-header", attribute: "testId"})
+ *
+ * @example
+ * <div data-testid="modal-header"></div>
+ * cy.getByDataAttr({value:"modal-header", attribute: "testid"})
  */
 Cypress.Commands.addQuery("getByDataAttr", ({ value, attribute = "cy" }) => {
   const getFn = cy.now("get", `[data-${attribute}="${value}"]`);
