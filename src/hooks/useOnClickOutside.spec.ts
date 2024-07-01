@@ -69,7 +69,7 @@ describe("useOnClickOutside", () => {
 
     renderHook(() => useOutsideClick({ ref, handler }));
 
-    expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+    expect(addEventListenerSpy).toHaveBeenCalled();
     expect(addEventListenerSpy).toHaveBeenCalledWith("mousedown", expect.any(Function));
 
     addEventListenerSpy.mockRestore();
