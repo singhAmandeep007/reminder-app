@@ -22,8 +22,20 @@ describe("useOnClickOutside", () => {
     jest.clearAllMocks();
   });
 
+  const setup = (props: { ref?: any; handler?: any } = {}) => {
+    props = { ref: props?.ref || ref, handler: props?.handler || handler };
+
+    return {
+      result: renderHook(() => useOutsideClick({ ref, handler }), {
+        config: {},
+      }),
+      handler,
+      ref,
+    };
+  };
+
   it("should call handler when clicking outside the referenced element", async () => {
-    renderHook(() => useOutsideClick({ ref, handler }));
+    const { handler } = setup();
 
     userEvent.click(document.body);
 
@@ -33,7 +45,7 @@ describe("useOnClickOutside", () => {
   });
 
   it("should not call handler when clicking inside the referenced element", () => {
-    renderHook(() => useOutsideClick({ ref, handler }));
+    const { handler } = setup();
 
     if (ref.current) {
       userEvent.click(ref.current);
@@ -45,6 +57,8 @@ describe("useOnClickOutside", () => {
   it("should not call handler when ref is null", () => {
     const nullRef = { current: null };
 
+    const { handler } = setup({ ref: nullRef });
+
     renderHook(() => useOutsideClick({ ref: nullRef, handler }));
 
     userEvent.click(document.body);
@@ -55,7 +69,9 @@ describe("useOnClickOutside", () => {
   it("should remove event listener on unmount", () => {
     const removeEventListenerSpy = jest.spyOn(document, "removeEventListener");
 
-    const { unmount } = renderHook(() => useOutsideClick({ ref, handler }));
+    const {
+      result: { unmount },
+    } = setup();
 
     unmount();
 
@@ -67,9 +83,9 @@ describe("useOnClickOutside", () => {
   it("should add event listener only once", () => {
     const addEventListenerSpy = jest.spyOn(document, "addEventListener");
 
-    renderHook(() => useOutsideClick({ ref, handler }));
+    setup();
 
-    expect(addEventListenerSpy).toHaveBeenCalled();
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
     expect(addEventListenerSpy).toHaveBeenCalledWith("mousedown", expect.any(Function));
 
     addEventListenerSpy.mockRestore();

@@ -33,10 +33,3 @@ Object.defineProperties(globalThis, {
   Request: { value: Request },
   Response: { value: Response },
 });
-
-//  mocking the environment variables
-
-// @ts-ignore
-process.env.REACT_APP_PUBLIC_URL = "http://localhost";
-// @ts-ignore
-process.env.REACT_APP_API_URL = "http://localhost/api/v1/";

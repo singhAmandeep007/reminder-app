@@ -14,6 +14,7 @@ export type TAddUpdateItemProps = {
   testIds?: {
     save?: string;
     cancel?: string;
+    text?: string;
   };
 };
 
@@ -44,6 +45,7 @@ export const AddUpdateItem: FC<PropsWithChildren<TAddUpdateItemProps>> = ({
         ref={inputRef}
         autoFocus
         required
+        data-testid={testIds?.text}
       />
       <div className="flex items-center gap-1">
         <Button

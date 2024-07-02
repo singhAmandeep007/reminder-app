@@ -2,7 +2,7 @@ import { setupServer } from "msw/node";
 
 import { beforeAll, afterEach, afterAll } from "@jest/globals";
 
-import { handlers } from "services/mocker/msw";
+import { handlers } from "services/mocker/msw/handlers";
 
 const runTestServer = () => {
   return setupServer(...handlers);
@@ -10,7 +10,7 @@ const runTestServer = () => {
 
 export const testServer = runTestServer();
 
-beforeAll(() => testServer.listen({ onUnhandledRequest: "bypass" }));
+beforeAll(() => testServer.listen({ onUnhandledRequest: "error" }));
 afterEach(() => testServer.resetHandlers());
 afterAll(() => testServer.close());
 // NOTE: simple outgoing request listener logger

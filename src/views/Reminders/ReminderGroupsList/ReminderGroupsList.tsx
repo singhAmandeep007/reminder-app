@@ -50,6 +50,7 @@ export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>>
           testIds={{
             cancel: `reminder-group-item-create-cancel`,
             save: `reminder-group-item-create-save`,
+            text: `reminder-group-item-create-text`,
           }}
         />
       )}

@@ -32,6 +32,8 @@ export type TWrapperProps = {
     withI18n?: boolean;
     withStore?: boolean;
     preloadedState?: Partial<TRootState>;
+    withRouter?: boolean;
+    withToaster?: boolean;
   };
 };
 
@@ -40,26 +42,27 @@ export const Wrapper: FC<PropsWithChildren<TWrapperProps>> = ({
   config = {
     withI18n: true,
     withStore: true,
+    withRouter: true,
+    withToaster: true,
   },
 }) => {
   const providers: TProvider[] = [];
 
-  if (config?.withI18n) {
-    initTestI18n();
-  }
+  if (config?.withI18n) initTestI18n();
 
   if (config?.withStore) {
     const store = setupStore(config?.preloadedState);
     providers.push({ Provider, props: { store } });
   }
 
+  if (config?.withRouter) providers.push({ Provider: MemoryRouter, props: {} });
+
   providers.push({ Provider: ThemeProvider, props: {} });
-  providers.push({ Provider: MemoryRouter, props: {} });
 
   return (
     <>
       {addProviders(providers, children)}
-      <Toaster />
+      {config?.withToaster && <Toaster />}
     </>
   );
 };
