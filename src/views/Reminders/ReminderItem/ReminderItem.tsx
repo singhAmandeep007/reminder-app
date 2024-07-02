@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, useState } from "react";
 
 import { ChevronDown, ChevronUp, Pencil, Trash, Pin, CalendarClock } from "lucide-react";
+import { format } from "date-fns";
 
 import { TReminder, REMINDER_STATE } from "types";
 
@@ -214,7 +215,11 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
           {!isCompleted && (
             <div className="ml-6 mr-10 flex flex-wrap gap-2">
               {!listName && reminder.group?.name && <Badge variant="default">{reminder.group.name}</Badge>}
-              {isOverdue && <Badge variant="destructive">Overdue</Badge>}
+              {reminder?.dueDate && (
+                <Badge variant={isOverdue ? "destructive" : "default"}>
+                  Due: {format(new Date(reminder.dueDate), "PPp")}
+                </Badge>
+              )}
             </div>
           )}
         </>

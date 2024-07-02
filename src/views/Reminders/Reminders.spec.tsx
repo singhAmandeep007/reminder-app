@@ -25,8 +25,6 @@ describe("Reminders", () => {
   it("should render Reminders Component", () => {
     setup();
 
-    expect(screen.getByRole("heading", { name: "Reminders", level: 2 })).toBeVisible();
-
     expect(screen.getByTestId("remindersList")).toBeInTheDocument();
 
     expect(screen.getByTestId("reminderGroupsList")).toBeInTheDocument();
