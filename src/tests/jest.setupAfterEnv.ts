@@ -5,8 +5,6 @@
 import "@testing-library/jest-dom";
 import ResizeObserver from "resize-observer-polyfill";
 
-import "./utils/testServer";
-
 global.ResizeObserver = ResizeObserver;
 
 // Mocking the matchMedia API

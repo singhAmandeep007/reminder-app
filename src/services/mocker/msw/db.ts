@@ -1,4 +1,4 @@
-import { factory, nullable, oneOf, primaryKey } from "@mswjs/data";
+import { factory, nullable, oneOf, primaryKey, drop } from "@mswjs/data";
 
 import { uuid } from "shared";
 
@@ -57,4 +57,8 @@ export const buildScenarios = (db: TDb) => {
     },
   };
   return builder;
+};
+
+export const dropDb = (db: TDb) => {
+  drop(db);
 };

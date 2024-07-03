@@ -1,2 +1,2 @@
-export * from "./reminder";
-export * from "./reminderGroup";
+export { setupRemindersController } from "./reminder";
+export { setupReminderGroupsController } from "./reminderGroup";

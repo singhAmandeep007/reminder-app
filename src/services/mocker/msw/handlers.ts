@@ -1,3 +1,7 @@
 import * as controllers from "./controllers";
+import { TDb } from "./db";
 
-export const handlers = [...Object.values(controllers)];
+export const setupHandlers = (db: TDb) => [
+  ...controllers.setupReminderGroupsController(db),
+  ...controllers.setupRemindersController(db),
+];
