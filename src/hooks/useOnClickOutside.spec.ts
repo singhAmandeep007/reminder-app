@@ -27,7 +27,9 @@ describe("useOnClickOutside", () => {
 
     return {
       result: renderHook(() => useOutsideClick({ ref, handler }), {
-        config: {},
+        config: {
+          withToaster: false,
+        },
       }),
       handler,
       ref,
@@ -85,7 +87,7 @@ describe("useOnClickOutside", () => {
 
     setup();
 
-    expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
     expect(addEventListenerSpy).toHaveBeenCalledWith("mousedown", expect.any(Function));
 
     addEventListenerSpy.mockRestore();

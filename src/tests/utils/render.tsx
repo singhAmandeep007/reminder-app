@@ -12,7 +12,7 @@ export const render = (ui: ReactNode, options: TRenderProps = {}) => {
   const OuterWrapper = () => {
     const InnerWrapper = renderOptions?.wrapper;
 
-    return <Wrapper {...config}>{InnerWrapper ? <InnerWrapper>{ui}</InnerWrapper> : ui}</Wrapper>;
+    return <Wrapper config={config}>{InnerWrapper ? <InnerWrapper>{ui}</InnerWrapper> : ui}</Wrapper>;
   };
 
   return _render(ui, { wrapper: OuterWrapper, ...renderOptions });

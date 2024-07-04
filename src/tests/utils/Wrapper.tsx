@@ -42,6 +42,7 @@ export const Wrapper: FC<PropsWithChildren<TWrapperProps>> = ({
   config = {
     withI18n: true,
     withStore: true,
+    preloadedState: undefined,
     withRouter: true,
     withToaster: true,
   },

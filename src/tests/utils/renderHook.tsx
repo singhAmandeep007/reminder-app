@@ -15,7 +15,7 @@ export const renderHook = <Props, Result>(
 
     const InnerWrapper = options?.wrapper;
 
-    return <Wrapper {...config}>{InnerWrapper ? <InnerWrapper {...props} /> : children}</Wrapper>;
+    return <Wrapper config={config}>{InnerWrapper ? <InnerWrapper {...props} /> : children}</Wrapper>;
   };
 
   return _renderHook(render, { ...options, wrapper: OuterWrapper });

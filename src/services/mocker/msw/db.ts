@@ -29,36 +29,6 @@ export const db = factory({
 
 export type TDb = typeof db;
 
-export const buildScenarios = (db: TDb) => {
-  const builder = {
-    withReminders: (n: number = 10) => {
-      for (let i = 0; i < n; i++) {
-        db.reminder.create();
-      }
-
-      return builder;
-    },
-    withReminderGroups: ({
-      reminderGroups = ["Work", "Home", "Personal"],
-      remindersPerGroup = 10,
-    }: {
-      reminderGroups?: string[];
-      remindersPerGroup?: number;
-    }) => {
-      reminderGroups.forEach((groupName) => {
-        const group = db.reminderGroup.create({ name: groupName });
-
-        for (let i = 0; i < remindersPerGroup; i++) {
-          db.reminder.create({ group });
-        }
-      });
-
-      return builder;
-    },
-  };
-  return builder;
-};
-
 export const dropDb = (db: TDb) => {
   drop(db);
 };

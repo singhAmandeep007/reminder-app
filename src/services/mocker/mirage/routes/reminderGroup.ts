@@ -2,7 +2,7 @@ import { TReminderGroup } from "types";
 
 import { TAppMockServer } from "../types";
 
-import { urlPrefix, resourceNotFoundResponse } from "./utils";
+import { urlPrefix, resourceNotFoundResponse } from "../utils";
 
 export function reminderGroupRoutes(this: TAppMockServer) {
   this.get(urlPrefix("/reminder-groups"), (schema) => {

@@ -1,5 +1,7 @@
 import { useCallback } from "react";
 
+import { toast } from "sonner";
+
 import {
   useGetRemindersQuery,
   useSelectQueryParams,
@@ -11,17 +13,13 @@ import {
 export const useRemindersList = () => {
   const queryParams = useSelectQueryParams();
 
-  const { currentData: reminders, refetch } = useGetRemindersQuery(queryParams);
+  const getRemindersResult = useGetRemindersQuery(queryParams);
 
-  const { currentData: reminderGroup } = useGetReminderGroupQuery(queryParams.groupId as string, {
+  const getReminderGroupResult = useGetReminderGroupQuery(queryParams.groupId as string, {
     skip: !queryParams.groupId,
   });
 
   const [createReminder, createReminderResult] = useCreateReminderMutation();
-
-  const isLoading = createReminderResult.isLoading;
-
-  const isErrored = createReminderResult.isError;
 
   const handleOnSave = useCallback(
     async (props: Parameters<typeof createReminder>[0]) => {
@@ -35,12 +33,22 @@ export const useRemindersList = () => {
     [createReminder]
   );
 
+  if (getReminderGroupResult.isError) {
+    toast.error("Error fetching reminder group");
+  }
+
+  if (getRemindersResult.isError) {
+    toast.error("Error fetching reminders");
+  }
+
+  if (createReminderResult.isError) {
+    toast.error("Error creating reminder");
+  }
+
   return {
-    reminders,
-    reminderGroup,
-    refetchReminders: refetch,
+    reminders: getRemindersResult.currentData,
+    reminderGroup: getReminderGroupResult.currentData,
+    refetchReminders: getRemindersResult.refetch,
     handleOnSave,
-    isLoading,
-    isErrored,
   };
 };

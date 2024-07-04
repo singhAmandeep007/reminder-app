@@ -5,16 +5,13 @@ export const MOCKER_TYPE = {
 
 export type TMocker = (typeof MOCKER_TYPE)[keyof typeof MOCKER_TYPE] | undefined;
 
-const initServer = (module: { runServer: () => void }) => {
-  const { runServer } = module;
-  const server = runServer();
-
-  return server;
-};
-
 export const setupMocker = async ({ type = undefined }: { type: TMocker }) => {
   if (MOCKER_TYPE[type!]) {
-    return import(`./${type}`).then(initServer);
+    const { runServer } = await import(`./${type}/server.ts`);
+
+    return runServer({
+      withDefaultScenario: true,
+    });
   }
 
   return Promise.resolve();

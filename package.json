@@ -54,7 +54,7 @@
     "build:msw": "msw init ./build --no-save",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "TEST": "------------------------------------------------------------------------",
-    "test": "npm run test:unit",
+    "test": "env-cmd -f ./.testing.env npm run test:unit",
     "test:unit": "npm run tsc:check && node scripts/test.js --watchAll=false",
     "test:unit:coverage": "npm run test:unit -- --coverage",
     "LINT": "------------------------------------------------------------------------",

@@ -3,20 +3,23 @@ import { createServer } from "miragejs";
 import { createRoutes } from "./routes";
 import * as models from "./models";
 import * as factories from "./factories";
-import { buildScenarios } from "./scenarios";
 
 import { TAppMockServer } from "./types";
 import { IdentityManager } from "./identityManager";
+import { buildScenarios } from "./scenarios";
 
 export type TRunMirageServerConfig = {
   environment?: string;
   logging?: boolean;
   timing?: number;
+  trackRequests?: boolean;
+  withDefaultScenario?: boolean;
 };
 
 export function runServer(config: TRunMirageServerConfig = {}): TAppMockServer {
-  return createServer({
+  const server = createServer({
     logging: config.logging || true,
+    trackRequests: config?.trackRequests || false,
     environment: config?.environment || "development",
     models,
     factories,
@@ -25,7 +28,9 @@ export function runServer(config: TRunMirageServerConfig = {}): TAppMockServer {
     },
     // mirage's seeds are loaded on initialization
     seeds(server) {
-      buildScenarios(server).withReminders(5).withReminderGroups({ remindersPerGroup: 2 });
+      if (config?.withDefaultScenario) {
+        buildScenarios(server).withReminders(5).withReminderGroups({ remindersPerGroup: 2 });
+      }
     },
 
     routes() {
@@ -36,4 +41,8 @@ export function runServer(config: TRunMirageServerConfig = {}): TAppMockServer {
       this.passthrough();
     },
   });
+
+  return server;
 }
+
+export type TServer = ReturnType<typeof runServer>;

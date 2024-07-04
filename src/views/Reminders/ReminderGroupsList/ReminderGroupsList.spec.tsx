@@ -4,9 +4,11 @@ import userEvent from "@testing-library/user-event";
 
 import { db, buildScenarios, urlPrefix } from "services/mocker/msw";
 
-import { render, testServer, HttpResponse, http } from "tests/utils";
+import { render, createTestMswServer, HttpResponse, http } from "tests/utils";
 
 import { ReminderGroupsList } from "./ReminderGroupsList";
+
+const testMswServer = createTestMswServer();
 
 describe("ReminderGroupsList", () => {
   const setup = () => {
@@ -25,9 +27,7 @@ describe("ReminderGroupsList", () => {
   };
 
   it("should render reminder groups list", async () => {
-    buildScenarios(db)
-      .withReminders(5)
-      .withReminderGroups({ reminderGroups: ["Work", "Home", "Personal"], remindersPerGroup: 2 });
+    buildScenarios(db).withReminderGroups({ reminderGroups: ["Work", "Home", "Personal"], remindersPerGroup: 0 });
 
     setup();
 
@@ -35,13 +35,15 @@ describe("ReminderGroupsList", () => {
       expect(screen.getByText("All")).toBeInTheDocument();
     });
 
-    expect(screen.getAllByRole("listitem")).toHaveLength(4);
+    await waitFor(() => {
+      expect(screen.getAllByRole("listitem")).toHaveLength(4);
+    });
   });
 
   it("should handle negative scenario for fetching reminder groups", async () => {
-    testServer.use(
+    testMswServer.use(
       http.get(urlPrefix("/reminder-groups"), () => {
-        return HttpResponse.json({ message: "Error" }, { status: 404 });
+        return HttpResponse.json({ message: "Error" }, { status: 500 });
       })
     );
 
@@ -52,7 +54,7 @@ describe("ReminderGroupsList", () => {
     });
   });
 
-  it("should add reminder group", async () => {
+  it("should be able to add reminder group", async () => {
     const { getAddListBtn, getTextInput, getSaveBtn } = setup();
 
     await userEvent.click(getAddListBtn());
@@ -71,9 +73,9 @@ describe("ReminderGroupsList", () => {
   });
 
   it("should handle negative scenario for adding reminder group", async () => {
-    testServer.use(
+    testMswServer.use(
       http.post(urlPrefix("/reminder-groups"), () => {
-        return HttpResponse.json({ message: "Error" }, { status: 404 });
+        return HttpResponse.json({ message: "Error" }, { status: 500 });
       })
     );
 
