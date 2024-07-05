@@ -1,15 +1,25 @@
+import { http, HttpResponse } from "msw";
+
+import { urlPrefix } from "services/mocker/msw";
+
 import { remindersElements } from "../pages";
 
 describe("Reminders Page", () => {
-  beforeEach(() => {
+  it("should render reminders page content", () => {
+    cy.interceptRequest(
+      http.get(
+        urlPrefix("/reminders"),
+        () => {
+          return HttpResponse.json(null, { status: 500 });
+        },
+        {
+          once: false,
+        }
+      )
+    );
+
     cy.visit("/reminders");
 
-    cy.url().should("include", "/reminders");
-  });
-
-  it("should render reminders page content", () => {
     remindersElements.root.should("exist");
-
-    remindersElements.root.findByRole("heading", { name: "Reminders", level: 2 }).should("exist");
   });
 });

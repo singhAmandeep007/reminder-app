@@ -16,6 +16,10 @@ declare global {
       readonly REACT_APP_PUBLIC_URL: string;
     }
   }
+
+  interface Window {
+    Cypress?: { env: (key: string) => string };
+  }
 }
 
 declare module "*.avif" {

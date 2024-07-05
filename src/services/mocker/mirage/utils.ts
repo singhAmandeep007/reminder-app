@@ -1,8 +1,8 @@
 import { Response } from "miragejs";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+export const urlPrefix = (path: string, baseUrl?: string) => {
+  const apiUrl = baseUrl || process.env.REACT_APP_API_URL;
 
-export const urlPrefix = (path: string) => {
   if (path[0] !== "/") {
     throw new Error("Miragejs handler path should start with a forward slash.");
   }

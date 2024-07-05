@@ -5,12 +5,12 @@ export const MOCKER_TYPE = {
 
 export type TMocker = (typeof MOCKER_TYPE)[keyof typeof MOCKER_TYPE] | undefined;
 
-export const setupMocker = async ({ type = undefined }: { type: TMocker }) => {
+export const setupMocker = async ({ type = undefined, shouldSeedData }: { type: TMocker; shouldSeedData: boolean }) => {
   if (MOCKER_TYPE[type!]) {
     const { runServer } = await import(`./${type}/server.ts`);
 
     return runServer({
-      withDefaultScenario: true,
+      withDefaultScenario: shouldSeedData,
     });
   }
 

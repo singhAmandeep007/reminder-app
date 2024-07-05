@@ -13,13 +13,14 @@ async function setupApp() {
   await i18n.configure();
 
   const mockerType = process.env.REACT_APP_MOCKER;
+  const isDemoMode = Boolean(process.env.REACT_APP_IS_DEMO_MODE);
 
-  if (!!mockerType) {
+  if (isDemoMode && !!mockerType && !window.Cypress) {
     const mocker = await import("services/mocker");
 
     const { setupMocker } = mocker;
 
-    await setupMocker({ type: mockerType });
+    await setupMocker({ type: mockerType, shouldSeedData: true });
     // eslint-disable-next-line no-console
     console.log(`%c API is being mocked using ${mockerType}!`, "color: #bada55; font-weight: bold;");
   }
