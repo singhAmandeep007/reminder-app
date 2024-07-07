@@ -31,7 +31,7 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
             size={"icon"}
             variant={"ghost"}
             className="hover:text-primary"
-            data-testid="reminder-list-refetch-btn"
+            data-testid="reminder-refetch-btn"
           >
             <RefreshCcw
               className="icon"
@@ -43,7 +43,7 @@ export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
             size={"icon"}
             onClick={() => setIsCreating((isCreating) => !isCreating)}
             disabled={isCreating}
-            data-testid="reminder-list-add-btn"
+            data-testid="reminder-create-btn"
           />
         </div>
       </div>

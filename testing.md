@@ -14,8 +14,17 @@
 ## RTL
 
 1. Print whole JSDOM object - `screen.debug(result.container, Infinity);`
+2. When to use `act` - https://github.com/threepointone/react-act-examples/blob/master/sync.md
 
 ## Mirage
 
 1. Print all entities in db - `console.log(testMirageServer.db.dump());`
 2. [Track requests for assertions](https://miragejs.com/docs/testing/assertions/#asserting-against-handled-requests-and-responses)
+
+## MSW + Cypress
+
+1. https://github.com/mswjs/msw/issues/1560
+
+## Popper issue
+
+1. https://github.com/floating-ui/react-popper/issues/350

@@ -12,10 +12,10 @@ const testMswServer = createTestMswServer();
 
 describe("ReminderGroupsList", () => {
   const setup = () => {
-    const getAddListBtn = () => screen.getByRole("button", { name: "Add List" });
-    const getSaveBtn = () => screen.getByTestId("reminder-group-item-create-save");
-    const getCancelBtn = () => screen.getByTestId("reminder-group-item-create-cancel");
-    const getTextInput = () => screen.getByTestId("reminder-group-item-create-text");
+    const getAddListBtn = () => screen.getByTestId("reminder-group-create-btn");
+    const getSaveBtn = () => screen.getByTestId("reminder-group-create-save");
+    const getCancelBtn = () => screen.getByTestId("reminder-group-create-cancel");
+    const getTextInput = () => screen.getByTestId("reminder-group-create-text");
 
     return {
       result: render(<ReminderGroupsList />),

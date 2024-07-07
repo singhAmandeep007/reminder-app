@@ -67,7 +67,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
   return (
     <div
       className={cn("flex cursor-pointer items-center justify-between gap-2 px-1 py-2")}
-      data-testid={`reminder-group-item-${reminderGroup ? reminderGroup.id : "all"}`}
+      data-testid={`reminder-group-item-${reminderGroup ? reminderGroup.name : "all"}`}
     >
       {renderItem}
 
@@ -80,7 +80,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
             <Button
               variant="outline"
               size="icon"
-              data-testid={`reminder-group-item-menu-${reminderGroup.id}`}
+              data-testid={`reminder-group-item-menu-btn`}
               disabled={isMenuDisabled}
             >
               {isDropdownOpen ? <ChevronUp className="icon" /> : <ChevronDown className="icon" />}
@@ -90,10 +90,11 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
             align="end"
             onInteractOutside={() => setIsDropdownOpen(false)}
             className="min-w-min"
+            data-testid={`reminder-group-item-menu`}
           >
             <DropdownMenuItem
               onClick={() => setIsUpdating(true)}
-              data-testid={`reminder-group-item-update-${reminderGroup.id}`}
+              data-testid={`reminder-group-item-update-${reminderGroup.name}`}
               className="group"
             >
               <Pencil
@@ -105,7 +106,7 @@ export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> =
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => handleOnDelete(reminderGroup.id)}
-              data-testid={`reminder-group-item-delete-${reminderGroup.id}`}
+              data-testid={`reminder-group-item-delete-${reminderGroup.name}`}
               className="group"
             >
               <Trash

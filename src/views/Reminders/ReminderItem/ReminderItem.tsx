@@ -53,7 +53,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
   return (
     <div
       className="flex flex-col py-2"
-      data-testid={`reminder-item-${reminder.id}`}
+      data-testid={`reminder-item-${reminder.title}`}
     >
       {isUpdating && (
         <AddUpdateItem
@@ -65,8 +65,9 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
             setIsUpdating(false);
           }}
           testIds={{
-            cancel: `reminder-item-update-cancel-${reminder.id}`,
-            save: `reminder-item-update-save-${reminder.id}`,
+            cancel: `reminder-update-cancel`,
+            save: `reminder-update-save`,
+            text: `reminder-update-text`,
           }}
         />
       )}
@@ -83,6 +84,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                   state: isCompleted ? REMINDER_STATE.INACTIVE : REMINDER_STATE.COMPLETED,
                 })
               }
+              data-testid={`reminder-item-checkbox`}
             />
             <Typography
               variant={"p"}
@@ -104,7 +106,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                   <Button
                     variant="outline"
                     size="icon"
-                    data-testid={`reminder-item-menu-${reminder.id}`}
+                    data-testid={`reminder-item-menu-btn`}
                     disabled={isMenuDisabled}
                   >
                     {isDropdownOpen ? <ChevronUp className="icon" /> : <ChevronDown className="icon" />}
@@ -114,9 +116,10 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                   className="min-w-min"
                   align="end"
                   onInteractOutside={() => setIsDropdownOpen(false)}
+                  data-testid={`reminder-item-menu`}
                 >
                   <DropdownMenuItem
-                    data-testid={`reminder-item-pin-${reminder.id}`}
+                    data-testid={`reminder-item-menuitem-pin`}
                     onClick={() =>
                       handleOnUpdate({
                         id: reminder.id,
@@ -140,6 +143,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                     <DropdownMenuItem
                       className="group"
                       disabled={isCompleted}
+                      data-testid={`reminder-item-menuitem-due-date`}
                     >
                       <CalendarClock
                         size={20}
@@ -152,7 +156,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                   <DropdownMenuSeparator />
 
                   <DropdownMenuItem
-                    data-testid={`reminder-item-edit-${reminder.id}`}
+                    data-testid={`reminder-item-menuitem-edit`}
                     onClick={() => setIsUpdating(true)}
                     className="group"
                     disabled={isCompleted}
@@ -165,7 +169,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    data-testid={`reminder-item-delete-${reminder.id}`}
+                    data-testid={`reminder-item-menuitem-delete`}
                     onClick={() => handleOnDelete(reminder.id)}
                     className="group"
                   >
@@ -178,7 +182,10 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <DialogContent className="w-max">
+              <DialogContent
+                className="w-max"
+                data-testid="reminder-item-due-date-dialog"
+              >
                 <DialogHeader>
                   <DialogTitle className="text-left">Schedule your reminder</DialogTitle>
                   <DialogDescription className="text-left">Select reminder's due date and time</DialogDescription>
@@ -201,6 +208,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                           }}
                           className={cn(isLoading && "cursor-not-allowed")}
                           disabled={!selectedDateTime || isLoading}
+                          data-testid={`reminder-item-save-due-date-btn`}
                         >
                           Save
                         </Button>

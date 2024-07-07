@@ -1,13 +1,15 @@
 import { setupWorker, type SetupWorker } from "msw/browser";
 import { RequestHandler } from "msw";
 
-import { handlers } from "services/mocker/msw";
+import { setupHandlers, db } from "services/mocker/msw";
 
 declare global {
   namespace Cypress {
     // eslint-disable-next-line
     interface Chainable {
       interceptRequest(...handlers: RequestHandler[]): void;
+
+      getMswDb(): Promise<typeof db>;
     }
   }
 }
@@ -15,7 +17,7 @@ declare global {
 let worker: SetupWorker;
 
 before(() => {
-  worker = setupWorker(...handlers);
+  worker = setupWorker(...setupHandlers(db));
 
   cy.wrap(
     worker.start({
@@ -37,4 +39,8 @@ Cypress.on("test:before:run", () => {
 
 Cypress.Commands.add("interceptRequest", (...handlers: RequestHandler[]) => {
   worker.use(...handlers);
+});
+
+Cypress.Commands.add("getMswDb", () => {
+  return Promise.resolve(db);
 });

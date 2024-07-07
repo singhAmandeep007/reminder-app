@@ -13,7 +13,7 @@ const testMirageServer = createTestMirageServer();
 
 describe("RemindersList", () => {
   const setup = (setupProps: { config?: TRenderProps["config"] } = {}) => {
-    const getAddItemBtn = () => screen.getByTestId("reminder-list-add-btn");
+    const getAddItemBtn = () => screen.getByTestId("reminder-create-btn");
     const getSaveBtn = () => screen.getByTestId("reminder-item-create-save");
     const getCancelBtn = () => screen.getByTestId("reminder-item-create-cancel");
     const getTextInput = () => screen.getByTestId("reminder-item-create-text");

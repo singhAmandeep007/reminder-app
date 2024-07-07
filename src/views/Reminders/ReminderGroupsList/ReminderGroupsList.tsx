@@ -19,6 +19,7 @@ export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>>
           size={"full"}
           onClick={() => setIsCreating((isCreating) => !isCreating)}
           disabled={isCreating}
+          data-testid={"reminder-group-create-btn"}
         >
           Add List
         </AddButton>
@@ -48,9 +49,9 @@ export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>>
             setIsCreating(false);
           }}
           testIds={{
-            cancel: `reminder-group-item-create-cancel`,
-            save: `reminder-group-item-create-save`,
-            text: `reminder-group-item-create-text`,
+            cancel: `reminder-group-create-cancel`,
+            save: `reminder-group-create-save`,
+            text: `reminder-group-create-text`,
           }}
         />
       )}

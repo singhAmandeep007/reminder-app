@@ -40,6 +40,7 @@ const TimeField = ({
           value={time}
           onChange={handleChange}
           disabled={disabled}
+          data-testid="select-time-input"
         />
       </div>
     </div>
