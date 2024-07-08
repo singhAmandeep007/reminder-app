@@ -2,7 +2,9 @@ import { screen, waitFor } from "@testing-library/react";
 
 import userEvent from "@testing-library/user-event";
 
-import { db, buildScenarios, urlPrefix } from "services/mocker/msw";
+import { db, buildScenarios } from "services/mocker/msw";
+
+import { urlPrefix } from "shared";
 
 import { render, createTestMswServer, HttpResponse, http } from "tests/utils";
 

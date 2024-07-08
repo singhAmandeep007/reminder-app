@@ -3,7 +3,9 @@ import { screen, waitFor } from "@testing-library/react";
 import { Response } from "miragejs";
 import userEvent from "@testing-library/user-event";
 
-import { buildScenarios, urlPrefix } from "services/mocker/mirage";
+import { urlPrefix } from "shared";
+
+import { buildScenarios } from "services/mocker/mirage";
 
 import { render, TRenderProps, createTestMirageServer } from "tests/utils";
 

@@ -11,13 +11,11 @@ import {
   TUpdateReminderResponsePayload,
 } from "types";
 
-import { getUrlSearchParams } from "shared";
+import { getUrlSearchParams, urlPrefix } from "shared";
 
-import { TDb } from "../db";
+import { TSetupController } from "./types";
 
-import { urlPrefix } from "../utils";
-
-export const setupRemindersController = (db: TDb) => {
+export const setupRemindersController: TSetupController = ({ db }) => {
   const getReminders = http.get(urlPrefix("/reminders"), ({ request }) => {
     const reminders = db.reminder.getAll();
 

@@ -6,7 +6,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   // small wrapper around fetch that aims to simplify HTTP requests (like axios)
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
+    baseUrl: window.Cypress ? window.Cypress.env("REACT_APP_API_URL") : process.env.REACT_APP_API_URL,
     prepareHeaders: (headers) => {
       headers.set("Accept-Language", i18n.currentLanguage);
     },

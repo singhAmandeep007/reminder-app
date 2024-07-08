@@ -1,11 +1,18 @@
 import { http, HttpResponse } from "msw";
 import { format } from "date-fns";
 
-import { buildScenarios, urlPrefix } from "services/mocker/msw";
+import { urlPrefix } from "shared";
+
+import { buildScenarios } from "services/mocker/msw";
+import { MOCKER_TYPE } from "services/mocker";
 
 import { remindersElements } from "../pages";
 
 describe("Reminders Page", () => {
+  before(function () {
+    cy.skipIf(Cypress.env("REACT_APP_MOCKER") !== MOCKER_TYPE.msw, this);
+  });
+
   it("should be able to create a reminder under a reminder group and add a due date", () => {
     const reminderTitle = "Learn Cypress";
 
@@ -41,7 +48,7 @@ describe("Reminders Page", () => {
   });
 
   it("should handle negative scenario for create reminder", () => {
-    cy.interceptRequest(
+    cy.interceptMswRequest(
       http.post(
         urlPrefix("/reminders"),
         () => {

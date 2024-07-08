@@ -1,8 +1,10 @@
 import { REMINDER_STATE, TReminder } from "types";
 
+import { urlPrefix } from "shared";
+
 import { TAppMockServer } from "../types";
 
-import { urlPrefix, resourceNotFoundResponse } from "../utils";
+import { resourceNotFoundResponse } from "../utils";
 
 export function reminderRoutes(this: TAppMockServer) {
   this.get(urlPrefix("/reminders"), (schema, request) => {

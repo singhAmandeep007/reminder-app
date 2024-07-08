@@ -8,7 +8,7 @@ import { setupHandlers } from "./handlers";
 
 const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
-export const handlers = setupHandlers(db);
+export const handlers = setupHandlers({ db });
 
 export const startMswWorker = async () => {
   const worker = setupWorker(...handlers);

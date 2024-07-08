@@ -1,7 +1,6 @@
-import * as controllers from "./controllers";
-import { TDb } from "./db";
+import { setupReminderGroupsController, setupRemindersController, TSetupController } from "./controllers";
 
-export const setupHandlers = (db: TDb) => [
-  ...controllers.setupReminderGroupsController(db),
-  ...controllers.setupRemindersController(db),
+export const setupHandlers = (config: Parameters<TSetupController>[0]) => [
+  ...setupReminderGroupsController(config),
+  ...setupRemindersController(config),
 ];

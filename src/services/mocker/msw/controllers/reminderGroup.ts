@@ -13,11 +13,11 @@ import {
   THTTPError,
 } from "types";
 
-import { TDb } from "../db";
+import { urlPrefix } from "shared";
 
-import { urlPrefix } from "../utils";
+import { TSetupController } from "./types";
 
-export const setupReminderGroupsController = (db: TDb) => {
+export const setupReminderGroupsController: TSetupController = ({ db }) => {
   const getReminderGroups = http.get(urlPrefix("/reminder-groups"), () => {
     return HttpResponse.json({ data: db.reminderGroup.getAll() }, { status: 200 });
   });

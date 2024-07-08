@@ -7,7 +7,7 @@ import { runServer, createRoutes } from "services/mocker/mirage";
 import { setupHandlers, db, dropDb } from "services/mocker/msw";
 
 export const createTestMswServer = (logging: boolean = false) => {
-  const testMswServer = setupServer(...setupHandlers(db));
+  const testMswServer = setupServer(...setupHandlers({ db }));
 
   beforeAll(() => {
     testMswServer.listen({
