@@ -27,7 +27,7 @@ async function setupApp() {
   }
 
   if (window.Cypress && window.Cypress.env("REACT_APP_MOCKER") === MOCKER_TYPE.mirage) {
-    import("services/mocker/mirage/proxyServer").then(({ startProxyMirageServer }) => {
+    await import("services/mocker/mirage/proxyServer").then(({ startProxyMirageServer }) => {
       startProxyMirageServer();
     });
   }

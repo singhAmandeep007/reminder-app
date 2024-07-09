@@ -1,3 +1,4 @@
+import { createRoutes, TServer } from "services/mocker/mirage";
 import { THandleProxyMirageServerRequest } from "services/mocker/mirage/proxyServer";
 
 type TCypressWindow = Window & {
@@ -9,6 +10,8 @@ declare global {
     // eslint-disable-next-line
     interface Chainable {
       setupMirageApiProxy(): void;
+
+      resetMirageApiHandlers(server: TServer): void;
     }
   }
 }
@@ -43,4 +46,8 @@ Cypress.Commands.add("setupMirageApiProxy", () => {
       });
     };
   });
+});
+
+Cypress.Commands.add("resetMirageApiHandlers", (server) => {
+  createRoutes.call(server);
 });

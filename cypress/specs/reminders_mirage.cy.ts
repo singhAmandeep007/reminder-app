@@ -1,6 +1,10 @@
 import { format } from "date-fns";
 
-import { runServer, TServer } from "services/mocker/mirage";
+import { Response as MirageResponse } from "miragejs";
+
+import { urlPrefix } from "shared";
+
+import { buildScenarios, runServer, TServer } from "services/mocker/mirage";
 import { MOCKER_TYPE } from "services/mocker";
 
 import { remindersElements } from "../pages";
@@ -53,5 +57,31 @@ describe("Reminders Page", () => {
     remindersElements.getReminderItemByText(reminderTitle).should("not.contain", "Reminder group title");
 
     remindersElements.getReminderItemByText(reminderTitle).contains(format(dueDate, "MMM d, yyyy, h:mm a"));
+  });
+
+  it("should be able handle negative case when creating a reminder", () => {
+    buildScenarios(server)
+      .withReminders(5)
+      .withReminderGroups({ reminderGroups: ["Personal"], remindersPerGroup: 2 });
+
+    cy.visit("/reminders");
+
+    remindersElements.root.should("exist");
+
+    remindersElements.getReminderGroupItemByText("Personal").findByText("Personal").click();
+
+    remindersElements.createReminder("Learn Cypress");
+
+    server.post(urlPrefix("/reminders"), () => {
+      return new MirageResponse(500, {});
+    });
+
+    cy.contains("Error creating reminder");
+
+    cy.resetMirageApiHandlers(server);
+
+    remindersElements.createReminder("Learn Cypress");
+
+    remindersElements.getReminderItemByText("Learn Cypress").should("exist");
   });
 });
