@@ -20,3 +20,5 @@ import "@cypress/code-coverage/support";
 import "./commands";
 
 import "./msw";
+
+import "./mirage";

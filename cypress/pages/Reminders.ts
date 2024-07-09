@@ -56,6 +56,10 @@ export class RemindersElements extends LayoutElements {
     return this.root.findByTestId("reminder-item-create-cancel");
   }
 
+  get reminderRefetchBtn() {
+    return this.root.findByTestId("reminder-refetch-btn");
+  }
+
   get reminderCreateTextInput() {
     return this.root.findByTestId("reminder-item-create-text");
   }

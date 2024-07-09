@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import { i18n } from "modules/i18n";
+import { MOCKER_TYPE } from "services/mocker";
 
 import { App } from "./app";
 
@@ -23,6 +24,12 @@ async function setupApp() {
     await setupMocker({ type: mockerType, shouldSeedData: true });
     // eslint-disable-next-line no-console
     console.log(`%c API is being mocked using ${mockerType}!`, "color: #bada55; font-weight: bold;");
+  }
+
+  if (window.Cypress && window.Cypress.env("REACT_APP_MOCKER") === MOCKER_TYPE.mirage) {
+    import("services/mocker/mirage/proxyServer").then(({ startProxyMirageServer }) => {
+      startProxyMirageServer();
+    });
   }
 
   return Promise.resolve();

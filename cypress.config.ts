@@ -21,12 +21,13 @@ export default defineConfig({
       codeCoverageTask(on, config);
       return config;
     },
+    // NOTE: PORT defined in .developer.env
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/specs/**/*.cy.{js,jsx,ts,tsx}",
   },
   video: false,
   env: {
-    REACT_APP_MOCKER: "msw",
+    REACT_APP_MOCKER: "mirage",
     REACT_APP_API_URL: "https://reminder-app.com/api/v1/",
     REACT_APP_PUBLIC_URL: "http://localhost:3000/",
     coverage: true,

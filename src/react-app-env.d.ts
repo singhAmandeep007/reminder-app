@@ -3,6 +3,7 @@
 /// <reference types="react-dom" />
 
 import { TEnv } from "types";
+import { TMocker } from "services/mocker";
 
 declare global {
   declare namespace NodeJS {

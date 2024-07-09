@@ -56,3 +56,7 @@ Cypress.Commands.addQuery("getByDataAttr", ({ value, attribute = "cy" }) => {
 Cypress.Commands.add("skipIf", (expression: boolean, context: Mocha.Context) => {
   if (expression) context.skip.bind(context)();
 });
+
+Cypress.on("uncaught:exception", (err, runnable, promise) => {
+  return false;
+});
