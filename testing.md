@@ -25,6 +25,10 @@
 
 1. https://github.com/mswjs/msw/issues/1560
 
+## Mirage + Cypress
+
+1. https://miragejs.com/quickstarts/cypress/
+
 ## Popper issue
 
 1. https://github.com/floating-ui/react-popper/issues/350
