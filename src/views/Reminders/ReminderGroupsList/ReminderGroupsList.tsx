@@ -1,8 +1,4 @@
-import { FC, forwardRef, PropsWithChildren, useState } from "react";
-
-import { Components, Virtuoso } from "react-virtuoso";
-
-import { TReminderGroup } from "types";
+import { FC, PropsWithChildren, useState } from "react";
 
 import { ReminderGroupItem } from "../ReminderGroupItem";
 import { AddButton, AddUpdateItem } from "../components";
@@ -10,24 +6,6 @@ import { AddButton, AddUpdateItem } from "../components";
 import { useReminderGroupsList } from "./useReminderGroupsList";
 
 export type TReminderGroupsListProps = Record<string, never>;
-
-const VirtuosoList: Components["List"] = forwardRef((props, ref) => {
-  return (
-    <ul
-      className="divide divide-y divide-accent-dark"
-      ref={ref as React.RefObject<HTMLUListElement>}
-      {...(props as React.HTMLAttributes<HTMLUListElement>)}
-    >
-      {props.children}
-    </ul>
-  );
-});
-
-const VirtuosoItem: Components["Item"] = (props) => {
-  // FIX: item="[Object Object]"
-  const { item, ...rest } = props;
-  return <li {...rest}>{props.children}</li>;
-};
 
 export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>> = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -48,34 +26,20 @@ export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>>
       </div>
 
       {reminderGroups && (
-        <Virtuoso
-          className="flex-1 overflow-scroll"
-          computeItemKey={(index) => {
-            return reminderGroups[index].id || Math.random();
-          }}
-          data={reminderGroups}
-          components={{
-            List: VirtuosoList,
-            Item: VirtuosoItem,
-            Header: () => <ReminderGroupItem />,
-          }}
-          itemContent={(_, reminderGroup) => <ReminderGroupItem reminderGroup={reminderGroup as TReminderGroup} />}
-        />
+        <div className="flex-1 overflow-scroll">
+          <ul className="divide divide-y divide-accent-dark">
+            <li key="all">
+              <ReminderGroupItem />
+            </li>
+            {reminderGroups &&
+              reminderGroups.map((reminderGroup) => (
+                <li key={reminderGroup.id}>
+                  <ReminderGroupItem reminderGroup={reminderGroup} />
+                </li>
+              ))}
+          </ul>
+        </div>
       )}
-
-      {/* <div className="flex-1 overflow-scroll">
-        <ul className="divide divide-y divide-accent-dark">
-          <li key="all">
-            <ReminderGroupItem />
-          </li>
-          {reminderGroups &&
-            reminderGroups.map((reminderGroup) => (
-              <li key={reminderGroup.id}>
-                <ReminderGroupItem reminderGroup={reminderGroup} />
-              </li>
-            ))}
-        </ul>
-      </div> */}
 
       {isCreating && (
         <AddUpdateItem

@@ -2,8 +2,6 @@ import { screen, waitFor } from "@testing-library/react";
 
 import userEvent from "@testing-library/user-event";
 
-import { VirtuosoMockContext } from "react-virtuoso";
-
 import { db, buildScenarios } from "services/mocker/msw";
 
 import { urlPrefix } from "shared";
@@ -22,13 +20,7 @@ describe("ReminderGroupsList", () => {
     const getTextInput = () => screen.getByTestId("reminder-group-create-text");
 
     return {
-      result: render(<ReminderGroupsList />, {
-        wrapper: (props) => (
-          <VirtuosoMockContext.Provider value={{ viewportHeight: 500, itemHeight: 1 }}>
-            {props.children}
-          </VirtuosoMockContext.Provider>
-        ),
-      }),
+      result: render(<ReminderGroupsList />),
       getAddListBtn,
       getSaveBtn,
       getCancelBtn,
@@ -46,8 +38,7 @@ describe("ReminderGroupsList", () => {
     });
 
     await waitFor(() => {
-      // WHY: "All" reminder group item is rendered as a header outside of the list as div
-      expect(screen.getAllByRole("listitem")).toHaveLength(3);
+      expect(screen.getAllByRole("listitem")).toHaveLength(4);
     });
   });
 
