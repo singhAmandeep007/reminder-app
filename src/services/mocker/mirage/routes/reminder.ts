@@ -54,12 +54,13 @@ export function reminderRoutes(this: TAppMockServer) {
       state: REMINDER_STATE.INACTIVE,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      dueDate: null,
     };
 
     const reminder = schema.create("reminder", Object.assign(defaultAttr, attrs));
 
     return {
-      data: reminder.attrs,
+      data: reminder.getAttributes(),
     };
   });
 
@@ -76,7 +77,7 @@ export function reminderRoutes(this: TAppMockServer) {
     reminder.update(attrs);
 
     return {
-      data: reminder,
+      data: reminder.getAttributes(),
     };
   });
 }

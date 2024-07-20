@@ -13,10 +13,10 @@ export const db = factory({
 
     isPinned: () => false,
     state: () => REMINDER_STATE.INACTIVE,
-    group: oneOf("reminderGroup"),
+    group: nullable(oneOf("reminderGroup")),
     createdAt: () => new Date().toISOString(),
     updatedAt: () => new Date().toISOString(),
-    dueDate: nullable(String),
+    dueDate: nullable<string>(() => null),
   },
 
   reminderGroup: {

@@ -20,6 +20,8 @@ export const reminder: ModelDefinition<TModelReminder> = Model.extend({
     // NOTE: populate the group attribute if the reminder is associated with a group.
     if (groupId) {
       reminderAttributes.group = (this as any).group.attrs;
+    } else {
+      reminderAttributes.group = null;
     }
 
     return reminderAttributes as TReminder;

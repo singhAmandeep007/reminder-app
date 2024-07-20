@@ -31,13 +31,13 @@ export type TReminder = {
   /**
    * Optional reminder group this reminder belongs to.
    */
-  group?: TReminderGroup;
+  group: TReminderGroup | null;
   /**
    * Optional due date and time for the reminder. (ISO 8601 format)
    *
    * @example "2021-09-30T00:00:00.000Z"
    */
-  dueDate?: string | null;
+  dueDate: string | null;
 };
 
 export type TReminderGroup = {
