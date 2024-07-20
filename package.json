@@ -84,6 +84,7 @@
     "storybook:build": "storybook build",
     "storybook:test": "test-storybook",
     "CYPRESS": "-------------------------------------------------------------------------",
+    "cy:install": "cypress install",
     "cy:open": "cypress open",
     "cy:test": "npm-run-all -n cy:clean --parallel -r start \"cy:run:report -- {@}\" --",
     "cy:clean": "rm -rf ./reports/cypress ./cypress/screenshots ./cypress/videos",
