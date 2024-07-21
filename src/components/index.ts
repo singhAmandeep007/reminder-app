@@ -11,3 +11,6 @@ export * from "./Label";
 export * from "./Dialog";
 export * from "./Badge";
 export * from "./Sonner";
+export * from "./Progress";
+export * from "./Separator";
+export * from "./ValueSetter";

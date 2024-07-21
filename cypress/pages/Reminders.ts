@@ -104,12 +104,12 @@ export class RemindersElements extends LayoutElements {
     return cy.findByTestId("reminder-item-save-due-date-btn");
   }
 
-  get reminderDueDateDialog() {
-    return cy.findByTestId("reminder-item-due-date-dialog");
+  get reminderDialog() {
+    return cy.findByTestId("reminder-item-dialog");
   }
 
   get reminderDueDateTimeInput() {
-    return this.reminderDueDateDialog.findByTestId("select-time-input");
+    return this.reminderDialog.findByTestId("select-time-input");
   }
 }
 

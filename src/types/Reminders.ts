@@ -7,6 +7,11 @@ export const REMINDER_STATE = {
 
 export type TReminderState = (typeof REMINDER_STATE)[keyof typeof REMINDER_STATE];
 
+export type TReminderFocusSession = {
+  startTime: string;
+  endTime: string;
+};
+
 export type TReminder = {
   id: string;
   title: string;
@@ -33,11 +38,26 @@ export type TReminder = {
    */
   group: TReminderGroup | null;
   /**
-   * Optional due date and time for the reminder. (ISO 8601 format)
+   * Due date and time for the reminder. (ISO 8601 format)
    *
    * @example "2021-09-30T00:00:00.000Z"
    */
   dueDate: string | null;
+  currentFocusSession: {
+    /**
+     * date and time when focus session was started for this reminder. (ISO 8601 format)
+     */
+    startTime: string;
+    /**
+     * date and time the focus session stopped for this reminder. (ISO 8601 format)
+     */
+    endTime: string;
+  } | null;
+  /**
+   * Array to store history of multiple focus sessions for this reminder.
+   * Each session includes start time and end time.
+   */
+  focusSessions: TReminderFocusSession[];
 };
 
 export type TReminderGroup = {
@@ -81,7 +101,11 @@ export type TCreateReminderRequestPayload = Pick<TReminder, "title"> & Partial<{
 export type TCreateReminderResponsePayload = TDataResponsePayload<TReminder>;
 
 export type TUpdateReminderRequestPayload = Pick<TReminder, "id"> &
-  Partial<Pick<TReminder, "title" | "state" | "isPinned" | "dueDate"> & { groupId: TReminderGroup["id"] }>;
+  Partial<
+    Pick<TReminder, "title" | "state" | "isPinned" | "dueDate" | "currentFocusSession" | "focusSessions"> & {
+      groupId: TReminderGroup["id"];
+    }
+  >;
 
 export type TUpdateReminderResponsePayload = TDataResponsePayload<TReminder>;
 

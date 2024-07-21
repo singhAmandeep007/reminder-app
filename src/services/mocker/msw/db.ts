@@ -1,4 +1,5 @@
 import { factory, nullable, oneOf, primaryKey, drop } from "@mswjs/data";
+import { NullableProperty } from "@mswjs/data/lib/nullable";
 
 import { uuid } from "shared";
 
@@ -17,6 +18,15 @@ export const db = factory({
     createdAt: () => new Date().toISOString(),
     updatedAt: () => new Date().toISOString(),
     dueDate: nullable<string>(() => null),
+    focusSessions: () => [],
+    // FIX: nullable(Object) returning {} instead of null
+    currentFocusSession: nullable<any>(
+      {
+        startTime: () => String,
+        endTime: () => String,
+      },
+      { defaultsToNull: true }
+    ) as unknown as NullableProperty<any>,
   },
 
   reminderGroup: {

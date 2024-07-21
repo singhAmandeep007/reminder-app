@@ -40,3 +40,44 @@ const generateUUID = function () {
 };
 
 export const uuid = generateUUID();
+
+export function generateUniqueRandomNumbers(length: number, min: number, max: number) {
+  if (length > max - min + 1) {
+    throw new Error("Cannot generate unique random numbers. Requested length is greater than the range of numbers.");
+  }
+
+  const numbers = new Set();
+  while (numbers.size < length) {
+    numbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
+  }
+  return Array.from(numbers) as number[];
+}
+
+type TTruncatePosition = "start" | "middle" | "end";
+
+export function truncateText(
+  text: string,
+  options: { maxLength: number; position?: TTruncatePosition; ellipsis?: string }
+): string {
+  const { maxLength, position = "end", ellipsis = "..." } = options;
+
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  const ellipsisLength = ellipsis.length;
+
+  switch (position) {
+    case "start":
+      return ellipsis + text.slice(-(maxLength - ellipsisLength));
+
+    case "middle":
+      const leftLength = Math.ceil((maxLength - ellipsisLength) / 2);
+      const rightLength = Math.floor((maxLength - ellipsisLength) / 2);
+      return text.slice(0, leftLength) + ellipsis + text.slice(-rightLength);
+
+    case "end":
+    default:
+      return text.slice(0, maxLength - ellipsisLength) + ellipsis;
+  }
+}

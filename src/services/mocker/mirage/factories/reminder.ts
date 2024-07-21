@@ -29,7 +29,13 @@ export const reminder: FactoryDefinition<TAppModels["reminder"]> = Factory.exten
   dueDate() {
     return null;
   },
+  focusSessions() {
+    return [];
+  },
   group() {
+    return null;
+  },
+  currentFocusSession() {
     return null;
   },
 });

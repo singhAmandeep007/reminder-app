@@ -1,7 +1,6 @@
 import { FC, PropsWithChildren, useState } from "react";
 
-import { ChevronDown, ChevronUp, Pencil, Trash, Pin, CalendarClock } from "lucide-react";
-import { format } from "date-fns";
+import { ChevronDown, ChevronUp, Pencil, Trash, Pin, CalendarClock, Timer } from "lucide-react";
 
 import { TReminder, REMINDER_STATE } from "types";
 
@@ -22,7 +21,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogClose,
-  Badge,
 } from "components";
 
 import { cn } from "shared";
@@ -31,14 +29,25 @@ import { AddUpdateItem } from "../components";
 
 import { useReminderItem } from "./useReminderItem";
 
+import { Badges } from "./Badges";
+import { FocusSessionTracker } from "./FocusSessionTracker";
+
 export type TReminderItemProps = {
   reminder: TReminder;
   listName?: string;
 };
 
+const DIALOGS = {
+  DUE_DATE: "DUE_DATE",
+  FOCUS_SESSION: "FOCUS_SESSION",
+} as const;
+
+type TDialog = (typeof DIALOGS)[keyof typeof DIALOGS] | null;
+
 export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ reminder, listName }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [dialog, setDialog] = useState<TDialog>(null);
 
   const { handleOnDelete, handleOnUpdate, isLoading } = useReminderItem({
     reminder,
@@ -47,8 +56,6 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
   const isMenuDisabled = isLoading;
 
   const isCompleted = reminder.state === REMINDER_STATE.COMPLETED;
-
-  const isOverdue = reminder.dueDate && new Date(reminder.dueDate) < new Date();
 
   return (
     <div
@@ -137,9 +144,36 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                       role="button"
                     />
                   </DropdownMenuItem>
+
                   <DropdownMenuSeparator />
 
-                  <DialogTrigger asChild>
+                  <DialogTrigger
+                    asChild
+                    onClick={() => {
+                      setDialog(DIALOGS.FOCUS_SESSION);
+                    }}
+                  >
+                    <DropdownMenuItem
+                      className={cn("group")}
+                      disabled={isCompleted}
+                      data-testid={`reminder-item-menuitem-focus-session`}
+                    >
+                      <Timer
+                        size={20}
+                        className={cn("group-hover:text-primary")}
+                        role="button"
+                      />
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+
+                  <DropdownMenuSeparator />
+
+                  <DialogTrigger
+                    asChild
+                    onClick={() => {
+                      setDialog(DIALOGS.DUE_DATE);
+                    }}
+                  >
                     <DropdownMenuItem
                       className="group"
                       disabled={isCompleted}
@@ -167,7 +201,9 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                       role="button"
                     />
                   </DropdownMenuItem>
+
                   <DropdownMenuSeparator />
+
                   <DropdownMenuItem
                     data-testid={`reminder-item-menuitem-delete`}
                     onClick={() => handleOnDelete(reminder.id)}
@@ -184,51 +220,52 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
 
               <DialogContent
                 className="w-max"
-                data-testid="reminder-item-due-date-dialog"
+                data-testid="reminder-item-dialog"
               >
-                <DialogHeader>
-                  <DialogTitle className="text-left">Schedule your reminder</DialogTitle>
-                  <DialogDescription className="text-left">Select reminder's due date and time</DialogDescription>
-                </DialogHeader>
+                {dialog === DIALOGS.DUE_DATE && (
+                  <>
+                    <DialogHeader>
+                      <DialogTitle className="text-left">Schedule your reminder</DialogTitle>
+                      <DialogDescription className="text-left">Select reminder's due date and time</DialogDescription>
+                    </DialogHeader>
 
-                <DateTimePicker
-                  isLoading={isLoading}
-                  date={reminder.dueDate ? new Date(reminder.dueDate) : undefined}
-                >
-                  {({ selectedDateTime }) => {
-                    return (
-                      <DialogClose asChild>
-                        <Button
-                          size="full"
-                          onClick={() => {
-                            if (selectedDateTime) {
-                              const dueDate = selectedDateTime.toISOString();
-                              handleOnUpdate({ id: reminder.id, dueDate });
-                            }
-                          }}
-                          className={cn(isLoading && "cursor-not-allowed")}
-                          disabled={!selectedDateTime || isLoading}
-                          data-testid={`reminder-item-save-due-date-btn`}
-                        >
-                          Save
-                        </Button>
-                      </DialogClose>
-                    );
-                  }}
-                </DateTimePicker>
+                    <DateTimePicker
+                      isLoading={isLoading}
+                      date={reminder.dueDate ? new Date(reminder.dueDate) : undefined}
+                    >
+                      {({ selectedDateTime }) => {
+                        return (
+                          <DialogClose asChild>
+                            <Button
+                              size="full"
+                              onClick={() => {
+                                if (selectedDateTime) {
+                                  const dueDate = selectedDateTime.toISOString();
+                                  handleOnUpdate({ id: reminder.id, dueDate });
+                                }
+                              }}
+                              className={cn(isLoading && "cursor-not-allowed")}
+                              disabled={!selectedDateTime || isLoading}
+                              data-testid={`reminder-item-save-due-date-btn`}
+                            >
+                              Save
+                            </Button>
+                          </DialogClose>
+                        );
+                      }}
+                    </DateTimePicker>
+                  </>
+                )}
+                {dialog === DIALOGS.FOCUS_SESSION && <FocusSessionTracker reminder={reminder} />}
               </DialogContent>
             </Dialog>
           </div>
 
           {!isCompleted && (
-            <div className="ml-6 mr-10 flex flex-wrap gap-2">
-              {!listName && reminder.group?.name && <Badge variant="default">{reminder.group.name}</Badge>}
-              {reminder?.dueDate && (
-                <Badge variant={isOverdue ? "destructive" : "default"}>
-                  Due: {format(new Date(reminder.dueDate), "PPp")}
-                </Badge>
-              )}
-            </div>
+            <Badges
+              reminder={reminder}
+              listName={listName}
+            />
           )}
         </>
       )}

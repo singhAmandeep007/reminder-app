@@ -48,7 +48,7 @@ describe("Reminders Page", () => {
 
     const dueDate = new Date();
 
-    remindersElements.reminderDueDateDialog.findByRole("gridcell", { name: dueDate.getDate().toString() }).click();
+    remindersElements.reminderDialog.findByRole("gridcell", { name: dueDate.getDate().toString() }).click();
 
     remindersElements.reminderDueDateTimeInput.type(format(dueDate, "HH:mm"));
 
