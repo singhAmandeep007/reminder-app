@@ -1,3 +1,5 @@
+# GitHub Actions
+# https://docs.github.com/en/actions/using-workflows
 name: Cypress Tests
 on:
   push:
@@ -10,22 +12,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # install a specific version of Node using
+      # https://github.com/actions/setup-node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: lts/*
-      - name: Install dependencies
+          node-version-file: .nvmrc
+
+      # Restore the previous npm modules and Cypress binary archives.
+      # In case there's no previous cache the packages will be downloaded
+      # and saved automatically after the entire workflow successfully finishes.
+      # See https://github.com/actions/cache
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies and verify Cypress
+        # print Cypress and OS info
         run: |
           npm ci
           npm run cy:install
+          npx cypress verify
+          npx cypress info
+          npx cypress version
+          npx cypress version --component package
+          npx cypress version --component binary
+          npx cypress version --component electron
+          npx cypress version --component node
+
       - name: Run Cypress e2e tests
         run: npm run cy:test
+
       - name: Upload Cypress screenshots
         uses: actions/upload-artifact@v4
+        # there might be no screenshots created when:
+        # - there are no test failures
+        # so only upload screenshots if previous step has failed
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
           retention-days: 5
+
       - name: Upload Cypress videos
         uses: actions/upload-artifact@v4
         if: failure()
@@ -34,6 +70,7 @@ jobs:
           path: cypress/videos
           retention-days: 5
           if-no-files-found: ignore
+
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         if: always()
@@ -41,6 +78,7 @@ jobs:
           name: cypress-html-report
           path: reports/cypress/result/html
           retention-days: 5
+
       - name: Upload XML report
         uses: actions/upload-artifact@v4
         if: failure()
@@ -49,6 +87,7 @@ jobs:
           path: reports/cypress/result/xml/combined-xml-report.xml
           retention-days: 5
           if-no-files-found: ignore
+
       - name: Upload JSON report
         uses: actions/upload-artifact@v4
         if: failure()
