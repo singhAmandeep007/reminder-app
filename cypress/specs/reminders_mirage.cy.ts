@@ -66,7 +66,7 @@ describe("Reminders Page", () => {
 
     cy.visit("/reminders");
 
-    remindersElements.root.should("not.exist");
+    remindersElements.root.should("exist");
 
     remindersElements.getReminderGroupItemByText("Personal").findByText("Personal").click();
 
