@@ -77,7 +77,7 @@ const FocusTimer: React.FC<TFocusTimerProps> = ({ progress, size = 144, onStart,
   const strokeDashoffset = Math.max(circumference - (progress / 100) * circumference, 0);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 ">
       <div
         className="relative"
         style={{ width: size, height: size }}
@@ -114,17 +114,17 @@ const FocusTimer: React.FC<TFocusTimerProps> = ({ progress, size = 144, onStart,
       </div>
       <Button
         onClick={isRunning ? onStop : onStart}
-        className="h-max rounded-full p-3"
+        className=" h-max rounded-full p-3"
       >
         {isRunning ? (
           <Square
             size={16}
-            className={"fill-current"}
+            className={"!pointer-events-none fill-current"}
           />
         ) : (
           <Play
             size={16}
-            className={"fill-current"}
+            className={"!pointer-events-none fill-current"}
           />
         )}
       </Button>
