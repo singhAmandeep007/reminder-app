@@ -1,5 +1,10 @@
 {
-  "presets": ["react-app"],
+  "presets": [
+    "react-app",
+    // NOTE: explicitly defined to work with storybook
+    // transforming JSX syntax into regular JavaScript
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ],
   "env": {
     "development": {
       "plugins": [
