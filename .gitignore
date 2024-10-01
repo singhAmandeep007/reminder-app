@@ -8,6 +8,16 @@
 # testing
 /reports
 
+# cypress
+/cypress/screenshots
+/cypress/videos
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # production
 /build
 
@@ -18,18 +28,13 @@
 .env.test.local
 .env.production.local
 
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# storybook
 *storybook.log
-
 /src/stories
-# playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-
 
 TODO.TODO
