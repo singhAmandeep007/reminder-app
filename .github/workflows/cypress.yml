@@ -20,37 +20,39 @@ jobs:
       - name: Run Cypress e2e tests
         run: npm run cy:test
       - name: Upload Cypress screenshots
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
           retention-days: 5
       - name: Upload Cypress videos
-        uses: actions/upload-artifact@v3
-        if: always()
+        uses: actions/upload-artifact@v4
+        if: failure()
         with:
           name: cypress-videos
           path: cypress/videos
           retention-days: 5
       - name: Upload HTML report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-html-report
           path: reports/cypress/result/html
           retention-days: 5
       - name: Upload XML report
-        uses: actions/upload-artifact@v3
-        if: always()
+        uses: actions/upload-artifact@v4
+        if: failure()
         with:
           name: cypress-xml-report
           path: reports/cypress/result/xml/combined-xml-report.xml
           retention-days: 5
+          if-no-files-found: ignore
       - name: Upload JSON report
-        uses: actions/upload-artifact@v3
-        if: always()
+        uses: actions/upload-artifact@v4
+        if: failure()
         with:
           name: cypress-json-report
           path: reports/cypress/result/json/combined-json-report.json
           retention-days: 5
+          if-no-files-found: ignore
