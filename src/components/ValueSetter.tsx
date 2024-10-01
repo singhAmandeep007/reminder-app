@@ -13,9 +13,21 @@ export type TValueSetterProps = {
   min?: number;
   children?: React.ReactNode;
   className?: string;
+  testIds?: {
+    increment?: string;
+    decrement?: string;
+  };
 };
 
-export function ValueSetter({ initialValue = 0, onChange, children, min = 0, max = 59, className }: TValueSetterProps) {
+export function ValueSetter({
+  initialValue = 0,
+  onChange,
+  children,
+  min = 0,
+  max = 59,
+  className,
+  testIds,
+}: TValueSetterProps) {
   const [value, setValue] = useState(initialValue);
 
   const increment = () => {
@@ -42,6 +54,7 @@ export function ValueSetter({ initialValue = 0, onChange, children, min = 0, max
           size={"icon"}
           disabled={value >= max}
           variant={"outline"}
+          data-testid={testIds?.increment || "increment"}
         >
           <ChevronUp />
         </Button>
@@ -51,6 +64,7 @@ export function ValueSetter({ initialValue = 0, onChange, children, min = 0, max
           size={"icon"}
           disabled={value <= min}
           variant={"outline"}
+          data-testid={testIds?.decrement || "decrement"}
         >
           <ChevronDown />
         </Button>

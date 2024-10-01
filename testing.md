@@ -32,3 +32,9 @@
 ## Popper issue
 
 1. https://github.com/floating-ui/react-popper/issues/350
+
+## Conventions followed
+
+1. testId - `data-testid`
+2. single test id as prop - `testId: 'id'`
+3. multiple test id as prop - `testIds: { id1: 'id1', id2: 'id2' }`
