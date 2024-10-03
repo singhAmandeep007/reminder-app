@@ -2,6 +2,7 @@ import * as React from "react";
 import { format, set } from "date-fns";
 import { Clock } from "lucide-react";
 
+import { cn } from "shared";
 import { Input, Label } from "components";
 
 import { Calendar, TCalendarProps } from "./Calendar";
@@ -12,10 +13,16 @@ const TimeField = ({
   time,
   onChange,
   disabled = false,
+  classNames,
 }: {
   time: TTime;
   onChange?: (value: TTime) => void;
   disabled?: boolean;
+  classNames?: {
+    container?: string;
+    input?: string;
+    label?: string;
+  };
 }) => {
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +34,13 @@ const TimeField = ({
   );
 
   return (
-    <div className="flex flex-col gap-2">
-      <Label htmlFor="time">Select time :</Label>
+    <div className={cn("flex flex-col gap-2", classNames?.container)}>
+      <Label
+        htmlFor="time"
+        className={classNames?.label}
+      >
+        Select time :
+      </Label>
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 end-0 top-0 flex items-center pe-3.5">
           <Clock size={16} />
@@ -36,7 +48,7 @@ const TimeField = ({
         <Input
           id="time"
           type="time"
-          className="block min-w-[calc(100%-1rem)] max-md:flex"
+          className={cn("block min-w-[calc(100%-1rem)] max-md:flex", classNames?.input)}
           value={time}
           onChange={handleChange}
           disabled={disabled}
@@ -97,29 +109,30 @@ export function DateTimePicker({
 
   return (
     <div className=" flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <Calendar
-          showOutsideDays={false}
-          mode="single"
-          selected={selectedDateTime}
-          // @ts-ignore
-          onSelect={handleDateChange}
-          defaultMonth={selectedDateTime ? selectedDateTime : new Date()}
-          initialFocus
-          required
-          fromDate={new Date()}
+      <Calendar
+        showOutsideDays={false}
+        mode="single"
+        selected={selectedDateTime}
+        // @ts-ignore
+        onSelect={handleDateChange}
+        defaultMonth={selectedDateTime ? selectedDateTime : new Date()}
+        initialFocus
+        required
+        fromDate={new Date()}
+        disabled={isDisabled()}
+        className="p-0"
+        {...props}
+      />
+      {withTime && selectedDateTime && (
+        <TimeField
+          time={format(selectedDateTime, "HH:mm") as TTime}
+          onChange={handleTimeChange}
           disabled={isDisabled()}
-          className="p-0"
-          {...props}
+          classNames={{
+            label: "text-primary",
+          }}
         />
-        {withTime && selectedDateTime && (
-          <TimeField
-            time={format(selectedDateTime, "HH:mm") as TTime}
-            onChange={handleTimeChange}
-            disabled={isDisabled()}
-          />
-        )}
-      </div>
+      )}
 
       {typeof children === "function" && children({ selectedDateTime })}
     </div>

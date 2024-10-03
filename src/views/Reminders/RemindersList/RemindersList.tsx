@@ -8,11 +8,14 @@ import { ReminderItem } from "../ReminderItem";
 import { AddButton, AddUpdateItem } from "../components";
 
 import { useRemindersList } from "./useRemindersList";
+import { useRemindersNotification } from "./useRemindersNotification";
 
 export type TRemindersListProps = Record<string, never>;
 
 export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
   const { reminders, refetchReminders, reminderGroup, handleOnSave } = useRemindersList();
+
+  useRemindersNotification({ reminders });
 
   const [isCreating, setIsCreating] = useState(false);
 

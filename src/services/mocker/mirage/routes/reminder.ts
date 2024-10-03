@@ -54,9 +54,11 @@ export function reminderRoutes(this: TAppMockServer) {
       state: REMINDER_STATE.INACTIVE,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      focusSessions: [],
       dueDate: null,
+      repeatInterval: null,
+      repeatTimes: null,
       currentFocusSession: null,
+      focusSessions: [],
     };
 
     const reminder = schema.create("reminder", Object.assign(defaultAttr, attrs));

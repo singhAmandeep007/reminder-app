@@ -43,6 +43,22 @@ export type TReminder = {
    * @example "2021-09-30T00:00:00.000Z"
    */
   dueDate: string | null;
+  /**
+   * Number of times to repeat the reminder.
+   *
+   * @default 1
+   */
+  repeatTimes: number | null;
+  /**
+   * Interval to repeat the reminder. (in milliseconds)
+   *
+   * @default 300000 (5 minutes)
+   */
+  repeatInterval: number | null;
+
+  /**
+   * Current focus session for this reminder.
+   */
   currentFocusSession: {
     /**
      * date and time when focus session was started for this reminder. (ISO 8601 format)
@@ -102,7 +118,17 @@ export type TCreateReminderResponsePayload = TDataResponsePayload<TReminder>;
 
 export type TUpdateReminderRequestPayload = Pick<TReminder, "id"> &
   Partial<
-    Pick<TReminder, "title" | "state" | "isPinned" | "dueDate" | "currentFocusSession" | "focusSessions"> & {
+    Pick<
+      TReminder,
+      | "title"
+      | "state"
+      | "isPinned"
+      | "dueDate"
+      | "currentFocusSession"
+      | "focusSessions"
+      | "repeatTimes"
+      | "repeatInterval"
+    > & {
       groupId: TReminderGroup["id"];
     }
   >;

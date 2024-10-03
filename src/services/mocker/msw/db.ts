@@ -17,7 +17,6 @@ export const db = factory({
     group: nullable(oneOf("reminderGroup")),
     createdAt: () => new Date().toISOString(),
     updatedAt: () => new Date().toISOString(),
-    dueDate: nullable<string>(() => null),
     focusSessions: () => [],
     // FIX: nullable(Object) returning {} instead of null
     currentFocusSession: nullable<any>(
@@ -27,6 +26,9 @@ export const db = factory({
       },
       { defaultsToNull: true }
     ) as unknown as NullableProperty<any>,
+    dueDate: nullable<string>(() => null),
+    repeatInterval: nullable<number>(() => null),
+    repeatTimes: nullable<number>(() => null),
   },
 
   reminderGroup: {

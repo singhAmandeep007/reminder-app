@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, PropsWithChildren, useRef, useState } from "react";
 
 import { ChevronDown, ChevronUp, Pencil, Trash, Pin, CalendarClock, Timer } from "lucide-react";
 
@@ -21,6 +21,13 @@ import {
   DialogDescription,
   DialogHeader,
   DialogClose,
+  ValueSetter,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectItem,
+  SelectGroup,
+  SelectContent,
 } from "components";
 
 import { cn } from "shared";
@@ -48,6 +55,9 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [dialog, setDialog] = useState<TDialog>(null);
+
+  const repeatTimesRef = useRef<number>(reminder.repeatTimes || 1);
+  const repeatIntervalRef = useRef<string>((reminder.repeatInterval || 300000).toString());
 
   const { handleOnDelete, handleOnUpdate, isLoading } = useReminderItem({
     reminder,
@@ -235,22 +245,63 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                     >
                       {({ selectedDateTime }) => {
                         return (
-                          <DialogClose asChild>
-                            <Button
-                              size="full"
-                              onClick={() => {
-                                if (selectedDateTime) {
-                                  const dueDate = selectedDateTime.toISOString();
-                                  handleOnUpdate({ id: reminder.id, dueDate });
-                                }
-                              }}
-                              className={cn(isLoading && "cursor-not-allowed")}
-                              disabled={!selectedDateTime || isLoading}
-                              data-testid={`reminder-item-save-due-date-btn`}
-                            >
-                              Save
-                            </Button>
-                          </DialogClose>
+                          <>
+                            <div className="flex">
+                              <ValueSetter
+                                initialValue={repeatTimesRef.current}
+                                onChange={(value) => (repeatTimesRef.current = value)}
+                                max={100}
+                                min={1}
+                                classNames={{
+                                  container: "",
+                                  value: "text-xl",
+                                  controls: "h-7 w-7",
+                                }}
+                              >
+                                <span className="text-xs">Repeat Times</span>
+                              </ValueSetter>
+
+                              <Select
+                                defaultValue={repeatIntervalRef.current}
+                                onValueChange={(v) => {
+                                  repeatIntervalRef.current = v;
+                                }}
+                              >
+                                <SelectTrigger className=" flex-1 self-center">
+                                  <SelectValue placeholder="Select an interval" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background">
+                                  <SelectGroup>
+                                    <SelectItem value="300000">5 min</SelectItem>
+                                    <SelectItem value="600000">10 min</SelectItem>
+                                    <SelectItem value="900000">15 min</SelectItem>
+                                    <SelectItem value="1800000">30 min</SelectItem>
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <DialogClose asChild>
+                              <Button
+                                size="full"
+                                onClick={() => {
+                                  if (selectedDateTime) {
+                                    const dueDate = selectedDateTime.toISOString();
+                                    handleOnUpdate({
+                                      id: reminder.id,
+                                      dueDate,
+                                      repeatTimes: repeatTimesRef.current,
+                                      repeatInterval: Number(repeatIntervalRef.current),
+                                    });
+                                  }
+                                }}
+                                className={cn(isLoading && "cursor-not-allowed")}
+                                disabled={!selectedDateTime || isLoading}
+                                data-testid={`reminder-item-save-due-date-btn`}
+                              >
+                                Save
+                              </Button>
+                            </DialogClose>
+                          </>
                         );
                       }}
                     </DateTimePicker>

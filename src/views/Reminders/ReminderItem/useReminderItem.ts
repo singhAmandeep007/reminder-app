@@ -32,6 +32,8 @@ export const useReminderItem = ({ reminder }: TUseReminderItemProps) => {
           state: props.state,
           isPinned: props.isPinned,
           dueDate: props.dueDate,
+          repeatTimes: props.repeatTimes,
+          repeatInterval: props.repeatInterval,
         })
       );
     },

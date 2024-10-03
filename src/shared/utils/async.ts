@@ -22,3 +22,24 @@ export const handleAsync = async <ErrorType extends any = Error, DataType extend
     return { error: error as ErrorType, data: null };
   }
 };
+
+type TWaitUntilProps = {
+  tick?: number;
+  timeout?: number;
+};
+
+export const waitUntil = (condition: () => boolean, options?: TWaitUntilProps) => {
+  return new Promise<void>((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (!condition()) return;
+
+      clearInterval(interval);
+      resolve();
+    }, options?.tick || 100);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      reject("Timeout");
+    }, options?.timeout || 10000);
+  });
+};

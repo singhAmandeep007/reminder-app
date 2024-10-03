@@ -12,7 +12,11 @@ export type TValueSetterProps = {
   max?: number;
   min?: number;
   children?: React.ReactNode;
-  className?: string;
+  classNames?: {
+    container?: string;
+    value?: string;
+    controls?: string;
+  };
   testIds?: {
     increment?: string;
     decrement?: string;
@@ -25,7 +29,7 @@ export function ValueSetter({
   children,
   min = 0,
   max = 59,
-  className,
+  classNames,
   testIds,
 }: TValueSetterProps) {
   const [value, setValue] = useState(initialValue);
@@ -42,15 +46,15 @@ export function ValueSetter({
   }, [value, onChange]);
 
   return (
-    <div className={cn("flex w-max items-center justify-between gap-4 p-2", className)}>
-      <div className="flex min-w-12 flex-col items-center justify-center">
-        <span className="text-4xl font-bold text-primary">{value}</span>
+    <div className={cn("flex w-max items-center justify-between gap-4 p-2", classNames?.container)}>
+      <div className={cn("flex min-w-12 flex-col items-center justify-center")}>
+        <span className={cn("text-4xl font-bold text-primary", classNames?.value)}>{value}</span>
         {children}
       </div>
       <div className="flex flex-col justify-between">
         <Button
           onClick={increment}
-          className="rounded-b-none"
+          className={cn("rounded-b-none", classNames?.controls)}
           size={"icon"}
           disabled={value >= max}
           variant={"outline"}
@@ -60,7 +64,7 @@ export function ValueSetter({
         </Button>
         <Button
           onClick={decrement}
-          className="rounded-t-none"
+          className={cn("text rounded-t-none", classNames?.controls)}
           size={"icon"}
           disabled={value <= min}
           variant={"outline"}
