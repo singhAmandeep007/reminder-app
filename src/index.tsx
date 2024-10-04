@@ -15,8 +15,11 @@ async function setupApp() {
 
   const mockerType = process.env.REACT_APP_MOCKER;
   const isDemoMode = Boolean(process.env.REACT_APP_IS_DEMO_MODE);
+  const isMockerEnabled = !!mockerType;
 
-  if (isDemoMode && !!mockerType && !window.Cypress) {
+  // NOTE: start the application mock server if demo mode enabled, mocker is enabled and not in cypress environment.
+  const shouldStartMockServer = isDemoMode && isMockerEnabled && !window.Cypress;
+  if (shouldStartMockServer) {
     const mocker = await import("services/mocker");
 
     const { setupMocker } = mocker;
@@ -26,6 +29,8 @@ async function setupApp() {
     console.log(`%c API is being mocked using ${mockerType}!`, "color: #bada55; font-weight: bold;");
   }
 
+  // NOTE: extra configuration to support mirage in cypress
+  // with window.Cypress.env we can access are the environment variables from Cypress configuration
   if (window.Cypress && window.Cypress.env("REACT_APP_MOCKER") === MOCKER_TYPE.mirage) {
     await import("services/mocker/mirage/proxyServer").then(({ startProxyMirageServer }) => {
       startProxyMirageServer();

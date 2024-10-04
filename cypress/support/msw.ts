@@ -18,6 +18,7 @@ declare global {
 let mswWorker: SetupWorker;
 
 before(() => {
+  // NOTE: if using msw, setup the msw worker
   if (Cypress.env("REACT_APP_MOCKER") === MOCKER_TYPE.msw) {
     mswWorker = setupWorker(...setupHandlers({ db }));
 
@@ -34,17 +35,21 @@ before(() => {
   }
 });
 
+// NOTE: before each test, reset the handlers, if using msw
+// Fires before the test and all before and beforeEach hooks run.
 Cypress.on("test:before:run", () => {
   if (mswWorker) {
     mswWorker.resetHandlers();
   }
 });
 
+// NOTE: custom commands to explicitly intercept the request
 Cypress.Commands.add("interceptMswRequest", (...handlers: RequestHandler[]) => {
   if (!mswWorker) throw new Error("MSW worker is not initialized");
   mswWorker.use(...handlers);
 });
 
+// NOTE: custom command to get the msw db
 Cypress.Commands.add("getMswDb", () => {
   if (!mswWorker) throw new Error("MSW worker is not initialized");
   return Promise.resolve(db);

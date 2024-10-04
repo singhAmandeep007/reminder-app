@@ -16,9 +16,11 @@ declare global {
   }
 }
 
+// NOTE: custom command to setup mirage api proxy
 Cypress.Commands.add("setupMirageApiProxy", () => {
+  // NOTE: listen for window:before:load events and modify the window before any of your application code runs between page transitions
   Cypress.on("window:before:load", (window: TCypressWindow) => {
-    // NOTE: defines a `handleProxyMirageServerRequest` function on your application's window object
+    // NOTE: define a `handleProxyMirageServerRequest` function on your application's window object
     window.handleProxyMirageServerRequest = function (request) {
       return fetch(request.url, {
         method: request.method,
@@ -48,6 +50,7 @@ Cypress.Commands.add("setupMirageApiProxy", () => {
   });
 });
 
+// NOTE: custom command to reset mirage api handlers
 Cypress.Commands.add("resetMirageApiHandlers", (server) => {
   createRoutes.call(server);
 });

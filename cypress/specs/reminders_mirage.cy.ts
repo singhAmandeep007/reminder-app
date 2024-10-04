@@ -11,6 +11,7 @@ import { remindersElements } from "../pages";
 
 describe("Reminders Page", () => {
   before(function () {
+    // skip test if not using mirage
     cy.skipIf(Cypress.env("REACT_APP_MOCKER") !== MOCKER_TYPE.mirage, this);
     cy.setupMirageApiProxy();
   });
@@ -18,10 +19,12 @@ describe("Reminders Page", () => {
   let server: TServer;
 
   beforeEach(() => {
+    // start the mock server before each test
     server = runServer({ logging: true });
   });
 
   afterEach(() => {
+    // stop the mock server after each test
     server.shutdown();
   });
 
@@ -72,12 +75,14 @@ describe("Reminders Page", () => {
 
     remindersElements.createReminder("Learn Cypress");
 
+    // NOTE: override/intercept the request and return a 500 status code to simulate a server error when creating a reminder,
     server.post(urlPrefix("/reminders"), () => {
       return new MirageResponse(500, {});
     });
 
     cy.contains("Error creating reminder");
 
+    // NOTE: reset the request handlers
     cy.resetMirageApiHandlers(server);
 
     remindersElements.createReminder("Learn Cypress");

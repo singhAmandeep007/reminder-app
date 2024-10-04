@@ -10,6 +10,7 @@ import { remindersElements } from "../pages";
 
 describe("Reminders Page", () => {
   before(function () {
+    // skip test if not using msw
     cy.skipIf(Cypress.env("REACT_APP_MOCKER") !== MOCKER_TYPE.msw, this);
   });
 
@@ -48,6 +49,7 @@ describe("Reminders Page", () => {
   });
 
   it("should handle negative scenario for create reminder", () => {
+    // NOTE: intercept the request and return a 500 status code to simulate a server error when creating a reminder only once
     cy.interceptMswRequest(
       http.post(
         urlPrefix("/reminders"),
