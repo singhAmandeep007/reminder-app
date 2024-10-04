@@ -11,6 +11,7 @@
 # cypress
 /cypress/screenshots
 /cypress/videos
+/cypress/downloads
 
 # playwright
 /test-results/

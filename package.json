@@ -100,8 +100,11 @@
     "cy:report:generate:html": "marge reports/cypress/result/json/combined-json-report.json --no-showPassed --assetsDir reports/cypress/result/html -o reports/cypress/result/html -f combined-html-report -t \"Cypress HTML Report\"",
     "cy:report:combine:xml": "jrm reports/cypress/result/xml/combined-xml-report.xml \"reports/cypress/result/xml/*.xml\"",
     "PLAYWRIGHT": "------------------------------------------------------------------------",
+    "pw:test": "npm-run-all -n --parallel -r start \"pw:test:delayed -- {@}\" --",
+    "pw:test:delayed": "run-s wait \"pw:run -- {@}\" --",
+    "wait": "wait-on http://localhost:3000",
+    "pw:run": "playwright test",
     "pw:open": "playwright test --ui",
-    "pw:test": "playwright test",
     "pw:report": "playwright show-report"
   },
   "browserslist": {
@@ -225,6 +228,7 @@
     "terser-webpack-plugin": "^5.2.5",
     "typescript": "^5.5.2",
     "undici": "^6.19.2",
+    "wait-on": "^8.0.1",
     "web-vitals": "^2.1.4",
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",

@@ -1,4 +1,4 @@
-import { homeElements, layoutElements, remindersElements } from "../pages";
+import { homeElements, remindersElements } from "../pages";
 
 describe("Home Page", () => {
   beforeEach(() => {
@@ -16,14 +16,14 @@ describe("Home Page", () => {
 
     homeElements.root.findByRole("heading", { name: "Folder Structure", level: 2 }).should("exist");
 
-    layoutElements.footer.contains("Copyright © 2024Amandeep Singh").should("exist");
+    homeElements.footer.contains("Copyright © 2024Amandeep Singh").should("exist");
 
-    layoutElements.footer
+    homeElements.footer
       .findByRole("link", { name: "Amandeep Singh" })
       .should("have.attr", "href")
       .and("include", "https://github.com/singhAmandeep007");
 
-    layoutElements.header.findByRole("link", { name: "Reminders" }).click();
+    homeElements.header.findByRole("link", { name: "Reminders" }).click();
 
     remindersElements.root.should("exist");
 
@@ -31,21 +31,21 @@ describe("Home Page", () => {
   });
 
   it("should be able to change theme and language", () => {
-    layoutElements.themeToggler.click();
+    homeElements.themeToggler.click();
 
     cy.document().its("documentElement").should("have.class", "light");
 
-    layoutElements.themeToggler.click();
+    homeElements.themeToggler.click();
 
     cy.document().its("documentElement").should("have.class", "dark");
 
-    layoutElements.langToggler.click();
+    homeElements.langToggler.click();
 
-    layoutElements.langTogglerMenu.findByRole("menuitem", { name: "English" }).click();
+    homeElements.langTogglerMenu.findByRole("menuitem", { name: "English" }).click();
 
     cy.document().its("documentElement").should("have.attr", "lang", "en-US");
 
-    layoutElements.langTogglerMenu.findByRole("menuitem", { name: "Japanese" }).click();
+    homeElements.langTogglerMenu.findByRole("menuitem", { name: "Japanese" }).click();
 
     cy.document().its("documentElement").should("have.attr", "lang", "ja-JP");
 
