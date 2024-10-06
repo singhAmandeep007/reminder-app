@@ -3,7 +3,7 @@ import { FC, PropsWithChildren, ReactNode } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 
-import { setupStore, TRootState } from "shared";
+import { setupStore, TRootState } from "store";
 import { Toaster } from "components";
 
 import { ThemeProvider } from "modules/theme";

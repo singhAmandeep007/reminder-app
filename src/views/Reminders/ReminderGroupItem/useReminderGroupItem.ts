@@ -7,7 +7,7 @@ import {
   selectQueryParams,
   useDeleteReminderGroupMutation,
   useUpdateReminderGroupMutation,
-} from "shared";
+} from "store";
 import { handleAsync } from "utils";
 import { TReminderGroup } from "types";
 

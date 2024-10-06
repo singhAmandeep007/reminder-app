@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { useDeleteReminderMutation, useUpdateReminderMutation } from "shared";
+import { useDeleteReminderMutation, useUpdateReminderMutation } from "store";
 import { handleAsync } from "utils";
 import { TReminder } from "types";
 

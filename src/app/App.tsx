@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from "react";
 
 import { Provider } from "react-redux";
 
-import { setupStore } from "shared";
+import { setupStore } from "store";
 
 import { ThemeProvider } from "modules/theme";
 

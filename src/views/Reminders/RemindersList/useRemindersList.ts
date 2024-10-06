@@ -2,12 +2,7 @@ import { useCallback } from "react";
 
 import { toast } from "sonner";
 
-import {
-  useGetRemindersQuery,
-  useSelectQueryParams,
-  useGetReminderGroupQuery,
-  useCreateReminderMutation,
-} from "shared";
+import { useGetRemindersQuery, useSelectQueryParams, useGetReminderGroupQuery, useCreateReminderMutation } from "store";
 
 import { handleAsync } from "utils";
 

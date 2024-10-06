@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { toast } from "sonner";
 
-import { useGetReminderGroupsQuery, useCreateReminderGroupMutation } from "shared";
+import { useGetReminderGroupsQuery, useCreateReminderGroupMutation } from "store";
 import { handleAsync } from "utils";
 
 export const useReminderGroupsList = () => {
