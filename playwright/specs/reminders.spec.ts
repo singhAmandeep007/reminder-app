@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 import { RemindersElements } from "../pages";
 
@@ -10,7 +10,9 @@ test.describe("Reminders Page", () => {
     await expect(remindersElements.page).toHaveTitle(/Reminder App/);
   });
 
-  test("should render reminders page and able to create reminder group", async ({ page }) => {
+  test("should render reminders page and able to create reminder group", async ({ page, mocker }) => {
+    await mocker.start();
+
     const remindersElements = new RemindersElements(page);
     await remindersElements.goto();
 
