@@ -1,18 +1,17 @@
-import { test as base, expect } from "@playwright/test";
+import { test as base, expect, Route, Request } from "@playwright/test";
 
-import { type HttpHandler } from "msw";
+import { http, HttpResponse, type HttpHandler } from "msw";
 
-import { db } from "services/mocker/msw/db";
-import { setupHandlers } from "services/mocker/msw/handlers";
+import { handlers as defaultHandlers } from "services/mocker/msw/handlers";
 
 import { handleRoute } from "./utils";
 
-const handlers = setupHandlers({ db });
-
 type TMocker = {
   start: () => Promise<void>;
-  resetHandlers: () => Promise<void>;
-  interceptRequest: (...customRequestHandlers: HttpHandler[]) => Promise<void>;
+  reset: () => Promise<void>;
+  add: (...customRequestHandlers: HttpHandler[]) => Promise<void>;
+  http: typeof http;
+  HttpResponse: typeof HttpResponse;
 };
 
 const test = base.extend<{ mocker: TMocker }>({
@@ -22,17 +21,100 @@ const test = base.extend<{ mocker: TMocker }>({
       // eslint-disable-next-line no-console
       console.log("before all the tests");
 
-      const start = async () => {
-        await page.route(`${process.env.REACT_APP_API_URL}**`, async (route, request) => {
-          await handleRoute({ route, handlers });
-        });
+      let isMockerStarted = false;
+
+      type TRoutes = Record<
+        string,
+        {
+          register: () => Promise<void>;
+          unregister: () => Promise<void>;
+        }
+      >;
+      type TRouteHandler = (route: Route, request: Request) => Promise<void>;
+
+      let routes = {} as TRoutes;
+
+      const handlersByPath = (handlers: HttpHandler[]) => {
+        return handlers.reduce(
+          (acc, handler) => {
+            const path = handler.info.path;
+            // NOTE: will mock only if path is of type string
+            if (typeof path === "string") {
+              if (!acc.hasOwnProperty(path)) {
+                acc[path] = [handler];
+              } else {
+                acc[path] = [...acc[path], handler];
+              }
+            }
+            return acc;
+          },
+          {} as Record<string, HttpHandler[]>
+        );
       };
 
-      const resetHandlers = async () => {};
+      const createRoutes = async (handlers: HttpHandler[]) => {
+        const groupedHandlers = handlersByPath(handlers);
 
-      const interceptRequest = async (...customRequestHandlers: HttpHandler[]) => {};
+        // unregister all the existing routes if any before creating new ones
+        if (Object.keys(routes).length > 0) {
+          await Promise.all(
+            Object.values(routes).map((route) => {
+              return route.unregister();
+            })
+          );
 
-      await use({ start, resetHandlers, interceptRequest });
+          routes = {};
+        }
+
+        // create new routes
+        routes = Object.keys(groupedHandlers).reduce((acc, path) => {
+          const routeHandler: TRouteHandler = async (route, request) => {
+            await handleRoute(route, groupedHandlers[path]);
+          };
+
+          acc[path] = {
+            register: async () => {
+              await page.route(path, routeHandler);
+            },
+            unregister: async () => {
+              await page.unroute(path);
+            },
+          };
+          return acc;
+        }, {} as TRoutes);
+
+        // register all the routes
+        await Promise.all(
+          Object.values(routes).map((route) => {
+            return route.register();
+          })
+        );
+
+        return routes;
+      };
+
+      const start = async () => {
+        if (isMockerStarted) return;
+
+        await createRoutes(defaultHandlers);
+
+        isMockerStarted = true;
+      };
+
+      const reset = async () => {
+        if (!isMockerStarted) return;
+
+        await createRoutes(defaultHandlers);
+      };
+
+      const add = async (...handlers: HttpHandler[]) => {
+        if (!isMockerStarted) return;
+
+        await createRoutes([...handlers, ...defaultHandlers]);
+      };
+
+      await use({ start, reset, add, http, HttpResponse });
+
       // this code runs after all the tests.
       // eslint-disable-next-line no-console
       console.log("after all the tests");

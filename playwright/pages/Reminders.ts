@@ -25,7 +25,7 @@ export class RemindersElements extends LayoutElements {
   }
 
   get reminderGroupItemMenu() {
-    return this.root.getByTestId("reminder-group-item-menu");
+    return this.page.getByTestId("reminder-group-item-menu");
   }
 
   get createReminderGroupBtn() {
@@ -41,7 +41,7 @@ export class RemindersElements extends LayoutElements {
   }
 
   get reminderGroupCreateTextInput() {
-    return this.root.getByTestId("reminder-group-create-text");
+    return this.page.getByTestId("reminder-group-create-text");
   }
 
   createReminderGroup(text: string) {
@@ -50,5 +50,9 @@ export class RemindersElements extends LayoutElements {
     this.reminderGroupCreateTextInput.fill(text);
 
     this.reminderGroupCreateSaveBtn.click();
+  }
+
+  getEditReminderGroupMenuItem(text: string) {
+    return this.reminderGroupItemMenu.getByTestId(`reminder-group-item-update-${text}`);
   }
 }

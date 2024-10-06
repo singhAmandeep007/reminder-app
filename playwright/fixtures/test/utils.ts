@@ -27,11 +27,11 @@ export const objectifyHeaders = (headers?: Headers): Record<string, string> => {
   return result;
 };
 
-export const handleRoute = async ({ route, handlers }: { route: Route; handlers: Array<RequestHandler> }) => {
+export const handleRoute = async (route: Route, handler: Array<RequestHandler> | RequestHandler) => {
   try {
     const request = await convertRouteToRequest(route);
 
-    const response = await getResponse(handlers, request);
+    const response = await getResponse(Array.isArray(handler) ? handler : [handler], request);
 
     return route.fulfill({
       status: response?.status,

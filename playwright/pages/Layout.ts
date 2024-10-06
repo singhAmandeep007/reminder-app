@@ -1,8 +1,7 @@
-import { type Locator, type Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 
 export class LayoutElements {
   readonly page: Page;
-  readonly root: Locator;
 
   constructor(page: Page) {
     this.page = page;
