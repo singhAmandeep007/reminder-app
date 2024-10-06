@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useCallback, useRef } from "react";
 
 import { Check, X } from "lucide-react";
 
-import { cn } from "shared";
+import { cn } from "utils";
 
 import { Button, Input } from "components";
 

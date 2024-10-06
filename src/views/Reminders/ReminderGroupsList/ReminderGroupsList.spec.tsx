@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 
 import { db, buildScenarios } from "services/mocker/msw";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { render, createTestMswServer, HttpResponse, http } from "tests/utils";
 

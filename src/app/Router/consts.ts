@@ -1,4 +1,4 @@
-import { getRoutesList, getRoutesPathByName, getRoutesPropByKeyList } from "shared";
+import { getRoutesList, getRoutesPathByName, getRoutesPropByKeyList } from "utils";
 
 import { TRoutes } from "types";
 

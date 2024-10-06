@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 import { Response as MirageResponse } from "miragejs";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { buildScenarios, runServer, TServer } from "services/mocker/mirage";
 import { MOCKER_TYPE } from "services/mocker";

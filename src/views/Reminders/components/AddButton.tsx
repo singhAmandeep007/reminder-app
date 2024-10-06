@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Plus } from "lucide-react";
 
-import { cn } from "shared";
+import { cn } from "utils";
 
 import { Button, TButtonProps } from "components";
 

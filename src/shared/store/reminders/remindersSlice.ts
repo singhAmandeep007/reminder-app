@@ -14,7 +14,7 @@ import {
   TGetReminderResponsePayload,
 } from "types";
 
-import { appendQueryParams } from "shared/utils";
+import { appendQueryParams } from "utils";
 
 import { apiSlice } from "../apiSlice";
 

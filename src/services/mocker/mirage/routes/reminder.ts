@@ -1,6 +1,6 @@
 import { REMINDER_STATE, TReminder } from "types";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { TAppMockServer } from "../types";
 

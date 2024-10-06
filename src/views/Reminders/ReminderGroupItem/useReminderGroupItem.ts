@@ -6,9 +6,9 @@ import {
   useAppSelector,
   selectQueryParams,
   useDeleteReminderGroupMutation,
-  handleAsync,
   useUpdateReminderGroupMutation,
 } from "shared";
+import { handleAsync } from "utils";
 import { TReminderGroup } from "types";
 
 export type TUseReminderGroupItemProps = {

@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from "react";
 
 import { Play, Square } from "lucide-react";
 
-import { truncateText } from "shared";
+import { truncateText } from "utils";
 
 import { DialogDescription, DialogHeader, DialogTitle, Button } from "components";
 

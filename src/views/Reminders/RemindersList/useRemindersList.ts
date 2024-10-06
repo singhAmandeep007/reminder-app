@@ -7,8 +7,9 @@ import {
   useSelectQueryParams,
   useGetReminderGroupQuery,
   useCreateReminderMutation,
-  handleAsync,
 } from "shared";
+
+import { handleAsync } from "utils";
 
 export const useRemindersList = () => {
   const queryParams = useSelectQueryParams();

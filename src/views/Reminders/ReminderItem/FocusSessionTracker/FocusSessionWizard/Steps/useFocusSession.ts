@@ -2,7 +2,9 @@ import { useCallback, useEffect } from "react";
 
 import { addSeconds } from "date-fns";
 
-import { handleAsync, useUpdateReminderMutation } from "shared";
+import { useUpdateReminderMutation } from "shared";
+
+import { handleAsync } from "utils";
 
 import { useTimer } from "hooks/useTimer";
 

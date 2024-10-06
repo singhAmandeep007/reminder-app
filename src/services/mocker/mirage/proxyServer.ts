@@ -1,6 +1,6 @@
 import { Response as MirageResponse, createServer, Request as MirageRequest } from "miragejs";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { TRunMirageServerConfig } from "./server";
 

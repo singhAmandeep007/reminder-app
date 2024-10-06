@@ -4,7 +4,8 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { EllipsisVertical, EllipsisIcon } from "lucide-react";
 
 import { useBreakpoint } from "hooks";
-import { cn, BREAKPOINTS } from "shared";
+import { BREAKPOINTS } from "shared";
+import { cn } from "utils";
 
 import { RemindersList } from "./RemindersList";
 

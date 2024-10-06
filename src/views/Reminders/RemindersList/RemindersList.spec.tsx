@@ -3,7 +3,7 @@ import { screen, waitFor } from "@testing-library/react";
 import { Response } from "miragejs";
 import userEvent from "@testing-library/user-event";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { buildScenarios } from "services/mocker/mirage";
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import { format, set } from "date-fns";
 import { Clock } from "lucide-react";
 
-import { cn } from "shared";
+import { cn } from "utils";
 import { Input, Label } from "components";
 
 import { Calendar, TCalendarProps } from "./Calendar";

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { cn } from "shared";
+import { cn } from "utils";
 
 import { useOutsideClick } from "hooks";
 

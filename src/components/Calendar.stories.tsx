@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
-import { cn } from "shared";
+import { cn } from "utils";
 
 import { Calendar } from "./Calendar";
 import { buttonVariants } from "./Button";

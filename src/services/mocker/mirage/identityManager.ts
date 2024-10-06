@@ -1,4 +1,4 @@
-import { uuid } from "shared";
+import { uuid } from "utils";
 
 class IdentityManager {
   ids: Set<string>;

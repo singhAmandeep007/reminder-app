@@ -1,4 +1,4 @@
-import { waitUntil } from "shared";
+import { waitUntil } from "utils";
 
 import { IDB_KEY } from "./consts";
 

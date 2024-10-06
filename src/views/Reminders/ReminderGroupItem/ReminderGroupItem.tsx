@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
 } from "components";
 
-import { cn } from "shared";
+import { cn } from "utils";
 
 import { AddUpdateItem } from "../components";
 

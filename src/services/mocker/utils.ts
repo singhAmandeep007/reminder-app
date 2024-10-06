@@ -2,7 +2,7 @@ import { subDays, addMinutes } from "date-fns";
 
 import { TReminder } from "types";
 
-import { generateUniqueRandomNumbers } from "shared";
+import { generateUniqueRandomNumbers } from "utils";
 
 export function generateRandomFocusSessions(
   numberOfEntries: number,

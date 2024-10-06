@@ -1,8 +1,7 @@
 import { factory, nullable, oneOf, primaryKey, drop } from "@mswjs/data";
 import { NullableProperty } from "@mswjs/data/lib/nullable";
 
-import { uuid } from "shared";
-
+import { uuid } from "utils";
 import { REMINDER_STATE } from "types";
 
 export const db = factory({

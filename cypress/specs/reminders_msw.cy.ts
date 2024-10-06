@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { format } from "date-fns";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { buildScenarios } from "services/mocker/msw";
 import { MOCKER_TYPE } from "services/mocker";

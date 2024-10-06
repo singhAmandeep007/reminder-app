@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
-import { useDeleteReminderMutation, handleAsync, useUpdateReminderMutation } from "shared";
+import { useDeleteReminderMutation, useUpdateReminderMutation } from "shared";
+import { handleAsync } from "utils";
 import { TReminder } from "types";
 
 export type TUseReminderItemProps = {

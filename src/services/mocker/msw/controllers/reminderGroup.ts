@@ -13,7 +13,7 @@ import {
   THTTPError,
 } from "types";
 
-import { urlPrefix } from "shared";
+import { urlPrefix } from "utils";
 
 import { TSetupController } from "./types";
 

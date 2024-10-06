@@ -100,11 +100,13 @@
     "cy:report:generate:html": "marge reports/cypress/result/json/combined-json-report.json --no-showPassed --assetsDir reports/cypress/result/html -o reports/cypress/result/html -f combined-html-report -t \"Cypress HTML Report\"",
     "cy:report:combine:xml": "jrm reports/cypress/result/xml/combined-xml-report.xml \"reports/cypress/result/xml/*.xml\"",
     "PLAYWRIGHT": "------------------------------------------------------------------------",
-    "pw:test": "npm-run-all -n --parallel -r start \"pw:test:delayed -- {@}\" --",
+    "pw:open": "run-s \"pw:test -- --ui\"",
+    "pw:test": "npm-run-all -n --parallel -r pw:server:start \"pw:test:delayed -- {@}\" --",
+    "pw:server:start": "concurrently npm:pw:server",
+    "pw:server": "env-cmd -f ./.playwright.env node scripts/start.js",
     "pw:test:delayed": "run-s wait \"pw:run -- {@}\" --",
     "wait": "wait-on http://localhost:3000",
     "pw:run": "playwright test",
-    "pw:open": "playwright test --ui",
     "pw:report": "playwright show-report"
   },
   "browserslist": {

@@ -4,7 +4,7 @@ import { ChevronUp, ChevronDown } from "lucide-react";
 
 import { Button } from "components";
 
-import { cn } from "shared";
+import { cn } from "utils";
 
 export type TValueSetterProps = {
   initialValue?: number;

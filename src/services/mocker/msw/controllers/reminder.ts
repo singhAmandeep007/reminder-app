@@ -11,7 +11,7 @@ import {
   TUpdateReminderResponsePayload,
 } from "types";
 
-import { getUrlSearchParams, urlPrefix } from "shared";
+import { getUrlSearchParams, urlPrefix } from "utils";
 
 import { TSetupController } from "./types";
 
