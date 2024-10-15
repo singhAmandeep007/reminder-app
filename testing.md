@@ -35,6 +35,9 @@
 
 ## Conventions followed
 
+### test ids
+
 1. testId - `data-testid`
-2. single test id as prop - `testId: 'id'`
-3. multiple test id as prop - `testIds: { id1: 'id1', id2: 'id2' }`
+2. kebab case - `long-test-id`
+3. single test id as prop - `testId: 'id'`
+4. multiple test id as prop - `testIds: { id1: 'id-1', id2: 'id-2' }`
