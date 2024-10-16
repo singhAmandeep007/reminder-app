@@ -186,6 +186,7 @@
     "eslint-plugin-playwright": "^1.6.2",
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "fake-indexeddb": "^6.0.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
     "gh-pages": "^6.1.1",

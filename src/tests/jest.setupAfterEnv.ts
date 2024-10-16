@@ -5,6 +5,10 @@
 import "@testing-library/jest-dom";
 import ResizeObserver from "resize-observer-polyfill";
 
+import "fake-indexeddb/auto";
+
+import { beforeEach, jest } from "@jest/globals";
+
 global.ResizeObserver = ResizeObserver;
 
 // Mocking the matchMedia API
@@ -20,3 +24,7 @@ global.matchMedia =
       dispatchEvent: jest.fn(),
     };
   };
+
+beforeEach(() => {
+  jest.spyOn(console, "error").mockImplementation(() => {});
+});
