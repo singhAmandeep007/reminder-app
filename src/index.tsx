@@ -52,7 +52,7 @@ setupApp()
   })
   .catch((error) => {
     // eslint-disable-next-line no-console
-    console.error("Something went wrong in setting up app", error);
+    console.error("Something went wrong in setting up reminder app", error);
   });
 
 // If you want to start measuring performance in your app, pass a function
