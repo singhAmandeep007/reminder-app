@@ -1,3 +1,3 @@
 module.exports = {
-  "**/*.{js,jsx,ts,tsx,css,scss,html,md,json}": () => ["npm run tsc:check", "npm run lint", "npm run test"],
+  "src/**/*.{js,jsx,ts,tsx,css,scss,html,md,json}": () => ["npm run tsc:check", "npm run lint", "npm run test"],
 };
