@@ -23,5 +23,3 @@ export class LayoutElements {
     return cy.findByTestId("lang-toggler-menu");
   }
 }
-
-export const layoutElements = new LayoutElements();

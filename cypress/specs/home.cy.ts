@@ -1,4 +1,4 @@
-import { homeElements, remindersElements } from "../pages";
+import { HomeElements, RemindersElements } from "../pages";
 
 describe("Home Page", () => {
   beforeEach(() => {
@@ -8,6 +8,9 @@ describe("Home Page", () => {
   });
 
   it("should render home page content and navigate to reminders page", () => {
+    const homeElements = new HomeElements();
+    const remindersElements = new RemindersElements();
+
     homeElements.root.should("exist");
 
     homeElements.root.findByRole("heading", { name: "A production grade reminder app" }).should("exist");
@@ -31,6 +34,8 @@ describe("Home Page", () => {
   });
 
   it("should be able to change theme and language", () => {
+    const homeElements = new HomeElements();
+
     homeElements.themeToggler.click();
 
     cy.document().its("documentElement").should("have.class", "light");

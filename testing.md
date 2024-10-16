@@ -41,3 +41,27 @@
 2. kebab case - `long-test-id`
 3. single test id as prop - `testId: 'id'`
 4. multiple test id as prop - `testIds: { id1: 'id-1', id2: 'id-2' }`
+
+## E2E
+
+### Cypress
+
+1. headless
+   - `npm run cy:test -- --browser chrome` - Run tests in chrome browser in headless mode
+   - `npm run cy:test -- --spec "cypress/specs/home.cy.ts"` - Run specific test file in headless mode
+2. headed
+   - `npm run cy:test:open` - Run tests in headed mode, closes on completion
+   - `npm run cy:test:open -- --spec "cypress/specs/home.cy.ts"` - Run specific test file in headed mode
+3. lauchpad
+   1. first run `npm run cy:server:start` - Starts dev server with cypress env variables
+   2. then run `npm run cy:open` in a new terminal - Opens cypress launchpad (need to be closed manually).
+4. change `REACT_APP_MOCKER` in `.cypress.env` to switch between `msw` and `mirage`. Note: restart cypress after changing the value.
+
+### Playwright
+
+1. headless
+   - `npm run pw:test` - Run tests in headless mode
+   - `npm run pw:test specs/home.spec.ts` - Run specific test file in headless mode
+2. ui mode
+   - `npm run pw:test:open` - Stars dev server and then opens launchpad.
+3. Only msw as a mocker is supported in playwright.

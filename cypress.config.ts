@@ -1,6 +1,19 @@
+import path from "path";
+
+import dotenv from "dotenv";
+
 import { defineConfig } from "cypress";
 
 import codeCoverageTask from "@cypress/code-coverage/task";
+
+dotenv.config({ path: path.resolve(__dirname, ".cypress.env") });
+
+const reactEnv = Object.keys(process.env).reduce((acc, key) => {
+  if (key.startsWith("REACT_APP_")) {
+    acc[key] = process.env[key];
+  }
+  return acc;
+}, {});
 
 export default defineConfig({
   screenshotOnRunFailure: true,
@@ -21,15 +34,12 @@ export default defineConfig({
       codeCoverageTask(on, config);
       return config;
     },
-    // NOTE: PORT defined in .developer.env
-    baseUrl: "http://localhost:3000",
+    baseUrl: process.env.REACT_APP_PUBLIC_URL,
     specPattern: "cypress/specs/**/*.cy.{js,jsx,ts,tsx}",
   },
   video: false,
   env: {
-    REACT_APP_MOCKER: "mirage",
-    REACT_APP_API_URL: "https://reminder-app.com/api/v1/",
-    REACT_APP_PUBLIC_URL: "http://localhost:3000/",
+    ...reactEnv,
     coverage: true,
   },
 });

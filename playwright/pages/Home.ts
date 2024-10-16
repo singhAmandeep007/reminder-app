@@ -9,7 +9,7 @@ export class HomeElements extends LayoutElements {
   constructor(page: Page) {
     super(page);
     this.page = page;
-    this.root = page.getByTestId("home");
+    this.root = page.getByTestId("home-page");
   }
 
   async goto() {

@@ -1,9 +1,7 @@
 import { LayoutElements } from "./Layout";
 
-class HomeElements extends LayoutElements {
+export class HomeElements extends LayoutElements {
   get root() {
-    return this.content.findByTestId("home");
+    return this.content.findByTestId("home-page");
   }
 }
-
-export const homeElements = new HomeElements();

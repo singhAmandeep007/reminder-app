@@ -112,5 +112,3 @@ export class RemindersElements extends LayoutElements {
     return this.reminderDialog.findByTestId("select-time-input");
   }
 }
-
-export const remindersElements = new RemindersElements();

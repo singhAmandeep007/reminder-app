@@ -14,8 +14,8 @@ jest.mock("./ReminderGroupsList");
 
 describe("Reminders", () => {
   const setup = () => {
-    (RemindersList as jest.Mock).mockReturnValue(<div data-testid="remindersList" />);
-    (ReminderGroupsList as jest.Mock).mockReturnValue(<div data-testid="reminderGroupsList" />);
+    (RemindersList as jest.Mock).mockReturnValue(<div data-testid="reminders-list" />);
+    (ReminderGroupsList as jest.Mock).mockReturnValue(<div data-testid="reminder-groups-list" />);
 
     return {
       result: render(<Reminders />),
@@ -25,8 +25,8 @@ describe("Reminders", () => {
   it("should render Reminders Component", () => {
     setup();
 
-    expect(screen.getByTestId("remindersList")).toBeInTheDocument();
+    expect(screen.getByTestId("reminders-list")).toBeInTheDocument();
 
-    expect(screen.getByTestId("reminderGroupsList")).toBeInTheDocument();
+    expect(screen.getByTestId("reminder-groups-list")).toBeInTheDocument();
   });
 });

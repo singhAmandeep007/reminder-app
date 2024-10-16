@@ -17,11 +17,11 @@ export class RemindersElements extends LayoutElements {
   }
 
   getReminderGroupItemByText(text: string) {
-    return this.root.getByTestId(`reminder-group-item-${text}`).getByText(text);
+    return this.root.getByTestId(`reminder-group-item-${text}`);
   }
 
   getReminderGroupMenuBtnByText(text: string) {
-    return this.root.getByTestId(`reminder-group-item-${text}`).getByTestId("reminder-group-item-menu-btn");
+    return this.getReminderGroupItemByText(text).getByTestId("reminder-group-item-menu-btn");
   }
 
   get reminderGroupItemMenu() {

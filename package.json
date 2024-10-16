@@ -90,9 +90,13 @@
     "CYPRESS": "-------------------------------------------------------------------------",
     "cy:install": "cypress install",
     "cy:open": "cypress open",
-    "cy:test": "npm-run-all -n cy:clean --parallel -r start \"cy:run:report -- {@}\" --",
+    "cy:test:open": "run-s \"cy:test -- --headed {@}\" --",
+    "cy:test": "npm-run-all -n cy:clean --parallel -r cy:server:start \"cy:run:report -- {@}\" --",
     "cy:clean": "rm -rf ./reports/cypress ./cypress/screenshots ./cypress/videos",
-    "cy:run:report": "run-s -c \"cy:run -- {@}\" cy:report --",
+    "cy:server:start": "concurrently npm:cy:server",
+    "cy:server": "env-cmd -f ./.cypress.env node scripts/start.js",
+    "cy:run:report": "run-s -c \"cy:run:delayed -- {@}\" cy:report --",
+    "cy:run:delayed": "run-s wait \"cy:run -- {@}\" --",
     "cy:run": "NO_COLOR=1 cypress run",
     "cy:report": "run-s cy:report:combine:html cy:report:combine:xml",
     "cy:report:combine:html": "run-s cy:report:combine:json cy:report:generate:html",
@@ -105,9 +109,9 @@
     "pw:server:start": "concurrently npm:pw:server",
     "pw:server": "env-cmd -f ./.playwright.env node scripts/start.js",
     "pw:test:delayed": "run-s wait \"pw:run -- {@}\" --",
-    "wait": "wait-on http://localhost:3000",
     "pw:run": "playwright test",
-    "pw:report": "playwright show-report"
+    "pw:report": "playwright show-report",
+    "wait": "wait-on http://localhost:3000"
   },
   "browserslist": {
     "production": [

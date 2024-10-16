@@ -7,7 +7,7 @@ import { urlPrefix } from "utils";
 import { buildScenarios, runServer, TServer } from "services/mocker/mirage";
 import { MOCKER_TYPE } from "services/mocker";
 
-import { remindersElements } from "../pages";
+import { RemindersElements } from "../pages";
 
 describe("Reminders Page", () => {
   before(function () {
@@ -29,6 +29,8 @@ describe("Reminders Page", () => {
   });
 
   it("should be able to create a reminder under a reminder group and add a due date", () => {
+    const remindersElements = new RemindersElements();
+
     const reminderTitle = "Learn Cypress";
 
     cy.visit("/reminders");
@@ -63,6 +65,8 @@ describe("Reminders Page", () => {
   });
 
   it("should be able handle negative case when creating a reminder", () => {
+    const remindersElements = new RemindersElements();
+
     buildScenarios(server)
       .withReminders(5)
       .withReminderGroups({ reminderGroups: ["Personal"], remindersPerGroup: 2 });
