@@ -8,8 +8,8 @@ async function bootstrap() {
 
 bootstrap()
   .then(() => {
-    console.log("NestJS server is running");
+    console.log("Nest JS server is running");
   })
   .catch((error) => {
-    console.error("Error starting NestJS server", error);
+    console.error("Error starting Nest JS server", error);
   });
