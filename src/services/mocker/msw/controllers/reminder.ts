@@ -3,7 +3,7 @@ import { HttpResponse, http } from "msw";
 import {
   TCreateReminderRequestPayload,
   TCreateReminderResponsePayload,
-  TDeleteReminderRequestPayload,
+  TDeleteReminderRequestPathParams,
   TDeleteReminderResponsePayload,
   TReminder,
   THTTPError,
@@ -51,7 +51,7 @@ export const setupRemindersController: TSetupController = ({ db }) => {
     }
   );
 
-  const deleteReminder = http.delete<{ id: TDeleteReminderRequestPayload }, never, TDeleteReminderResponsePayload>(
+  const deleteReminder = http.delete<{ id: TDeleteReminderRequestPathParams }, never, TDeleteReminderResponsePayload>(
     urlPrefix("/reminders/:id"),
     ({ params }) => {
       const reminder = db.reminder.findFirst({

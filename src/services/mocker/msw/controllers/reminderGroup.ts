@@ -3,11 +3,11 @@ import { HttpResponse, http } from "msw";
 import {
   TCreateReminderGroupRequestPayload,
   TCreateReminderGroupResponsePayload,
-  TDeleteReminderGroupRequestPayload,
+  TDeleteReminderGroupRequestPathParams,
   TDeleteReminderGroupResponsePayload,
   TUpdateReminderGroupRequestPayload,
   TUpdateReminderGroupResponsePayload,
-  TGetReminderGroupRequestPayload,
+  TGetReminderGroupRequestPathParams,
   TGetReminderGroupResponsePayload,
   TReminderGroup,
   THTTPError,
@@ -23,7 +23,7 @@ export const setupReminderGroupsController: TSetupController = ({ db }) => {
   });
 
   const getReminderGroup = http.get<
-    { id: TGetReminderGroupRequestPayload },
+    { id: TGetReminderGroupRequestPathParams },
     never,
     TGetReminderGroupResponsePayload | THTTPError
   >(urlPrefix("/reminder-groups/:id"), ({ params }) => {
@@ -57,7 +57,7 @@ export const setupReminderGroupsController: TSetupController = ({ db }) => {
   });
 
   const deleteReminderGroup = http.delete<
-    { id: TDeleteReminderGroupRequestPayload },
+    { id: TDeleteReminderGroupRequestPathParams },
     never,
     TDeleteReminderGroupResponsePayload | THTTPError
   >(urlPrefix("/reminder-groups/:id"), ({ params }) => {

@@ -2,15 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
   TReminder,
-  TGetRemindersQueryParams,
+  TGetRemindersRequestQueryParams,
   TGetRemindersResponsePayload,
   TCreateReminderResponsePayload,
   TCreateReminderRequestPayload,
   TUpdateReminderRequestPayload,
   TUpdateReminderResponsePayload,
-  TDeleteReminderRequestPayload,
+  TDeleteReminderRequestPathParams,
   TDeleteReminderResponsePayload,
-  TGetReminderRequestPayload,
+  TGetReminderRequestPathParams,
   TGetReminderResponsePayload,
 } from "types";
 
@@ -20,7 +20,7 @@ import { apiSlice } from "../apiSlice";
 
 export const remindersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getReminders: builder.query<TReminder[], TGetRemindersQueryParams>({
+    getReminders: builder.query<TReminder[], TGetRemindersRequestQueryParams>({
       query: (queryParams) => {
         return appendQueryParams("/reminders", queryParams);
       },
@@ -32,7 +32,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
           : // an error occurred,
             [{ type: "Reminders", id: "LIST" }],
     }),
-    getReminder: builder.query<TReminder, TGetReminderRequestPayload>({
+    getReminder: builder.query<TReminder, TGetReminderRequestPathParams>({
       query: (id) => `/reminders/${id}`,
       transformResponse: (response: TGetReminderResponsePayload) => response.data,
       // result, error, request payload
@@ -58,7 +58,7 @@ export const remindersApiSlice = apiSlice.injectEndpoints({
       // in this case, `getReminder` will be re-run. `getReminders` *might*  rerun, if this id was under its results.
       invalidatesTags: (response, error, { id }) => [{ type: "Reminders", id }],
     }),
-    deleteReminder: builder.mutation<TDeleteReminderResponsePayload, TDeleteReminderRequestPayload>({
+    deleteReminder: builder.mutation<TDeleteReminderResponsePayload, TDeleteReminderRequestPathParams>({
       query: (id) => ({
         url: `/reminders/${id}`,
         method: "DELETE",
@@ -73,14 +73,14 @@ const initialRemindersSliceState = {
   queryParams: {
     groupId: undefined,
     state: undefined,
-  } as TGetRemindersQueryParams,
+  } as TGetRemindersRequestQueryParams,
 };
 
 export const remindersSlice = createSlice({
   name: "reminders",
   initialState: initialRemindersSliceState,
   reducers: {
-    setQueryParams: (state, action: PayloadAction<TGetRemindersQueryParams>) => {
+    setQueryParams: (state, action: PayloadAction<TGetRemindersRequestQueryParams>) => {
       state.queryParams = action.payload;
     },
   },

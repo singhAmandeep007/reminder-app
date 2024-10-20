@@ -83,7 +83,7 @@ export type TReminderGroup = {
   updatedAt: string;
 };
 
-export type TMessageResponsePaylaod = {
+export type TMessageResponsePayload = {
   message: string;
 };
 
@@ -101,14 +101,14 @@ export type THTTPError = {
 /**
  * Reminder
  */
-export type TGetRemindersQueryParams = Partial<{
+export type TGetRemindersRequestQueryParams = Partial<{
   groupId: TReminderGroup["id"];
   state: TReminder["state"];
 }>;
 
 export type TGetRemindersResponsePayload = TDataResponsePayload<TReminder[]>;
 
-export type TGetReminderRequestPayload = TReminder["id"];
+export type TGetReminderRequestPathParams = TReminder["id"];
 
 export type TGetReminderResponsePayload = TDataResponsePayload<TReminder>;
 
@@ -135,16 +135,16 @@ export type TUpdateReminderRequestPayload = Pick<TReminder, "id"> &
 
 export type TUpdateReminderResponsePayload = TDataResponsePayload<TReminder>;
 
-export type TDeleteReminderRequestPayload = TReminder["id"];
+export type TDeleteReminderRequestPathParams = TReminder["id"];
 
-export type TDeleteReminderResponsePayload = TMessageResponsePaylaod;
+export type TDeleteReminderResponsePayload = TMessageResponsePayload;
 
 /**
  * Reminder Group
  */
 export type TGetReminderGroupsResponsePayload = TDataResponsePayload<TReminderGroup[]>;
 
-export type TGetReminderGroupRequestPayload = TReminderGroup["id"];
+export type TGetReminderGroupRequestPathParams = TReminderGroup["id"];
 
 export type TGetReminderGroupResponsePayload = TDataResponsePayload<TReminderGroup>;
 
@@ -156,6 +156,6 @@ export type TUpdateReminderGroupRequestPayload = Pick<TReminderGroup, "id"> & Pa
 
 export type TUpdateReminderGroupResponsePayload = TDataResponsePayload<TReminderGroup>;
 
-export type TDeleteReminderGroupRequestPayload = TReminderGroup["id"];
+export type TDeleteReminderGroupRequestPathParams = TReminderGroup["id"];
 
-export type TDeleteReminderGroupResponsePayload = TMessageResponsePaylaod;
+export type TDeleteReminderGroupResponsePayload = TMessageResponsePayload;

@@ -1,13 +1,13 @@
 import {
   TReminderGroup,
   TGetReminderGroupsResponsePayload,
-  TGetReminderGroupRequestPayload,
+  TGetReminderGroupRequestPathParams,
   TGetReminderGroupResponsePayload,
   TCreateReminderGroupRequestPayload,
   TCreateReminderGroupResponsePayload,
   TUpdateReminderGroupRequestPayload,
   TUpdateReminderGroupResponsePayload,
-  TDeleteReminderGroupRequestPayload,
+  TDeleteReminderGroupRequestPathParams,
   TDeleteReminderGroupResponsePayload,
 } from "types";
 
@@ -32,12 +32,12 @@ export const reminderGroupsApiSlice = apiSlice.injectEndpoints({
           : // an error occurred,
             [{ type: "ReminderGroups", id: "LIST" }],
     }),
-    getReminderGroup: builder.query<TReminderGroup, TGetReminderGroupRequestPayload>({
+    getReminderGroup: builder.query<TReminderGroup, TGetReminderGroupRequestPathParams>({
       query: (id) => `/reminder-groups/${id}`,
       transformResponse: (response: TGetReminderGroupResponsePayload) => response.data,
       providesTags: (result, error, id) => [{ type: "ReminderGroups", id }],
     }),
-    deleteReminderGroup: builder.mutation<TDeleteReminderGroupResponsePayload, TDeleteReminderGroupRequestPayload>({
+    deleteReminderGroup: builder.mutation<TDeleteReminderGroupResponsePayload, TDeleteReminderGroupRequestPathParams>({
       query: (id) => ({
         url: `/reminder-groups/${id}`,
         method: "DELETE",
