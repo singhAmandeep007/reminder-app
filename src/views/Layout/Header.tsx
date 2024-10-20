@@ -29,7 +29,7 @@ export const Header: FC<PropsWithChildren<THeaderProps>> = () => {
           </RouteLink>
         </div>
         <div>
-          <nav className="flex items-center justify-between gap-3 ">
+          <nav className="flex items-center justify-between gap-3">
             {[
               { title: t("navbar.home"), path: ROUTE_BY_PATH.home },
               { title: t("navbar.reminders"), path: HOME_ROUTE_BY_PATH.reminders },

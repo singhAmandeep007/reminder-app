@@ -39,7 +39,7 @@ export const WithCustomization: TStory = {
       day: "rounded-full border-2 border-transparent hover:border-primary",
       nav_button: cn(
         buttonVariants({ variant: "outline" }),
-        "hover:bg-primary hover:text-primary-foreground h-7 w-7 p-0 "
+        "h-7 w-7 p-0 hover:bg-primary hover:text-primary-foreground"
       ),
     },
   },

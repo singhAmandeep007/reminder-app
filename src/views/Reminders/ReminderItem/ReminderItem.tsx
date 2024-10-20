@@ -267,7 +267,7 @@ export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ remind
                                   repeatIntervalRef.current = v;
                                 }}
                               >
-                                <SelectTrigger className=" flex-1 self-center">
+                                <SelectTrigger className="flex-1 self-center">
                                   <SelectValue placeholder="Select an interval" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-background">

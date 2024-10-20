@@ -29,7 +29,7 @@ export const FocusSessionDuration: FC<PropsWithChildren<TFocusSessionDurationPro
         <DialogTitle className="text-left">Ready, set, focus!</DialogTitle>
         <DialogDescription className="max-w-xs text-left">Set duration of your focus session</DialogDescription>
       </DialogHeader>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <div className="mb-4 flex items-center justify-center gap-4">
           <ValueSetter
             initialValue={hoursRef.current}

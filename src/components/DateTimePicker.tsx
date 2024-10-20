@@ -108,7 +108,7 @@ export function DateTimePicker({
   };
 
   return (
-    <div className=" flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Calendar
         showOutsideDays={false}
         mode="single"
