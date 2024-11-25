@@ -1,6 +1,6 @@
 # GitHub Actions
 # https://docs.github.com/en/actions/using-workflows
-name: Run Unit Tests
+name: Unit Tests
 on:
   push:
     branches: [main, master]
@@ -28,29 +28,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install Dependencies
+      - name: Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Run Tests
+      - name: Run unit tests
         run: npm run test:unit:coverage
         env:
           CI: true
-
-      - name: Unit test report status
-        if: always()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { job, conclusion } = context.payload;
-            const status = conclusion === 'success' ? '✅' : '❌';
-            const message = `Tests ${conclusion} ${status}`;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: message
-            });
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
