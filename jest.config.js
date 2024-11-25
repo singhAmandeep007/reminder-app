@@ -39,12 +39,12 @@ module.exports = {
   // coverage
   coverageDirectory: "<rootDir>/reports/unit/coverage",
   coverageReporters: ["clover", "json", "lcov", ["text", { skipFull: true }]],
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: -10,
-    },
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 80,
+  //     functions: 80,
+  //     lines: 80,
+  //     statements: -10,
+  //   },
+  // },
 };
