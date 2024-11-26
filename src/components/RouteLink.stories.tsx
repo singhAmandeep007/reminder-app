@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import { MemoryRouter, Routes, Route, MemoryRouterProps } from "react-router-dom";
+import { MemoryRouter, Routes, Route, MemoryRouterProps } from "react-router";
 
 import { RouteLink } from "./RouteLink";
 

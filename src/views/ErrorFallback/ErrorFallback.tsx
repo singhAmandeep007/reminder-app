@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import { isRouteErrorResponse, useRouteError } from "react-router";
 
 import { TriangleAlert } from "lucide-react";
 

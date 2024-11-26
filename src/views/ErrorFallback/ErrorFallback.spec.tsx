@@ -1,13 +1,13 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse } from "react-router";
 
 import { render, mockLocation } from "tests/utils";
 
 import { ErrorFallback, TErrorFallbackProps } from "./ErrorFallback";
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
   useRouteError: jest.fn(),
   isRouteErrorResponse: jest.fn(),
 }));

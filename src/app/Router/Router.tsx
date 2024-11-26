@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router";
 
 import { ErrorFallback } from "views/ErrorFallback";
 
@@ -17,6 +17,7 @@ const router = createBrowserRouter(
     {
       element: <BaseLayout />,
       errorElement: <ErrorFallback />,
+      hydrateFallbackElement: <div>Loading...</div>,
       children: [
         {
           path: ROUTE_BY_PATH.home,

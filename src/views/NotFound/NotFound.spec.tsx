@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import userEvent from "@testing-library/user-event";
 
 import { ROUTE_BY_PATH } from "app/Router";
@@ -9,8 +9,8 @@ import { render } from "tests/utils";
 
 import { NotFound } from "./NotFound";
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
   useNavigate: jest.fn(),
 }));
 

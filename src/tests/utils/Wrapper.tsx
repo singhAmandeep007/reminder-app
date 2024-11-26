@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 
 import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 
 import { setupStore, TRootState } from "store";
 import { Toaster } from "components";

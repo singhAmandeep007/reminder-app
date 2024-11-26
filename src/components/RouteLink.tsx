@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { NavLink, NavLinkProps } from "react-router-dom";
+import { NavLink, NavLinkProps } from "react-router";
 
 export type TRouteLinkProps = {
   className?: string;
