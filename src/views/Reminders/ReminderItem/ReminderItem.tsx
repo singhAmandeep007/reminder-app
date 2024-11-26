@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 import { ChevronDown, ChevronUp, Pencil, Trash, Pin, CalendarClock, Timer } from "lucide-react";
 
@@ -51,7 +51,7 @@ const DIALOGS = {
 
 type TDialog = (typeof DIALOGS)[keyof typeof DIALOGS] | null;
 
-export const ReminderItem: FC<PropsWithChildren<TReminderItemProps>> = ({ reminder, listName }) => {
+export const ReminderItem: FC<TReminderItemProps> = ({ reminder, listName }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [dialog, setDialog] = useState<TDialog>(null);

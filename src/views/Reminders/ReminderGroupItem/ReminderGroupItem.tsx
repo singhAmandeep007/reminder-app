@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 
 import { ChevronDown, ChevronUp, Pencil, Trash } from "lucide-react";
 
@@ -24,7 +24,7 @@ export type TReminderGroupItemProps = {
   reminderGroup?: TReminderGroup;
 };
 
-export const ReminderGroupItem: FC<PropsWithChildren<TReminderGroupItemProps>> = ({ reminderGroup }) => {
+export const ReminderGroupItem: FC<TReminderGroupItemProps> = ({ reminderGroup }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { RouterProvider, createBrowserRouter } from "react-router";
 
@@ -47,4 +47,4 @@ const router = createBrowserRouter(
 
 export type TRouterProps = Record<string, never>;
 
-export const Router: FC<PropsWithChildren<TRouterProps>> = () => <RouterProvider router={router} />;
+export const Router: FC<TRouterProps> = () => <RouterProvider router={router} />;

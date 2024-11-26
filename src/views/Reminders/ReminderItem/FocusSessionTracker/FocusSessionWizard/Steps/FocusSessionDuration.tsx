@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useRef } from "react";
+import { FC, useRef } from "react";
 
 import { DialogDescription, DialogHeader, DialogTitle, Button, ValueSetter } from "components";
 
@@ -6,7 +6,7 @@ import { useFocusSessionWizardContext } from "../context";
 
 export type TFocusSessionDurationProps = Record<string, never>;
 
-export const FocusSessionDuration: FC<PropsWithChildren<TFocusSessionDurationProps>> = () => {
+export const FocusSessionDuration: FC<TFocusSessionDurationProps> = () => {
   const hoursRef = useRef<number>(0);
   const minutesRef = useRef<number>(1);
 

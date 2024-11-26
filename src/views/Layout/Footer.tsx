@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +6,7 @@ import { Typography } from "components";
 
 export type TFooterProps = Record<string, never>;
 
-export const Footer: FC<PropsWithChildren<TFooterProps>> = () => {
+export const Footer: FC<TFooterProps> = () => {
   const { t } = useTranslation("common");
   return (
     <footer

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { format, intervalToDuration, differenceInMilliseconds } from "date-fns";
 
 import { Badge } from "components";
@@ -34,7 +34,7 @@ function formatTimeSpent(milliseconds: number): string {
   return format || "0m";
 }
 
-export const Badges: FC<PropsWithChildren<TBadgesProps>> = ({ reminder, listName }) => {
+export const Badges: FC<TBadgesProps> = ({ reminder, listName }) => {
   const isOverdue = reminder.dueDate && new Date(reminder.dueDate) < new Date();
 
   const totalDurationMs = useMemo(

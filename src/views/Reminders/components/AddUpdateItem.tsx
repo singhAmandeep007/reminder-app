@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useCallback, useRef } from "react";
+import { FC, useCallback, useRef } from "react";
 
 import { Check, X } from "lucide-react";
 
@@ -18,13 +18,7 @@ export type TAddUpdateItemProps = {
   };
 };
 
-export const AddUpdateItem: FC<PropsWithChildren<TAddUpdateItemProps>> = ({
-  className,
-  onCancel,
-  onSave,
-  defaultValue = "",
-  testIds,
-}) => {
+export const AddUpdateItem: FC<TAddUpdateItemProps> = ({ className, onCancel, onSave, defaultValue = "", testIds }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleOnSave = useCallback(() => {

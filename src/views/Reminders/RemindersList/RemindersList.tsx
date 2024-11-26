@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, useState } from "react";
 
 import { RefreshCcw } from "lucide-react";
 
@@ -12,7 +12,7 @@ import { useRemindersNotification } from "./useRemindersNotification";
 
 export type TRemindersListProps = Record<string, never>;
 
-export const RemindersList: FC<PropsWithChildren<TRemindersListProps>> = () => {
+export const RemindersList: FC<TRemindersListProps> = () => {
   const { reminders, refetchReminders, reminderGroup, handleOnSave } = useRemindersList();
 
   useRemindersNotification({ reminders });

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { Bell } from "lucide-react";
 
@@ -14,7 +14,7 @@ import { LangToggler } from "modules/i18n";
 
 export type THeaderProps = Record<string, never>;
 
-export const Header: FC<PropsWithChildren<THeaderProps>> = () => {
+export const Header: FC<THeaderProps> = () => {
   const { t } = useTranslation("common");
 
   return (

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { EllipsisVertical, EllipsisIcon } from "lucide-react";
@@ -13,7 +13,7 @@ import { ReminderGroupsList } from "./ReminderGroupsList";
 
 export type TRemindersProps = Record<string, never>;
 
-export const Reminders: FC<PropsWithChildren<TRemindersProps>> = () => {
+export const Reminders: FC<TRemindersProps> = () => {
   const { isBelowMd } = useBreakpoint<keyof typeof BREAKPOINTS>("md", BREAKPOINTS);
 
   return (

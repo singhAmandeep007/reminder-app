@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, useState } from "react";
 
 import { ReminderGroupItem } from "../ReminderGroupItem";
 import { AddButton, AddUpdateItem } from "../components";
@@ -7,7 +7,7 @@ import { useReminderGroupsList } from "./useReminderGroupsList";
 
 export type TReminderGroupsListProps = Record<string, never>;
 
-export const ReminderGroupsList: FC<PropsWithChildren<TReminderGroupsListProps>> = () => {
+export const ReminderGroupsList: FC<TReminderGroupsListProps> = () => {
   const [isCreating, setIsCreating] = useState(false);
 
   const { handleOnSave, reminderGroups } = useReminderGroupsList();

@@ -1,11 +1,11 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 import { useTranslation, Trans } from "react-i18next";
 
 import { Typography } from "components";
 
 export type THomeProps = Record<string, never>;
 
-export const Home: FC<PropsWithChildren<THomeProps>> = () => {
+export const Home: FC<THomeProps> = () => {
   const { t } = useTranslation("homePage");
 
   return (

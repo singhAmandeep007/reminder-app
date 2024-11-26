@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { Play, Square } from "lucide-react";
 
@@ -24,7 +24,7 @@ const FormattedFocusedTime = ({ totalSeconds }: { totalSeconds: number }) => {
 
 export type TFocusSessionProps = Record<string, never>;
 
-export const FocusSession: FC<PropsWithChildren<TFocusSessionProps>> = () => {
+export const FocusSession: FC<TFocusSessionProps> = () => {
   const { isRunning, progress, onStart, onStop, elapsedDuration, reminder } = useFocusSession();
 
   return (

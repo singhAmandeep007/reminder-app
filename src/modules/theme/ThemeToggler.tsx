@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { Moon, Sun } from "lucide-react";
 
@@ -9,7 +9,7 @@ import { useTheme } from "./context";
 
 export type TThemeTogglerProps = Record<string, never>;
 
-export const ThemeToggler: FC<PropsWithChildren<TThemeTogglerProps>> = () => {
+export const ThemeToggler: FC<TThemeTogglerProps> = () => {
   const { setTheme, theme } = useTheme();
 
   return (
