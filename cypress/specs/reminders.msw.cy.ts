@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { format } from "date-fns";
 
-import { urlPrefix } from "utils";
+import { urlPrefix, getEnvValue } from "utils";
 
 import { buildScenarios } from "services/mocker/msw";
 import { MOCKER_TYPE } from "services/mocker";
@@ -11,7 +11,7 @@ import { RemindersElements } from "../pages";
 describe("Reminders Page", () => {
   before(function () {
     // skip test if not using msw
-    cy.skipIf(Cypress.env("REACT_APP_MOCKER") !== MOCKER_TYPE.msw, this);
+    cy.skipIf(getEnvValue("REACT_APP_MOCKER") !== MOCKER_TYPE.msw, this);
   });
 
   it("should be able to create a reminder under a reminder group and add a due date", () => {

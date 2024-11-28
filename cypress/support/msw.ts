@@ -3,6 +3,7 @@ import { RequestHandler } from "msw";
 
 import { setupHandlers, db } from "services/mocker/msw";
 import { MOCKER_TYPE } from "services/mocker";
+import { getEnvValue } from "utils";
 
 declare global {
   namespace Cypress {
@@ -19,7 +20,7 @@ let mswWorker: SetupWorker;
 
 before(() => {
   // NOTE: if using msw, setup the msw worker
-  if (Cypress.env("REACT_APP_MOCKER") === MOCKER_TYPE.msw) {
+  if (getEnvValue("REACT_APP_MOCKER") === MOCKER_TYPE.msw) {
     mswWorker = setupWorker(...setupHandlers({ db }));
 
     cy.wrap(

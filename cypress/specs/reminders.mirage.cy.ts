@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 import { Response as MirageResponse } from "miragejs";
 
-import { urlPrefix } from "utils";
+import { urlPrefix, getEnvValue } from "utils";
 
 import { buildScenarios, runServer, TServer } from "services/mocker/mirage";
 import { MOCKER_TYPE } from "services/mocker";
@@ -12,7 +12,7 @@ import { RemindersElements } from "../pages";
 describe("Reminders Page", () => {
   before(function () {
     // skip test if not using mirage
-    cy.skipIf(Cypress.env("REACT_APP_MOCKER") !== MOCKER_TYPE.mirage, this);
+    cy.skipIf(getEnvValue("REACT_APP_MOCKER") !== MOCKER_TYPE.mirage, this);
     cy.setupMirageApiProxy();
   });
 

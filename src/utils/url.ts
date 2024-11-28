@@ -1,3 +1,5 @@
+import { getEnvValue } from "./env";
+
 export function appendQueryParams<T extends Record<string, string>>(url: string, queryParams: T) {
   const queries = Object.keys(queryParams);
 
@@ -30,8 +32,7 @@ export const getUrlSearchParams = (url: string) => {
 };
 
 export const urlPrefix = (path: string, baseUrl?: string) => {
-  const apiUrl =
-    baseUrl || process.env.REACT_APP_API_URL || ((window.Cypress && window.Cypress.env("REACT_APP_API_URL")) as string);
+  const apiUrl = baseUrl || getEnvValue("REACT_APP_API_URL");
 
   if (path[0] !== "/") {
     throw new Error("Path should start with a forward slash.");

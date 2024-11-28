@@ -13,7 +13,7 @@ export type THandleProxyMirageServerRequest = (
 declare global {
   // eslint-disable-next-line
   interface Window {
-    handleProxyMirageServerRequest: THandleProxyMirageServerRequest;
+    handleProxyMirageServerRequest?: THandleProxyMirageServerRequest;
   }
 }
 
@@ -31,9 +31,12 @@ export const startProxyMirageServer = function (config: Omit<TRunMirageServerCon
         for (const method of methods) {
           // @ts-ignore
           this[method](`${domain}*`, async (_, request: TMirageRequest) => {
-            const [status, headers, body] = await window.handleProxyMirageServerRequest(request);
+            // check if the window object has the handleProxyMirageServerRequest function before calling it
+            if (window.handleProxyMirageServerRequest) {
+              const [status, headers, body] = await window.handleProxyMirageServerRequest(request);
 
-            return new MirageResponse(status, headers, body);
+              return new MirageResponse(status, headers, body);
+            }
           });
         }
       }

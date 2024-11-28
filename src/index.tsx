@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import { i18n } from "modules/i18n";
 import { MOCKER_TYPE } from "services/mocker";
+import { getEnvValue } from "utils";
 
 import { App } from "./app";
 
@@ -30,8 +31,7 @@ async function setupApp() {
   }
 
   // NOTE: extra configuration to support mirage in cypress
-  // with window.Cypress.env we can access are the environment variables from Cypress configuration
-  if (window.Cypress && window.Cypress.env("REACT_APP_MOCKER") === MOCKER_TYPE.mirage) {
+  if (getEnvValue("REACT_APP_MOCKER") === MOCKER_TYPE.mirage) {
     await import("services/mocker/mirage/proxyServer").then(({ startProxyMirageServer }) => {
       startProxyMirageServer();
     });
